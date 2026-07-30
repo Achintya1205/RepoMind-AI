@@ -1,11 +1,10 @@
-def greet(name):
-    return f"Hello {name}"
+def get_user():
+    return "Achintya"
 
 
-def add(a, b):
-    return a + b
+def login():
+    user = get_user()
+    print(user)
 
 
-class Calculator:
-    def multiply(self, a, b):
-        return a * b
+login()

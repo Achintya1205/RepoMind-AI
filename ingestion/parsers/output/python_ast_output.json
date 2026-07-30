@@ -1,0 +1,3703 @@
+[
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\.copier\\update_dotenv.py",
+        "functions": [],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from pathlib import Path",
+                "start_line": 1
+            },
+            {
+                "statement": "import json",
+                "start_line": 2
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "Path",
+                "start_line": 7
+            },
+            {
+                "name": "Path",
+                "start_line": 8
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\backend_pre_start.py",
+        "functions": [
+            {
+                "name": "init",
+                "start_line": 22,
+                "end_line": 22
+            },
+            {
+                "name": "main",
+                "start_line": 32,
+                "end_line": 32
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "import logging",
+                "start_line": 1
+            },
+            {
+                "statement": "from app.core.db import engine",
+                "start_line": 7
+            },
+            {
+                "statement": "from tenacity import after_log, before_log, retry, stop_after_attempt, wait_fixed",
+                "start_line": 5
+            },
+            {
+                "statement": "from sqlalchemy import Engine",
+                "start_line": 3
+            },
+            {
+                "statement": "from sqlmodel import Session, select",
+                "start_line": 4
+            }
+        ],
+        "decorators": [
+            {
+                "name": "@retry(\r\n    stop=stop_after_attempt(max_tries),\r\n    wait=wait_fixed(wait_seconds),\r\n    before=before_log(logger, logging.INFO),\r\n    after=after_log(logger, logging.WARN),\r\n)",
+                "start_line": 16
+            }
+        ],
+        "calls": [
+            {
+                "name": "retry",
+                "start_line": 16
+            },
+            {
+                "name": "after_log",
+                "start_line": 20
+            },
+            {
+                "name": "wait_fixed",
+                "start_line": 18
+            },
+            {
+                "name": "stop_after_attempt",
+                "start_line": 17
+            },
+            {
+                "name": "before_log",
+                "start_line": 19
+            },
+            {
+                "name": "Session",
+                "start_line": 24
+            },
+            {
+                "name": "select",
+                "start_line": 26
+            },
+            {
+                "name": "init",
+                "start_line": 34
+            },
+            {
+                "name": "main",
+                "start_line": 39
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\crud.py",
+        "functions": [
+            {
+                "name": "create_user",
+                "start_line": 10,
+                "end_line": 10
+            },
+            {
+                "name": "authenticate",
+                "start_line": 45,
+                "end_line": 45
+            },
+            {
+                "name": "create_item",
+                "start_line": 63,
+                "end_line": 63
+            },
+            {
+                "name": "get_user_by_email",
+                "start_line": 34,
+                "end_line": 34
+            },
+            {
+                "name": "update_user",
+                "start_line": 20,
+                "end_line": 20
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "import uuid",
+                "start_line": 1
+            },
+            {
+                "statement": "from app.core.security import get_password_hash, verify_password",
+                "start_line": 6
+            },
+            {
+                "statement": "from app.models import Item, ItemCreate, User, UserCreate, UserUpdate",
+                "start_line": 7
+            },
+            {
+                "statement": "from typing import Any",
+                "start_line": 2
+            },
+            {
+                "statement": "from sqlmodel import Session, select",
+                "start_line": 4
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "get_password_hash",
+                "start_line": 12
+            },
+            {
+                "name": "get_password_hash",
+                "start_line": 25
+            },
+            {
+                "name": "select",
+                "start_line": 35
+            },
+            {
+                "name": "verify_password",
+                "start_line": 50
+            },
+            {
+                "name": "get_user_by_email",
+                "start_line": 46
+            },
+            {
+                "name": "verify_password",
+                "start_line": 52
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\initial_data.py",
+        "functions": [
+            {
+                "name": "init",
+                "start_line": 11,
+                "end_line": 11
+            },
+            {
+                "name": "main",
+                "start_line": 16,
+                "end_line": 16
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "import logging",
+                "start_line": 1
+            },
+            {
+                "statement": "from app.core.db import engine, init_db",
+                "start_line": 5
+            },
+            {
+                "statement": "from sqlmodel import Session",
+                "start_line": 3
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "Session",
+                "start_line": 12
+            },
+            {
+                "name": "init",
+                "start_line": 18
+            },
+            {
+                "name": "main",
+                "start_line": 23
+            },
+            {
+                "name": "init_db",
+                "start_line": 13
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\main.py",
+        "functions": [
+            {
+                "name": "custom_generate_unique_id",
+                "start_line": 10,
+                "end_line": 10
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "import sentry_sdk",
+                "start_line": 1
+            },
+            {
+                "statement": "from app.api.main import api_router",
+                "start_line": 6
+            },
+            {
+                "statement": "from fastapi.routing import APIRoute",
+                "start_line": 3
+            },
+            {
+                "statement": "from fastapi import FastAPI",
+                "start_line": 2
+            },
+            {
+                "statement": "from starlette.middleware.cors import CORSMiddleware",
+                "start_line": 4
+            },
+            {
+                "statement": "from app.core.config import settings",
+                "start_line": 7
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "str",
+                "start_line": 15
+            },
+            {
+                "name": "FastAPI",
+                "start_line": 17
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
+        "functions": [
+            {
+                "name": "get_datetime_utc",
+                "start_line": 9,
+                "end_line": 9
+            }
+        ],
+        "classes": [
+            {
+                "name": "ItemsPublic",
+                "start_line": 110,
+                "end_line": 110
+            },
+            {
+                "name": "Message",
+                "start_line": 116,
+                "end_line": 116
+            },
+            {
+                "name": "UserBase",
+                "start_line": 14,
+                "end_line": 14
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 22,
+                "end_line": 22
+            },
+            {
+                "name": "UserUpdate",
+                "start_line": 33,
+                "end_line": 33
+            },
+            {
+                "name": "UserRegister",
+                "start_line": 26,
+                "end_line": 26
+            },
+            {
+                "name": "UserUpdateMe",
+                "start_line": 41,
+                "end_line": 41
+            },
+            {
+                "name": "UpdatePassword",
+                "start_line": 46,
+                "end_line": 46
+            },
+            {
+                "name": "User",
+                "start_line": 52,
+                "end_line": 52
+            },
+            {
+                "name": "UserPublic",
+                "start_line": 63,
+                "end_line": 63
+            },
+            {
+                "name": "ItemCreate",
+                "start_line": 80,
+                "end_line": 80
+            },
+            {
+                "name": "ItemUpdate",
+                "start_line": 85,
+                "end_line": 85
+            },
+            {
+                "name": "ItemBase",
+                "start_line": 74,
+                "end_line": 74
+            },
+            {
+                "name": "UsersPublic",
+                "start_line": 68,
+                "end_line": 68
+            },
+            {
+                "name": "NewPassword",
+                "start_line": 131,
+                "end_line": 131
+            },
+            {
+                "name": "TokenPayload",
+                "start_line": 127,
+                "end_line": 127
+            },
+            {
+                "name": "Token",
+                "start_line": 121,
+                "end_line": 121
+            },
+            {
+                "name": "ItemPublic",
+                "start_line": 104,
+                "end_line": 104
+            },
+            {
+                "name": "Item",
+                "start_line": 91,
+                "end_line": 91
+            }
+        ],
+        "imports": [
+            {
+                "statement": "import uuid",
+                "start_line": 1
+            },
+            {
+                "statement": "from sqlalchemy import DateTime",
+                "start_line": 5
+            },
+            {
+                "statement": "from datetime import UTC, datetime",
+                "start_line": 2
+            },
+            {
+                "statement": "from pydantic import EmailStr",
+                "start_line": 4
+            },
+            {
+                "statement": "from sqlmodel import Field, Relationship, SQLModel",
+                "start_line": 6
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "Field",
+                "start_line": 23
+            },
+            {
+                "name": "Field",
+                "start_line": 28
+            },
+            {
+                "name": "Field",
+                "start_line": 27
+            },
+            {
+                "name": "Field",
+                "start_line": 29
+            },
+            {
+                "name": "Field",
+                "start_line": 43
+            },
+            {
+                "name": "Field",
+                "start_line": 76
+            },
+            {
+                "name": "Field",
+                "start_line": 53
+            },
+            {
+                "name": "DateTime",
+                "start_line": 95
+            },
+            {
+                "name": "Field",
+                "start_line": 87
+            },
+            {
+                "name": "Field",
+                "start_line": 92
+            },
+            {
+                "name": "Field",
+                "start_line": 93
+            },
+            {
+                "name": "Field",
+                "start_line": 133
+            },
+            {
+                "name": "Field",
+                "start_line": 34
+            },
+            {
+                "name": "Field",
+                "start_line": 37
+            },
+            {
+                "name": "Field",
+                "start_line": 38
+            },
+            {
+                "name": "Field",
+                "start_line": 42
+            },
+            {
+                "name": "Relationship",
+                "start_line": 59
+            },
+            {
+                "name": "DateTime",
+                "start_line": 57
+            },
+            {
+                "name": "Field",
+                "start_line": 75
+            },
+            {
+                "name": "Field",
+                "start_line": 15
+            },
+            {
+                "name": "Field",
+                "start_line": 18
+            },
+            {
+                "name": "Field",
+                "start_line": 47
+            },
+            {
+                "name": "Field",
+                "start_line": 55
+            },
+            {
+                "name": "Field",
+                "start_line": 48
+            },
+            {
+                "name": "Field",
+                "start_line": 86
+            },
+            {
+                "name": "Field",
+                "start_line": 97
+            },
+            {
+                "name": "Relationship",
+                "start_line": 100
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\tests_pre_start.py",
+        "functions": [
+            {
+                "name": "init",
+                "start_line": 22,
+                "end_line": 22
+            },
+            {
+                "name": "main",
+                "start_line": 32,
+                "end_line": 32
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "import logging",
+                "start_line": 1
+            },
+            {
+                "statement": "from app.core.db import engine",
+                "start_line": 7
+            },
+            {
+                "statement": "from sqlmodel import Session, select",
+                "start_line": 4
+            },
+            {
+                "statement": "from sqlalchemy import Engine",
+                "start_line": 3
+            },
+            {
+                "statement": "from tenacity import after_log, before_log, retry, stop_after_attempt, wait_fixed",
+                "start_line": 5
+            }
+        ],
+        "decorators": [
+            {
+                "name": "@retry(\r\n    stop=stop_after_attempt(max_tries),\r\n    wait=wait_fixed(wait_seconds),\r\n    before=before_log(logger, logging.INFO),\r\n    after=after_log(logger, logging.WARN),\r\n)",
+                "start_line": 16
+            }
+        ],
+        "calls": [
+            {
+                "name": "retry",
+                "start_line": 16
+            },
+            {
+                "name": "wait_fixed",
+                "start_line": 18
+            },
+            {
+                "name": "before_log",
+                "start_line": 19
+            },
+            {
+                "name": "stop_after_attempt",
+                "start_line": 17
+            },
+            {
+                "name": "after_log",
+                "start_line": 20
+            },
+            {
+                "name": "Session",
+                "start_line": 25
+            },
+            {
+                "name": "select",
+                "start_line": 26
+            },
+            {
+                "name": "init",
+                "start_line": 34
+            },
+            {
+                "name": "main",
+                "start_line": 39
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py",
+        "functions": [
+            {
+                "name": "send_email",
+                "start_line": 33,
+                "end_line": 33
+            },
+            {
+                "name": "render_email_template",
+                "start_line": 25,
+                "end_line": 25
+            },
+            {
+                "name": "generate_reset_password_email",
+                "start_line": 69,
+                "end_line": 69
+            },
+            {
+                "name": "generate_password_reset_token",
+                "start_line": 104,
+                "end_line": 104
+            },
+            {
+                "name": "verify_password_reset_token",
+                "start_line": 117,
+                "end_line": 117
+            },
+            {
+                "name": "generate_new_account_email",
+                "start_line": 86,
+                "end_line": 86
+            },
+            {
+                "name": "generate_test_email",
+                "start_line": 59,
+                "end_line": 59
+            }
+        ],
+        "classes": [
+            {
+                "name": "EmailData",
+                "start_line": 20,
+                "end_line": 20
+            }
+        ],
+        "imports": [
+            {
+                "statement": "import logging",
+                "start_line": 1
+            },
+            {
+                "statement": "from typing import Any",
+                "start_line": 5
+            },
+            {
+                "statement": "from dataclasses import dataclass",
+                "start_line": 2
+            },
+            {
+                "statement": "from pathlib import Path",
+                "start_line": 4
+            },
+            {
+                "statement": "from datetime import UTC, datetime, timedelta",
+                "start_line": 3
+            },
+            {
+                "statement": "import emails",
+                "start_line": 7
+            },
+            {
+                "statement": "import jwt",
+                "start_line": 8
+            },
+            {
+                "statement": "from jinja2 import Template",
+                "start_line": 9
+            },
+            {
+                "statement": "from jwt.exceptions import InvalidTokenError",
+                "start_line": 10
+            },
+            {
+                "statement": "from app.core import security",
+                "start_line": 12
+            },
+            {
+                "statement": "from app.core.config import settings",
+                "start_line": 13
+            }
+        ],
+        "decorators": [
+            {
+                "name": "@dataclass",
+                "start_line": 19
+            }
+        ],
+        "calls": [
+            {
+                "name": "Path",
+                "start_line": 27
+            },
+            {
+                "name": "render_email_template",
+                "start_line": 73
+            },
+            {
+                "name": "Template",
+                "start_line": 29
+            },
+            {
+                "name": "EmailData",
+                "start_line": 66
+            },
+            {
+                "name": "render_email_template",
+                "start_line": 62
+            },
+            {
+                "name": "EmailData",
+                "start_line": 83
+            },
+            {
+                "name": "render_email_template",
+                "start_line": 91
+            },
+            {
+                "name": "EmailData",
+                "start_line": 101
+            },
+            {
+                "name": "timedelta",
+                "start_line": 105
+            },
+            {
+                "name": "str",
+                "start_line": 122
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\__init__.py",
+        "functions": [],
+        "classes": [],
+        "imports": [],
+        "decorators": [],
+        "calls": []
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\alembic\\env.py",
+        "functions": [
+            {
+                "name": "get_url",
+                "start_line": 33,
+                "end_line": 33
+            },
+            {
+                "name": "run_migrations_offline",
+                "start_line": 37,
+                "end_line": 37
+            },
+            {
+                "name": "run_migrations_online",
+                "start_line": 58,
+                "end_line": 58
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "import os",
+                "start_line": 1
+            },
+            {
+                "statement": "from sqlalchemy import engine_from_config, pool",
+                "start_line": 5
+            },
+            {
+                "statement": "from logging.config import fileConfig",
+                "start_line": 2
+            },
+            {
+                "statement": "from alembic import context",
+                "start_line": 4
+            },
+            {
+                "statement": "from app.models import SQLModel",
+                "start_line": 22
+            },
+            {
+                "statement": "from app.core.config import settings",
+                "start_line": 23
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "fileConfig",
+                "start_line": 14
+            },
+            {
+                "name": "get_url",
+                "start_line": 49
+            },
+            {
+                "name": "get_url",
+                "start_line": 67
+            },
+            {
+                "name": "str",
+                "start_line": 34
+            },
+            {
+                "name": "engine_from_config",
+                "start_line": 68
+            },
+            {
+                "name": "run_migrations_offline",
+                "start_line": 84
+            },
+            {
+                "name": "run_migrations_online",
+                "start_line": 86
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\alembic\\versions\\1a31ce608336_add_cascade_delete_relationships.py",
+        "functions": [
+            {
+                "name": "upgrade",
+                "start_line": 20,
+                "end_line": 20
+            },
+            {
+                "name": "downgrade",
+                "start_line": 30,
+                "end_line": 30
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from alembic import op",
+                "start_line": 8
+            },
+            {
+                "statement": "import sqlmodel.sql.sqltypes",
+                "start_line": 10
+            },
+            {
+                "statement": "import sqlalchemy as sa",
+                "start_line": 9
+            }
+        ],
+        "decorators": [],
+        "calls": []
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\alembic\\versions\\9c0a54914c78_add_max_length_for_string_varchar_.py",
+        "functions": [
+            {
+                "name": "upgrade",
+                "start_line": 20,
+                "end_line": 20
+            },
+            {
+                "name": "downgrade",
+                "start_line": 46,
+                "end_line": 46
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from alembic import op",
+                "start_line": 8
+            },
+            {
+                "statement": "import sqlmodel.sql.sqltypes",
+                "start_line": 10
+            },
+            {
+                "statement": "import sqlalchemy as sa",
+                "start_line": 9
+            }
+        ],
+        "decorators": [],
+        "calls": []
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\alembic\\versions\\d98dd8ec85a3_edit_replace_id_integers_in_all_models_.py",
+        "functions": [
+            {
+                "name": "upgrade",
+                "start_line": 21,
+                "end_line": 21
+            },
+            {
+                "name": "downgrade",
+                "start_line": 57,
+                "end_line": 57
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from alembic import op",
+                "start_line": 8
+            },
+            {
+                "statement": "import sqlmodel.sql.sqltypes",
+                "start_line": 10
+            },
+            {
+                "statement": "import sqlalchemy as sa",
+                "start_line": 9
+            },
+            {
+                "statement": "from sqlalchemy.dialects import postgresql",
+                "start_line": 11
+            }
+        ],
+        "decorators": [],
+        "calls": []
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\alembic\\versions\\e2412789c190_initialize_models.py",
+        "functions": [
+            {
+                "name": "upgrade",
+                "start_line": 19,
+                "end_line": 19
+            },
+            {
+                "name": "downgrade",
+                "start_line": 49,
+                "end_line": 49
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "import sqlalchemy as sa",
+                "start_line": 8
+            },
+            {
+                "statement": "import sqlmodel.sql.sqltypes",
+                "start_line": 9
+            },
+            {
+                "statement": "from alembic import op",
+                "start_line": 10
+            }
+        ],
+        "decorators": [],
+        "calls": []
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\alembic\\versions\\fe56fa70289e_add_created_at_to_user_and_item.py",
+        "functions": [
+            {
+                "name": "upgrade",
+                "start_line": 20,
+                "end_line": 20
+            },
+            {
+                "name": "downgrade",
+                "start_line": 27,
+                "end_line": 27
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from alembic import op",
+                "start_line": 8
+            },
+            {
+                "statement": "import sqlmodel.sql.sqltypes",
+                "start_line": 10
+            },
+            {
+                "statement": "import sqlalchemy as sa",
+                "start_line": 9
+            }
+        ],
+        "decorators": [],
+        "calls": []
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\deps.py",
+        "functions": [
+            {
+                "name": "get_db",
+                "start_line": 21,
+                "end_line": 21
+            },
+            {
+                "name": "get_current_active_superuser",
+                "start_line": 52,
+                "end_line": 52
+            },
+            {
+                "name": "get_current_user",
+                "start_line": 30,
+                "end_line": 30
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from collections.abc import Generator",
+                "start_line": 1
+            },
+            {
+                "statement": "from fastapi import Depends, HTTPException, status",
+                "start_line": 5
+            },
+            {
+                "statement": "from typing import Annotated",
+                "start_line": 2
+            },
+            {
+                "statement": "import jwt",
+                "start_line": 4
+            },
+            {
+                "statement": "from fastapi.security import OAuth2PasswordBearer",
+                "start_line": 6
+            },
+            {
+                "statement": "from jwt.exceptions import InvalidTokenError",
+                "start_line": 7
+            },
+            {
+                "statement": "from pydantic import ValidationError",
+                "start_line": 8
+            },
+            {
+                "statement": "from sqlmodel import Session",
+                "start_line": 9
+            },
+            {
+                "statement": "from app.core import security",
+                "start_line": 11
+            },
+            {
+                "statement": "from app.core.config import settings",
+                "start_line": 12
+            },
+            {
+                "statement": "from app.core.db import engine",
+                "start_line": 13
+            },
+            {
+                "statement": "from app.models import TokenPayload, User",
+                "start_line": 14
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "OAuth2PasswordBearer",
+                "start_line": 16
+            },
+            {
+                "name": "Depends",
+                "start_line": 27
+            },
+            {
+                "name": "Session",
+                "start_line": 22
+            },
+            {
+                "name": "Depends",
+                "start_line": 26
+            },
+            {
+                "name": "TokenPayload",
+                "start_line": 35
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 37
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 43
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 45
+            },
+            {
+                "name": "Depends",
+                "start_line": 49
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 54
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\main.py",
+        "functions": [],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from fastapi import APIRouter",
+                "start_line": 1
+            },
+            {
+                "statement": "from app.core.config import settings",
+                "start_line": 4
+            },
+            {
+                "statement": "from app.api.routes import items, login, private, users, utils",
+                "start_line": 3
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "APIRouter",
+                "start_line": 6
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\__init__.py",
+        "functions": [],
+        "classes": [],
+        "imports": [],
+        "decorators": [],
+        "calls": []
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py",
+        "functions": [
+            {
+                "name": "read_item",
+                "start_line": 49,
+                "end_line": 49
+            },
+            {
+                "name": "read_items",
+                "start_line": 14,
+                "end_line": 14
+            },
+            {
+                "name": "update_item",
+                "start_line": 76,
+                "end_line": 76
+            },
+            {
+                "name": "delete_item",
+                "start_line": 100,
+                "end_line": 100
+            },
+            {
+                "name": "create_item",
+                "start_line": 62,
+                "end_line": 62
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "import uuid",
+                "start_line": 1
+            },
+            {
+                "statement": "from fastapi import APIRouter, HTTPException",
+                "start_line": 4
+            },
+            {
+                "statement": "from typing import Any",
+                "start_line": 2
+            },
+            {
+                "statement": "from sqlmodel import col, func, select",
+                "start_line": 5
+            },
+            {
+                "statement": "from app.api.deps import CurrentUser, SessionDep",
+                "start_line": 7
+            },
+            {
+                "statement": "from app.models import Item, ItemCreate, ItemPublic, ItemsPublic, ItemUpdate, Message",
+                "start_line": 8
+            }
+        ],
+        "decorators": [
+            {
+                "name": "@router.get(\"/\", response_model=ItemsPublic)",
+                "start_line": 13
+            },
+            {
+                "name": "@router.delete(\"/{id}\")",
+                "start_line": 99
+            },
+            {
+                "name": "@router.post(\"/\", response_model=ItemPublic)",
+                "start_line": 61
+            },
+            {
+                "name": "@router.get(\"/{id}\", response_model=ItemPublic)",
+                "start_line": 48
+            },
+            {
+                "name": "@router.put(\"/{id}\", response_model=ItemPublic)",
+                "start_line": 75
+            }
+        ],
+        "calls": [
+            {
+                "name": "APIRouter",
+                "start_line": 10
+            },
+            {
+                "name": "col",
+                "start_line": 25
+            },
+            {
+                "name": "select",
+                "start_line": 30
+            },
+            {
+                "name": "select",
+                "start_line": 25
+            },
+            {
+                "name": "select",
+                "start_line": 22
+            },
+            {
+                "name": "select",
+                "start_line": 36
+            },
+            {
+                "name": "col",
+                "start_line": 38
+            },
+            {
+                "name": "ItemsPublic",
+                "start_line": 45
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 55
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 57
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 110
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 90
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 108
+            },
+            {
+                "name": "Message",
+                "start_line": 113
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 88
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\login.py",
+        "functions": [
+            {
+                "name": "test_token",
+                "start_line": 46,
+                "end_line": 46
+            },
+            {
+                "name": "login_access_token",
+                "start_line": 24,
+                "end_line": 24
+            },
+            {
+                "name": "recover_password_html_content",
+                "start_line": 105,
+                "end_line": 105
+            },
+            {
+                "name": "reset_password",
+                "start_line": 78,
+                "end_line": 78
+            },
+            {
+                "name": "recover_password",
+                "start_line": 54,
+                "end_line": 54
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from datetime import timedelta",
+                "start_line": 1
+            },
+            {
+                "statement": "from typing import Annotated, Any",
+                "start_line": 2
+            },
+            {
+                "statement": "from fastapi.responses import HTMLResponse",
+                "start_line": 5
+            },
+            {
+                "statement": "from fastapi import APIRouter, Depends, HTTPException",
+                "start_line": 4
+            },
+            {
+                "statement": "from fastapi.security import OAuth2PasswordRequestForm",
+                "start_line": 6
+            },
+            {
+                "statement": "from app import crud",
+                "start_line": 8
+            },
+            {
+                "statement": "from app.api.deps import CurrentUser, SessionDep, get_current_active_superuser",
+                "start_line": 9
+            },
+            {
+                "statement": "from app.core import security",
+                "start_line": 10
+            },
+            {
+                "statement": "from app.core.config import settings",
+                "start_line": 11
+            },
+            {
+                "statement": "from app.models import Message, NewPassword, Token, UserPublic, UserUpdate",
+                "start_line": 12
+            },
+            {
+                "statement": "from app.utils import (\r\n    generate_password_reset_token,\r\n    generate_reset_password_email,\r\n    send_email,\r\n    verify_password_reset_token,\r\n)",
+                "start_line": 13
+            }
+        ],
+        "decorators": [
+            {
+                "name": "@router.post(\"/login/access-token\")",
+                "start_line": 23
+            },
+            {
+                "name": "@router.post(\"/password-recovery/{email}\")",
+                "start_line": 53
+            },
+            {
+                "name": "@router.post(\"/reset-password/\")",
+                "start_line": 77
+            },
+            {
+                "name": "@router.post(\"/login/test-token\", response_model=UserPublic)",
+                "start_line": 45
+            },
+            {
+                "name": "@router.post(\r\n    \"/password-recovery-html-content/{email}\",\r\n    dependencies=[Depends(get_current_active_superuser)],\r\n    response_class=HTMLResponse,\r\n)",
+                "start_line": 100
+            }
+        ],
+        "calls": [
+            {
+                "name": "HTTPException",
+                "start_line": 36
+            },
+            {
+                "name": "timedelta",
+                "start_line": 37
+            },
+            {
+                "name": "generate_reset_password_email",
+                "start_line": 64
+            },
+            {
+                "name": "verify_password_reset_token",
+                "start_line": 82
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 90
+            },
+            {
+                "name": "Message",
+                "start_line": 97
+            },
+            {
+                "name": "generate_password_reset_token",
+                "start_line": 116
+            },
+            {
+                "name": "generate_reset_password_email",
+                "start_line": 117
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 34
+            },
+            {
+                "name": "send_email",
+                "start_line": 67
+            },
+            {
+                "name": "Message",
+                "start_line": 72
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 84
+            },
+            {
+                "name": "Depends",
+                "start_line": 25
+            },
+            {
+                "name": "Token",
+                "start_line": 38
+            },
+            {
+                "name": "generate_password_reset_token",
+                "start_line": 63
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 88
+            },
+            {
+                "name": "UserUpdate",
+                "start_line": 91
+            },
+            {
+                "name": "APIRouter",
+                "start_line": 20
+            },
+            {
+                "name": "Depends",
+                "start_line": 102
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 112
+            },
+            {
+                "name": "HTMLResponse",
+                "start_line": 121
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\private.py",
+        "functions": [
+            {
+                "name": "create_user",
+                "start_line": 24,
+                "end_line": 24
+            }
+        ],
+        "classes": [
+            {
+                "name": "PrivateUserCreate",
+                "start_line": 16,
+                "end_line": 16
+            }
+        ],
+        "imports": [
+            {
+                "statement": "from typing import Any",
+                "start_line": 1
+            },
+            {
+                "statement": "from app.core.security import get_password_hash",
+                "start_line": 7
+            },
+            {
+                "statement": "from app.api.deps import SessionDep",
+                "start_line": 6
+            },
+            {
+                "statement": "from fastapi import APIRouter",
+                "start_line": 3
+            },
+            {
+                "statement": "from pydantic import BaseModel",
+                "start_line": 4
+            },
+            {
+                "statement": "from app.models import (\r\n    User,\r\n    UserPublic,\r\n)",
+                "start_line": 8
+            }
+        ],
+        "decorators": [
+            {
+                "name": "@router.post(\"/users/\", response_model=UserPublic)",
+                "start_line": 23
+            }
+        ],
+        "calls": [
+            {
+                "name": "APIRouter",
+                "start_line": 13
+            },
+            {
+                "name": "User",
+                "start_line": 29
+            },
+            {
+                "name": "get_password_hash",
+                "start_line": 32
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py",
+        "functions": [
+            {
+                "name": "create_user",
+                "start_line": 57,
+                "end_line": 57
+            },
+            {
+                "name": "read_users",
+                "start_line": 37,
+                "end_line": 37
+            },
+            {
+                "name": "update_password_me",
+                "start_line": 104,
+                "end_line": 104
+            },
+            {
+                "name": "delete_user_me",
+                "start_line": 133,
+                "end_line": 133
+            },
+            {
+                "name": "register_user",
+                "start_line": 147,
+                "end_line": 147
+            },
+            {
+                "name": "read_user_by_id",
+                "start_line": 163,
+                "end_line": 163
+            },
+            {
+                "name": "update_user",
+                "start_line": 187,
+                "end_line": 187
+            },
+            {
+                "name": "delete_user",
+                "start_line": 215,
+                "end_line": 215
+            },
+            {
+                "name": "read_user_me",
+                "start_line": 125,
+                "end_line": 125
+            },
+            {
+                "name": "update_user_me",
+                "start_line": 82,
+                "end_line": 82
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "import uuid",
+                "start_line": 1
+            },
+            {
+                "statement": "from app import crud",
+                "start_line": 7
+            },
+            {
+                "statement": "from typing import Any",
+                "start_line": 2
+            },
+            {
+                "statement": "from sqlmodel import col, delete, func, select",
+                "start_line": 5
+            },
+            {
+                "statement": "from fastapi import APIRouter, Depends, HTTPException",
+                "start_line": 4
+            },
+            {
+                "statement": "from app.api.deps import (\r\n    CurrentUser,\r\n    SessionDep,\r\n    get_current_active_superuser,\r\n)",
+                "start_line": 8
+            },
+            {
+                "statement": "from app.core.config import settings",
+                "start_line": 13
+            },
+            {
+                "statement": "from app.core.security import get_password_hash, verify_password",
+                "start_line": 14
+            },
+            {
+                "statement": "from app.models import (\r\n    Item,\r\n    Message,\r\n    UpdatePassword,\r\n    User,\r\n    UserCreate,\r\n    UserPublic,\r\n    UserRegister,\r\n    UsersPublic,\r\n    UserUpdate,\r\n    UserUpdateMe,\r\n)",
+                "start_line": 15
+            },
+            {
+                "statement": "from app.utils import generate_new_account_email, send_email",
+                "start_line": 27
+            }
+        ],
+        "decorators": [
+            {
+                "name": "@router.get(\r\n    \"/\",\r\n    dependencies=[Depends(get_current_active_superuser)],\r\n    response_model=UsersPublic,\r\n)",
+                "start_line": 32
+            },
+            {
+                "name": "@router.post(\r\n    \"/\", dependencies=[Depends(get_current_active_superuser)], response_model=UserPublic\r\n)",
+                "start_line": 54
+            },
+            {
+                "name": "@router.patch(\"/me/password\", response_model=Message)",
+                "start_line": 103
+            },
+            {
+                "name": "@router.patch(\"/me\", response_model=UserPublic)",
+                "start_line": 81
+            },
+            {
+                "name": "@router.get(\"/me\", response_model=UserPublic)",
+                "start_line": 124
+            },
+            {
+                "name": "@router.delete(\"/me\", response_model=Message)",
+                "start_line": 132
+            },
+            {
+                "name": "@router.post(\"/signup\", response_model=UserPublic)",
+                "start_line": 146
+            },
+            {
+                "name": "@router.get(\"/{user_id}\", response_model=UserPublic)",
+                "start_line": 162
+            },
+            {
+                "name": "@router.patch(\r\n    \"/{user_id}\",\r\n    dependencies=[Depends(get_current_active_superuser)],\r\n    response_model=UserPublic,\r\n)",
+                "start_line": 182
+            },
+            {
+                "name": "@router.delete(\"/{user_id}\", dependencies=[Depends(get_current_active_superuser)])",
+                "start_line": 214
+            }
+        ],
+        "calls": [
+            {
+                "name": "select",
+                "start_line": 46
+            },
+            {
+                "name": "Depends",
+                "start_line": 55
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 138
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 178
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 225
+            },
+            {
+                "name": "APIRouter",
+                "start_line": 29
+            },
+            {
+                "name": "UsersPublic",
+                "start_line": 51
+            },
+            {
+                "name": "generate_new_account_email",
+                "start_line": 70
+            },
+            {
+                "name": "send_email",
+                "start_line": 73
+            },
+            {
+                "name": "verify_password",
+                "start_line": 110
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 92
+            },
+            {
+                "name": "get_password_hash",
+                "start_line": 117
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 173
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 199
+            },
+            {
+                "name": "col",
+                "start_line": 228
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 63
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 114
+            },
+            {
+                "name": "Message",
+                "start_line": 121
+            },
+            {
+                "name": "Message",
+                "start_line": 143
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 206
+            },
+            {
+                "name": "Depends",
+                "start_line": 214
+            },
+            {
+                "name": "col",
+                "start_line": 46
+            },
+            {
+                "name": "Depends",
+                "start_line": 34
+            },
+            {
+                "name": "select",
+                "start_line": 42
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 112
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 153
+            },
+            {
+                "name": "Depends",
+                "start_line": 184
+            },
+            {
+                "name": "HTTPException",
+                "start_line": 223
+            },
+            {
+                "name": "delete",
+                "start_line": 228
+            },
+            {
+                "name": "Message",
+                "start_line": 232
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\utils.py",
+        "functions": [
+            {
+                "name": "test_email",
+                "start_line": 16,
+                "end_line": 16
+            },
+            {
+                "name": "health_check",
+                "start_line": 30,
+                "end_line": 30
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from fastapi import APIRouter, Depends",
+                "start_line": 1
+            },
+            {
+                "statement": "from pydantic.networks import EmailStr",
+                "start_line": 2
+            },
+            {
+                "statement": "from app.utils import generate_test_email, send_email",
+                "start_line": 6
+            },
+            {
+                "statement": "from app.models import Message",
+                "start_line": 5
+            },
+            {
+                "statement": "from app.api.deps import get_current_active_superuser",
+                "start_line": 4
+            }
+        ],
+        "decorators": [
+            {
+                "name": "@router.post(\r\n    \"/test-email/\",\r\n    dependencies=[Depends(get_current_active_superuser)],\r\n    status_code=201,\r\n)",
+                "start_line": 11
+            },
+            {
+                "name": "@router.get(\"/health-check/\")",
+                "start_line": 29
+            }
+        ],
+        "calls": [
+            {
+                "name": "APIRouter",
+                "start_line": 8
+            },
+            {
+                "name": "Message",
+                "start_line": 26
+            },
+            {
+                "name": "Depends",
+                "start_line": 13
+            },
+            {
+                "name": "send_email",
+                "start_line": 21
+            },
+            {
+                "name": "generate_test_email",
+                "start_line": 20
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\__init__.py",
+        "functions": [],
+        "classes": [],
+        "imports": [],
+        "decorators": [],
+        "calls": []
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\config.py",
+        "functions": [
+            {
+                "name": "all_cors_origins",
+                "start_line": 45,
+                "end_line": 45
+            },
+            {
+                "name": "parse_cors",
+                "start_line": 17,
+                "end_line": 17
+            },
+            {
+                "name": "_set_default_emails_from",
+                "start_line": 80,
+                "end_line": 80
+            },
+            {
+                "name": "_check_default_secret",
+                "start_line": 96,
+                "end_line": 96
+            },
+            {
+                "name": "_enforce_non_default_secrets",
+                "start_line": 108,
+                "end_line": 108
+            },
+            {
+                "name": "emails_enabled",
+                "start_line": 89,
+                "end_line": 89
+            },
+            {
+                "name": "SQLALCHEMY_DATABASE_URI",
+                "start_line": 60,
+                "end_line": 60
+            }
+        ],
+        "classes": [
+            {
+                "name": "Settings",
+                "start_line": 25,
+                "end_line": 25
+            }
+        ],
+        "imports": [
+            {
+                "statement": "import secrets",
+                "start_line": 1
+            },
+            {
+                "statement": "from pydantic_settings import BaseSettings, SettingsConfigDict",
+                "start_line": 14
+            },
+            {
+                "statement": "import warnings",
+                "start_line": 2
+            },
+            {
+                "statement": "from pydantic import (\r\n    AnyUrl,\r\n    BeforeValidator,\r\n    EmailStr,\r\n    HttpUrl,\r\n    PostgresDsn,\r\n    computed_field,\r\n    model_validator,\r\n)",
+                "start_line": 5
+            },
+            {
+                "statement": "from typing import Annotated, Any, Literal, Self",
+                "start_line": 3
+            }
+        ],
+        "decorators": [
+            {
+                "name": "@computed_field  # type: ignore[prop-decorator]\r",
+                "start_line": 43
+            },
+            {
+                "name": "@computed_field  # type: ignore[prop-decorator]\r",
+                "start_line": 58
+            },
+            {
+                "name": "@model_validator(mode=\"after\")",
+                "start_line": 79
+            },
+            {
+                "name": "@computed_field  # type: ignore[prop-decorator]\r",
+                "start_line": 87
+            },
+            {
+                "name": "@model_validator(mode=\"after\")",
+                "start_line": 107
+            },
+            {
+                "name": "@property",
+                "start_line": 44
+            },
+            {
+                "name": "@property",
+                "start_line": 59
+            },
+            {
+                "name": "@property",
+                "start_line": 88
+            }
+        ],
+        "calls": [
+            {
+                "name": "isinstance",
+                "start_line": 18
+            },
+            {
+                "name": "isinstance",
+                "start_line": 20
+            },
+            {
+                "name": "BeforeValidator",
+                "start_line": 40
+            },
+            {
+                "name": "SettingsConfigDict",
+                "start_line": 26
+            },
+            {
+                "name": "ValueError",
+                "start_line": 22
+            },
+            {
+                "name": "str",
+                "start_line": 46
+            },
+            {
+                "name": "model_validator",
+                "start_line": 79
+            },
+            {
+                "name": "bool",
+                "start_line": 90
+            },
+            {
+                "name": "ValueError",
+                "start_line": 105
+            },
+            {
+                "name": "model_validator",
+                "start_line": 107
+            },
+            {
+                "name": "Settings",
+                "start_line": 118
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\db.py",
+        "functions": [
+            {
+                "name": "init_db",
+                "start_line": 15,
+                "end_line": 15
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from sqlmodel import Session, create_engine, select",
+                "start_line": 1
+            },
+            {
+                "statement": "from app.core.config import settings",
+                "start_line": 4
+            },
+            {
+                "statement": "from app.models import User, UserCreate",
+                "start_line": 5
+            },
+            {
+                "statement": "from app import crud",
+                "start_line": 3
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "create_engine",
+                "start_line": 7
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 28
+            },
+            {
+                "name": "str",
+                "start_line": 7
+            },
+            {
+                "name": "select",
+                "start_line": 25
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\security.py",
+        "functions": [
+            {
+                "name": "create_access_token",
+                "start_line": 22,
+                "end_line": 22
+            },
+            {
+                "name": "get_password_hash",
+                "start_line": 35,
+                "end_line": 35
+            },
+            {
+                "name": "verify_password",
+                "start_line": 29,
+                "end_line": 29
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from datetime import UTC, datetime, timedelta",
+                "start_line": 1
+            },
+            {
+                "statement": "from pwdlib.hashers.argon2 import Argon2Hasher",
+                "start_line": 6
+            },
+            {
+                "statement": "import jwt",
+                "start_line": 4
+            },
+            {
+                "statement": "from pwdlib import PasswordHash",
+                "start_line": 5
+            },
+            {
+                "statement": "from typing import Any",
+                "start_line": 2
+            },
+            {
+                "statement": "from pwdlib.hashers.bcrypt import BcryptHasher",
+                "start_line": 7
+            },
+            {
+                "statement": "from app.core.config import settings",
+                "start_line": 9
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "PasswordHash",
+                "start_line": 11
+            },
+            {
+                "name": "Argon2Hasher",
+                "start_line": 13
+            },
+            {
+                "name": "BcryptHasher",
+                "start_line": 14
+            },
+            {
+                "name": "str",
+                "start_line": 24
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\__init__.py",
+        "functions": [],
+        "classes": [],
+        "imports": [],
+        "decorators": [],
+        "calls": []
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\conftest.py",
+        "functions": [
+            {
+                "name": "db",
+                "start_line": 16,
+                "end_line": 16
+            },
+            {
+                "name": "superuser_token_headers",
+                "start_line": 34,
+                "end_line": 34
+            },
+            {
+                "name": "client",
+                "start_line": 28,
+                "end_line": 28
+            },
+            {
+                "name": "normal_user_token_headers",
+                "start_line": 39,
+                "end_line": 39
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from collections.abc import Generator",
+                "start_line": 1
+            },
+            {
+                "statement": "from fastapi.testclient import TestClient",
+                "start_line": 4
+            },
+            {
+                "statement": "import pytest",
+                "start_line": 3
+            },
+            {
+                "statement": "from app.core.config import settings",
+                "start_line": 7
+            },
+            {
+                "statement": "from sqlmodel import Session, delete",
+                "start_line": 5
+            },
+            {
+                "statement": "from app.core.db import engine, init_db",
+                "start_line": 8
+            },
+            {
+                "statement": "from app.main import app",
+                "start_line": 9
+            },
+            {
+                "statement": "from app.models import Item, User",
+                "start_line": 10
+            },
+            {
+                "statement": "from tests.utils.user import authentication_token_from_email",
+                "start_line": 11
+            },
+            {
+                "statement": "from tests.utils.utils import get_superuser_token_headers",
+                "start_line": 12
+            }
+        ],
+        "decorators": [
+            {
+                "name": "@pytest.fixture(scope=\"session\", autouse=True)",
+                "start_line": 15
+            },
+            {
+                "name": "@pytest.fixture(scope=\"module\")",
+                "start_line": 33
+            },
+            {
+                "name": "@pytest.fixture(scope=\"module\")",
+                "start_line": 38
+            },
+            {
+                "name": "@pytest.fixture(scope=\"module\")",
+                "start_line": 27
+            }
+        ],
+        "calls": [
+            {
+                "name": "Session",
+                "start_line": 17
+            },
+            {
+                "name": "TestClient",
+                "start_line": 29
+            },
+            {
+                "name": "delete",
+                "start_line": 22
+            },
+            {
+                "name": "delete",
+                "start_line": 20
+            },
+            {
+                "name": "init_db",
+                "start_line": 18
+            },
+            {
+                "name": "get_superuser_token_headers",
+                "start_line": 35
+            },
+            {
+                "name": "authentication_token_from_email",
+                "start_line": 40
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\__init__.py",
+        "functions": [],
+        "classes": [],
+        "imports": [],
+        "decorators": [],
+        "calls": []
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\__init__.py",
+        "functions": [],
+        "classes": [],
+        "imports": [],
+        "decorators": [],
+        "calls": []
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py",
+        "functions": [
+            {
+                "name": "test_read_item",
+                "start_line": 27,
+                "end_line": 27
+            },
+            {
+                "name": "test_create_item",
+                "start_line": 10,
+                "end_line": 10
+            },
+            {
+                "name": "test_read_item_not_enough_permissions",
+                "start_line": 55,
+                "end_line": 55
+            },
+            {
+                "name": "test_update_item",
+                "start_line": 82,
+                "end_line": 82
+            },
+            {
+                "name": "test_update_item_not_found",
+                "start_line": 100,
+                "end_line": 100
+            },
+            {
+                "name": "test_update_item_not_enough_permissions",
+                "start_line": 114,
+                "end_line": 114
+            },
+            {
+                "name": "test_delete_item",
+                "start_line": 129,
+                "end_line": 129
+            },
+            {
+                "name": "test_delete_item_not_found",
+                "start_line": 142,
+                "end_line": 142
+            },
+            {
+                "name": "test_delete_item_not_enough_permissions",
+                "start_line": 154,
+                "end_line": 154
+            },
+            {
+                "name": "test_read_items",
+                "start_line": 68,
+                "end_line": 68
+            },
+            {
+                "name": "test_read_item_not_found",
+                "start_line": 43,
+                "end_line": 43
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "import uuid",
+                "start_line": 1
+            },
+            {
+                "statement": "from app.core.config import settings",
+                "start_line": 6
+            },
+            {
+                "statement": "from fastapi.testclient import TestClient",
+                "start_line": 3
+            },
+            {
+                "statement": "from tests.utils.item import create_random_item",
+                "start_line": 7
+            },
+            {
+                "statement": "from sqlmodel import Session",
+                "start_line": 4
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "create_random_item",
+                "start_line": 30
+            },
+            {
+                "name": "str",
+                "start_line": 40
+            },
+            {
+                "name": "create_random_item",
+                "start_line": 71
+            },
+            {
+                "name": "str",
+                "start_line": 39
+            },
+            {
+                "name": "create_random_item",
+                "start_line": 58
+            },
+            {
+                "name": "create_random_item",
+                "start_line": 72
+            },
+            {
+                "name": "len",
+                "start_line": 79
+            },
+            {
+                "name": "create_random_item",
+                "start_line": 85
+            },
+            {
+                "name": "str",
+                "start_line": 96
+            },
+            {
+                "name": "str",
+                "start_line": 97
+            },
+            {
+                "name": "create_random_item",
+                "start_line": 117
+            },
+            {
+                "name": "create_random_item",
+                "start_line": 132
+            },
+            {
+                "name": "create_random_item",
+                "start_line": 157
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_login.py",
+        "functions": [
+            {
+                "name": "test_get_access_token_incorrect_password",
+                "start_line": 28,
+                "end_line": 28
+            },
+            {
+                "name": "test_get_access_token",
+                "start_line": 16,
+                "end_line": 16
+            },
+            {
+                "name": "test_recovery_password",
+                "start_line": 49,
+                "end_line": 49
+            },
+            {
+                "name": "test_reset_password",
+                "start_line": 82,
+                "end_line": 82
+            },
+            {
+                "name": "test_reset_password_invalid_token",
+                "start_line": 113,
+                "end_line": 113
+            },
+            {
+                "name": "test_login_with_bcrypt_password_upgrades_to_argon2",
+                "start_line": 129,
+                "end_line": 129
+            },
+            {
+                "name": "test_login_with_argon2_password_keeps_hash",
+                "start_line": 165,
+                "end_line": 165
+            },
+            {
+                "name": "test_recovery_password_user_not_exits",
+                "start_line": 67,
+                "end_line": 67
+            },
+            {
+                "name": "test_use_access_token",
+                "start_line": 37,
+                "end_line": 37
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from unittest.mock import patch",
+                "start_line": 1
+            },
+            {
+                "statement": "from sqlmodel import Session",
+                "start_line": 5
+            },
+            {
+                "statement": "from fastapi.testclient import TestClient",
+                "start_line": 3
+            },
+            {
+                "statement": "from app.core.config import settings",
+                "start_line": 7
+            },
+            {
+                "statement": "from pwdlib.hashers.bcrypt import BcryptHasher",
+                "start_line": 4
+            },
+            {
+                "statement": "from app.core.security import get_password_hash, verify_password",
+                "start_line": 8
+            },
+            {
+                "statement": "from app.crud import create_user",
+                "start_line": 9
+            },
+            {
+                "statement": "from app.models import User, UserCreate",
+                "start_line": 10
+            },
+            {
+                "statement": "from app.utils import generate_password_reset_token",
+                "start_line": 11
+            },
+            {
+                "statement": "from tests.utils.user import user_authentication_headers",
+                "start_line": 12
+            },
+            {
+                "statement": "from tests.utils.utils import random_email, random_lower_string",
+                "start_line": 13
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "random_lower_string",
+                "start_line": 84
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 134
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 168
+            },
+            {
+                "name": "get_password_hash",
+                "start_line": 171
+            },
+            {
+                "name": "BcryptHasher",
+                "start_line": 137
+            },
+            {
+                "name": "patch",
+                "start_line": 53
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 87
+            },
+            {
+                "name": "verify_password",
+                "start_line": 109
+            },
+            {
+                "name": "random_email",
+                "start_line": 167
+            },
+            {
+                "name": "User",
+                "start_line": 175
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 85
+            },
+            {
+                "name": "generate_password_reset_token",
+                "start_line": 95
+            },
+            {
+                "name": "user_authentication_headers",
+                "start_line": 96
+            },
+            {
+                "name": "User",
+                "start_line": 141
+            },
+            {
+                "name": "verify_password",
+                "start_line": 159
+            },
+            {
+                "name": "random_email",
+                "start_line": 83
+            },
+            {
+                "name": "patch",
+                "start_line": 54
+            },
+            {
+                "name": "create_user",
+                "start_line": 94
+            },
+            {
+                "name": "random_email",
+                "start_line": 133
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_private.py",
+        "functions": [
+            {
+                "name": "test_create_user",
+                "start_line": 8,
+                "end_line": 8
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from fastapi.testclient import TestClient",
+                "start_line": 1
+            },
+            {
+                "statement": "from sqlmodel import Session, select",
+                "start_line": 2
+            },
+            {
+                "statement": "from app.core.config import settings",
+                "start_line": 4
+            },
+            {
+                "statement": "from app.models import User",
+                "start_line": 5
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "select",
+                "start_line": 22
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+        "functions": [
+            {
+                "name": "test_update_user",
+                "start_line": 358,
+                "end_line": 358
+            },
+            {
+                "name": "test_create_user_new_email",
+                "start_line": 37,
+                "end_line": 37
+            },
+            {
+                "name": "test_retrieve_users",
+                "start_line": 179,
+                "end_line": 179
+            },
+            {
+                "name": "test_delete_user_without_privileges",
+                "start_line": 508,
+                "end_line": 508
+            },
+            {
+                "name": "test_update_user_not_exists",
+                "start_line": 384,
+                "end_line": 384
+            },
+            {
+                "name": "test_register_user_already_exists_error",
+                "start_line": 342,
+                "end_line": 342
+            },
+            {
+                "name": "test_delete_user_current_super_user_error",
+                "start_line": 493,
+                "end_line": 493
+            },
+            {
+                "name": "test_create_user_by_normal_user",
+                "start_line": 165,
+                "end_line": 165
+            },
+            {
+                "name": "test_register_user",
+                "start_line": 319,
+                "end_line": 319
+            },
+            {
+                "name": "test_delete_user_not_found",
+                "start_line": 482,
+                "end_line": 482
+            },
+            {
+                "name": "test_get_users_normal_user_me",
+                "start_line": 26,
+                "end_line": 26
+            },
+            {
+                "name": "test_update_password_me_same_password_error",
+                "start_line": 300,
+                "end_line": 300
+            },
+            {
+                "name": "test_delete_user_super_user",
+                "start_line": 463,
+                "end_line": 463
+            },
+            {
+                "name": "test_get_users_superuser_me",
+                "start_line": 15,
+                "end_line": 15
+            },
+            {
+                "name": "test_get_non_existing_user_as_superuser",
+                "start_line": 79,
+                "end_line": 79
+            },
+            {
+                "name": "test_create_user_existing_username",
+                "start_line": 146,
+                "end_line": 146
+            },
+            {
+                "name": "test_update_user_me_email_exists",
+                "start_line": 282,
+                "end_line": 282
+            },
+            {
+                "name": "test_delete_user_me_as_superuser",
+                "start_line": 451,
+                "end_line": 451
+            },
+            {
+                "name": "test_get_existing_user_as_superuser",
+                "start_line": 60,
+                "end_line": 60
+            },
+            {
+                "name": "test_get_non_existing_user_permissions_error",
+                "start_line": 132,
+                "end_line": 132
+            },
+            {
+                "name": "test_update_password_me_incorrect_password",
+                "start_line": 267,
+                "end_line": 267
+            },
+            {
+                "name": "test_delete_user_me",
+                "start_line": 420,
+                "end_line": 420
+            },
+            {
+                "name": "test_get_existing_user_current_user",
+                "start_line": 90,
+                "end_line": 90
+            },
+            {
+                "name": "test_get_existing_user_permissions_error",
+                "start_line": 117,
+                "end_line": 117
+            },
+            {
+                "name": "test_update_password_me",
+                "start_line": 224,
+                "end_line": 224
+            },
+            {
+                "name": "test_update_user_email_exists",
+                "start_line": 397,
+                "end_line": 397
+            },
+            {
+                "name": "test_update_user_me",
+                "start_line": 201,
+                "end_line": 201
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "import uuid",
+                "start_line": 1
+            },
+            {
+                "statement": "from unittest.mock import patch",
+                "start_line": 2
+            },
+            {
+                "statement": "from fastapi.testclient import TestClient",
+                "start_line": 4
+            },
+            {
+                "statement": "from sqlmodel import Session, select",
+                "start_line": 5
+            },
+            {
+                "statement": "from app import crud",
+                "start_line": 7
+            },
+            {
+                "statement": "from app.core.config import settings",
+                "start_line": 8
+            },
+            {
+                "statement": "from app.core.security import verify_password",
+                "start_line": 9
+            },
+            {
+                "statement": "from app.models import User, UserCreate",
+                "start_line": 10
+            },
+            {
+                "statement": "from tests.utils.user import create_random_user",
+                "start_line": 11
+            },
+            {
+                "statement": "from tests.utils.utils import random_email, random_lower_string",
+                "start_line": 12
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "random_lower_string",
+                "start_line": 46
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 64
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 65
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 151
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 184
+            },
+            {
+                "name": "random_email",
+                "start_line": 205
+            },
+            {
+                "name": "verify_password",
+                "start_line": 261
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 286
+            },
+            {
+                "name": "random_email",
+                "start_line": 320
+            },
+            {
+                "name": "verify_password",
+                "start_line": 338
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 401
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 406
+            },
+            {
+                "name": "select",
+                "start_line": 478
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 362
+            },
+            {
+                "name": "random_email",
+                "start_line": 45
+            },
+            {
+                "name": "patch",
+                "start_line": 42
+            },
+            {
+                "name": "patch",
+                "start_line": 43
+            },
+            {
+                "name": "random_email",
+                "start_line": 168
+            },
+            {
+                "name": "random_email",
+                "start_line": 182
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 152
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 188
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 227
+            },
+            {
+                "name": "select",
+                "start_line": 241
+            },
+            {
+                "name": "verify_password",
+                "start_line": 245
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 402
+            },
+            {
+                "name": "random_email",
+                "start_line": 466
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 321
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 363
+            },
+            {
+                "name": "random_email",
+                "start_line": 421
+            },
+            {
+                "name": "random_email",
+                "start_line": 63
+            },
+            {
+                "name": "random_email",
+                "start_line": 91
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 183
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 93
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 287
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 344
+            },
+            {
+                "name": "random_email",
+                "start_line": 361
+            },
+            {
+                "name": "random_email",
+                "start_line": 400
+            },
+            {
+                "name": "random_email",
+                "start_line": 405
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 407
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 270
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 422
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 467
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 512
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 468
+            },
+            {
+                "name": "random_email",
+                "start_line": 511
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 343
+            },
+            {
+                "name": "select",
+                "start_line": 377
+            },
+            {
+                "name": "patch",
+                "start_line": 41
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 92
+            },
+            {
+                "name": "create_random_user",
+                "start_line": 122
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 169
+            },
+            {
+                "name": "random_email",
+                "start_line": 149
+            },
+            {
+                "name": "random_email",
+                "start_line": 187
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 189
+            },
+            {
+                "name": "len",
+                "start_line": 195
+            },
+            {
+                "name": "select",
+                "start_line": 217
+            },
+            {
+                "name": "random_email",
+                "start_line": 285
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 423
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 513
+            },
+            {
+                "name": "select",
+                "start_line": 333
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 322
+            },
+            {
+                "name": "select",
+                "start_line": 446
+            },
+            {
+                "name": "select",
+                "start_line": 443
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\__init__.py",
+        "functions": [],
+        "classes": [],
+        "imports": [],
+        "decorators": [],
+        "calls": []
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py",
+        "functions": [
+            {
+                "name": "test_create_user",
+                "start_line": 11,
+                "end_line": 11
+            },
+            {
+                "name": "test_not_authenticate_user",
+                "start_line": 30,
+                "end_line": 30
+            },
+            {
+                "name": "test_check_if_user_is_active_inactive",
+                "start_line": 45,
+                "end_line": 45
+            },
+            {
+                "name": "test_check_if_user_is_superuser",
+                "start_line": 53,
+                "end_line": 53
+            },
+            {
+                "name": "test_check_if_user_is_superuser_normal_user",
+                "start_line": 61,
+                "end_line": 61
+            },
+            {
+                "name": "test_get_user",
+                "start_line": 69,
+                "end_line": 69
+            },
+            {
+                "name": "test_update_user",
+                "start_line": 80,
+                "end_line": 80
+            },
+            {
+                "name": "test_authenticate_user_with_bcrypt_upgrades_to_argon2",
+                "start_line": 96,
+                "end_line": 96
+            },
+            {
+                "name": "test_check_if_user_is_active",
+                "start_line": 37,
+                "end_line": 37
+            },
+            {
+                "name": "test_authenticate_user",
+                "start_line": 20,
+                "end_line": 20
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from fastapi.encoders import jsonable_encoder",
+                "start_line": 1
+            },
+            {
+                "statement": "from app.core.security import verify_password",
+                "start_line": 6
+            },
+            {
+                "statement": "from pwdlib.hashers.bcrypt import BcryptHasher",
+                "start_line": 2
+            },
+            {
+                "statement": "from app import crud",
+                "start_line": 5
+            },
+            {
+                "statement": "from sqlmodel import Session",
+                "start_line": 3
+            },
+            {
+                "statement": "from app.models import User, UserCreate, UserUpdate",
+                "start_line": 7
+            },
+            {
+                "statement": "from tests.utils.utils import random_email, random_lower_string",
+                "start_line": 8
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "UserCreate",
+                "start_line": 14
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 23
+            },
+            {
+                "name": "random_email",
+                "start_line": 82
+            },
+            {
+                "name": "random_email",
+                "start_line": 98
+            },
+            {
+                "name": "User",
+                "start_line": 107
+            },
+            {
+                "name": "random_email",
+                "start_line": 12
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 32
+            },
+            {
+                "name": "random_email",
+                "start_line": 38
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 47
+            },
+            {
+                "name": "random_email",
+                "start_line": 54
+            },
+            {
+                "name": "random_email",
+                "start_line": 46
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 40
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 48
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 56
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 63
+            },
+            {
+                "name": "random_email",
+                "start_line": 21
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 13
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 39
+            },
+            {
+                "name": "random_email",
+                "start_line": 62
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 70
+            },
+            {
+                "name": "jsonable_encoder",
+                "start_line": 77
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 81
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 83
+            },
+            {
+                "name": "BcryptHasher",
+                "start_line": 102
+            },
+            {
+                "name": "random_email",
+                "start_line": 71
+            },
+            {
+                "name": "verify_password",
+                "start_line": 92
+            },
+            {
+                "name": "hasattr",
+                "start_line": 17
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 22
+            },
+            {
+                "name": "random_email",
+                "start_line": 31
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 55
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 64
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 72
+            },
+            {
+                "name": "jsonable_encoder",
+                "start_line": 77
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 85
+            },
+            {
+                "name": "UserUpdate",
+                "start_line": 86
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 99
+            },
+            {
+                "name": "verify_password",
+                "start_line": 125
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\__init__.py",
+        "functions": [],
+        "classes": [],
+        "imports": [],
+        "decorators": [],
+        "calls": []
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\scripts\\test_backend_pre_start.py",
+        "functions": [
+            {
+                "name": "test_init_successful_connection",
+                "start_line": 8,
+                "end_line": 8
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from unittest.mock import MagicMock, patch",
+                "start_line": 1
+            },
+            {
+                "statement": "from app.backend_pre_start import init, logger",
+                "start_line": 5
+            },
+            {
+                "statement": "from sqlmodel import select",
+                "start_line": 3
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "MagicMock",
+                "start_line": 9
+            },
+            {
+                "name": "select",
+                "start_line": 14
+            },
+            {
+                "name": "patch",
+                "start_line": 17
+            },
+            {
+                "name": "MagicMock",
+                "start_line": 11
+            },
+            {
+                "name": "patch",
+                "start_line": 18
+            },
+            {
+                "name": "init",
+                "start_line": 24
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\scripts\\test_test_pre_start.py",
+        "functions": [
+            {
+                "name": "test_init_successful_connection",
+                "start_line": 8,
+                "end_line": 8
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from unittest.mock import MagicMock, patch",
+                "start_line": 1
+            },
+            {
+                "statement": "from app.tests_pre_start import init, logger",
+                "start_line": 5
+            },
+            {
+                "statement": "from sqlmodel import select",
+                "start_line": 3
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "MagicMock",
+                "start_line": 9
+            },
+            {
+                "name": "patch",
+                "start_line": 18
+            },
+            {
+                "name": "select",
+                "start_line": 14
+            },
+            {
+                "name": "MagicMock",
+                "start_line": 11
+            },
+            {
+                "name": "patch",
+                "start_line": 17
+            },
+            {
+                "name": "init",
+                "start_line": 24
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\scripts\\__init__.py",
+        "functions": [],
+        "classes": [],
+        "imports": [],
+        "decorators": [],
+        "calls": []
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\utils\\item.py",
+        "functions": [
+            {
+                "name": "create_random_item",
+                "start_line": 9,
+                "end_line": 9
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from sqlmodel import Session",
+                "start_line": 1
+            },
+            {
+                "statement": "from tests.utils.user import create_random_user",
+                "start_line": 5
+            },
+            {
+                "statement": "from app import crud",
+                "start_line": 3
+            },
+            {
+                "statement": "from app.models import Item, ItemCreate",
+                "start_line": 4
+            },
+            {
+                "statement": "from tests.utils.utils import random_lower_string",
+                "start_line": 6
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "create_random_user",
+                "start_line": 10
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 14
+            },
+            {
+                "name": "ItemCreate",
+                "start_line": 15
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 13
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\utils\\user.py",
+        "functions": [
+            {
+                "name": "user_authentication_headers",
+                "start_line": 10,
+                "end_line": 10
+            },
+            {
+                "name": "create_random_user",
+                "start_line": 22,
+                "end_line": 22
+            },
+            {
+                "name": "authentication_token_from_email",
+                "start_line": 30,
+                "end_line": 30
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from fastapi.testclient import TestClient",
+                "start_line": 1
+            },
+            {
+                "statement": "from app.core.config import settings",
+                "start_line": 5
+            },
+            {
+                "statement": "from sqlmodel import Session",
+                "start_line": 2
+            },
+            {
+                "statement": "from app.models import User, UserCreate, UserUpdate",
+                "start_line": 6
+            },
+            {
+                "statement": "from app import crud",
+                "start_line": 4
+            },
+            {
+                "statement": "from tests.utils.utils import random_email, random_lower_string",
+                "start_line": 7
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "random_email",
+                "start_line": 23
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 41
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 24
+            },
+            {
+                "name": "UserCreate",
+                "start_line": 25
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 38
+            },
+            {
+                "name": "UserUpdate",
+                "start_line": 44
+            },
+            {
+                "name": "Exception",
+                "start_line": 46
+            },
+            {
+                "name": "user_authentication_headers",
+                "start_line": 49
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\utils\\utils.py",
+        "functions": [
+            {
+                "name": "random_lower_string",
+                "start_line": 9,
+                "end_line": 9
+            },
+            {
+                "name": "random_email",
+                "start_line": 13,
+                "end_line": 13
+            },
+            {
+                "name": "get_superuser_token_headers",
+                "start_line": 17,
+                "end_line": 17
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "import random",
+                "start_line": 1
+            },
+            {
+                "statement": "from app.core.config import settings",
+                "start_line": 6
+            },
+            {
+                "statement": "import string",
+                "start_line": 2
+            },
+            {
+                "statement": "from fastapi.testclient import TestClient",
+                "start_line": 4
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "random_lower_string",
+                "start_line": 14
+            },
+            {
+                "name": "random_lower_string",
+                "start_line": 14
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\utils\\__init__.py",
+        "functions": [],
+        "classes": [],
+        "imports": [],
+        "decorators": [],
+        "calls": []
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\hooks\\post_gen_project.py",
+        "functions": [],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "from pathlib import Path",
+                "start_line": 1
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "Path",
+                "start_line": 5
+            }
+        ]
+    },
+    {
+        "file": "sample_repos\\full-stack-fastapi-template\\scripts\\add_latest_release_date.py",
+        "functions": [
+            {
+                "name": "main",
+                "start_line": 11,
+                "end_line": 11
+            }
+        ],
+        "classes": [],
+        "imports": [
+            {
+                "statement": "import re",
+                "start_line": 3
+            },
+            {
+                "statement": "import sys",
+                "start_line": 4
+            },
+            {
+                "statement": "from datetime import date",
+                "start_line": 5
+            }
+        ],
+        "decorators": [],
+        "calls": [
+            {
+                "name": "open",
+                "start_line": 12
+            },
+            {
+                "name": "print",
+                "start_line": 24
+            },
+            {
+                "name": "open",
+                "start_line": 31
+            },
+            {
+                "name": "enumerate",
+                "start_line": 15
+            },
+            {
+                "name": "print",
+                "start_line": 29
+            },
+            {
+                "name": "print",
+                "start_line": 35
+            },
+            {
+                "name": "main",
+                "start_line": 40
+            }
+        ]
+    }
+]
