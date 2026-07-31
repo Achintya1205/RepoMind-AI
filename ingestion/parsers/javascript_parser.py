@@ -54,11 +54,16 @@ class JavascriptParser:
                 {
                     "name": source[name_node.start_byte:name_node.end_byte].decode(),
                     "start_line": function_node.start_point[0] + 1,
-                    "end_line": function_node.end_point[0] + 1
+                    "end_line": function_node.end_point[0] + 1,
+                    "start_byte": function_node.start_byte,
+                    "end_byte": function_node.end_byte,
+                    "code": source[function_node.start_byte:function_node.end_byte].decode()
                 }
             )
 
+
         return functions
+
     def extract_arrow_functions(self, tree, source):
 
         cursor = QueryCursor(self.query)
@@ -77,7 +82,10 @@ class JavascriptParser:
                 {
                     "name": source[name_node.start_byte:name_node.end_byte].decode(),
                     "start_line": arrow_node.start_point[0] + 1,
-                    "end_line": arrow_node.end_point[0] + 1
+                    "end_line": arrow_node.end_point[0] + 1,
+                    "start_byte": arrow_node.start_byte,
+                    "end_byte": arrow_node.end_byte,
+                    "code": source[arrow_node.start_byte:arrow_node.end_byte].decode()
                 }
             )
 
@@ -101,7 +109,10 @@ class JavascriptParser:
                 {
                     "name": source[name_node.start_byte:name_node.end_byte].decode(),
                     "start_line": class_node.start_point[0] + 1,
-                    "end_line": class_node.end_point[0] + 1
+                    "end_line": class_node.end_point[0] + 1,
+                    "start_byte": class_node.start_byte,
+                    "end_byte": class_node.end_byte,
+                    "code": source[class_node.start_byte:class_node.end_byte].decode()
                 }
             )
 
