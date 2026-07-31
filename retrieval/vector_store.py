@@ -3,7 +3,7 @@ from pathlib import Path
 
 import chromadb
 
-from embedder import Embedder
+from retrieval.embedder import Embedder
 
 
 CHUNKS_PATH = Path(

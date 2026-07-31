@@ -1,7 +1,7 @@
 from sentence_transformers import CrossEncoder
 
-from vector_store import VectorStore
-from keyword_search import KeywordSearch
+from retrieval.vector_store import VectorStore
+from retrieval.keyword_search import KeywordSearch
 
 
 class HybridRetriever:
@@ -79,10 +79,18 @@ class HybridRetriever:
         )
 
 
+        ranked = sorted(
+            zip(candidates, scores),
+            key=lambda x:x[1],
+            reverse=True
+        )
+
+
         return [
-            {
-                "chunk": item[0],
-                "rerank_score": float(item[1])
-            }
-            for item in ranked[:k]
+        {
+            "chunk": chunk["content"],
+            "metadata": chunk["metadata"],
+            "rerank_score": float(score)
+        }
+        for chunk, score in ranked[:k]
         ]
