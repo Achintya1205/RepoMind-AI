@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
-from resolver import ImportResolver
+from ingestion.graph_builder.resolver import ImportResolver
+import pickle
+from pathlib import Path
 
 import networkx as nx
 
@@ -183,27 +185,21 @@ class DependencyGraphBuilder:
 
             self.add_import_edges(file_data)
 
-
             for function in file_data.get("functions", []):
-                self.add_function_node(
-                    file_path,
-                    function
-                )
+                self.add_function_node(file_path, function)
 
             for function in file_data.get("arrow_functions", []):
-                self.add_function_node(
-                    file_path,
-                    function
-                )
+                self.add_function_node(file_path, function)
 
             for cls in file_data.get("classes", []):
-                self.add_class_node(
-                    file_path,
-                    cls
-                )
+                self.add_class_node(file_path, cls)
 
             self.add_call_edges(file_data)
 
-        return self.graph
+        Path("graph_output").mkdir(exist_ok=True)
 
+        with open("graph_output/dependency_graph.pkl", "wb") as f:
+            pickle.dump(self.graph, f)
+
+        return self.graph
     

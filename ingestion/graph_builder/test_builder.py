@@ -1,8 +1,8 @@
 from pathlib import Path
 from collections import Counter
 
-from builder import DependencyGraphBuilder
-from graph_io import save_graph
+from ingestion.graph_builder.builder import DependencyGraphBuilder
+from ingestion.graph_builder.graph_io import save_graph
 
 
 builder = DependencyGraphBuilder(
