@@ -31,6 +31,20 @@ class GraphTool:
 
         return callers
 
+    def has_call_edge(self, caller, callee):
+
+        caller_node = self.get_node(caller)
+        callee_node = self.get_node(callee)
+
+        if not caller_node or not callee_node:
+            return False
+
+
+        return self.graph.has_edge(
+            caller_node,
+            callee_node
+        )
+
     def impact(self, symbol):
 
         node = self.get_node(symbol)
