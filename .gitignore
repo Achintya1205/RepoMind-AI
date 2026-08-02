@@ -61,4 +61,5 @@ embeddings/
 coverage/
 .pytest_cache/
 
+# Chroma vector database
 chroma_db/
