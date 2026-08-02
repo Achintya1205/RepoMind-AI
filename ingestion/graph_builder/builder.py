@@ -67,37 +67,38 @@ class DependencyGraphBuilder:
 
         current_file = file_data["file"]
 
-        functions_in_file = [
-            name
-            for (file, name)
-            in self.function_nodes.keys()
-            if file == current_file
-        ]
-
         for call in file_data.get("calls", []):
 
-            call_name = call["name"]
+            caller_name = call.get("caller")
 
-            # handle object.method()
-            if "." in call_name:
-                call_name = call_name.split(".")[-1]
+            callee_name = call.get("name")
+
+            if caller_name is None:
+                continue
 
 
-            for function_name in functions_in_file:
+            caller_id = self.function_nodes.get(
+                (
+                    current_file,
+                    caller_name
+                )
+            )
 
-                if function_name == call_name:
+            callee_id = self.function_nodes.get(
+                (
+                    current_file,
+                    callee_name
+                )
+            )
 
-                    caller = current_file
 
-                    callee = self.function_nodes[
-                        (current_file, function_name)
-                    ]
+            if (caller_id and callee_id and caller_id != callee_id):
 
-                    self.graph.add_edge(
-                        caller,
-                        callee,
-                        edge_type="CALLS"
-                    )
+                self.graph.add_edge(
+                    caller_id,
+                    callee_id,
+                    edge_type="CALLS"
+                )
 
     def add_import_edges(self, file_data):
 

@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from retrieval.reranker import rerank
 
 import chromadb
 
@@ -36,6 +37,11 @@ class VectorStore:
 
             chunks = json.load(f)
 
+            print(
+                "Sample metadata:",
+                chunks[0]["metadata"]
+            )
+
 
         for i, chunk in enumerate(chunks):
 
@@ -43,15 +49,27 @@ class VectorStore:
                 chunk["content"]
             ).tolist()
 
+
+            # Remove None values before storing in Chroma
+            metadata = {
+                k: v
+                for k, v in chunk["metadata"].items()
+                if v is not None
+            }
+
+
             self.collection.add(
                 ids=[str(i)],
                 embeddings=[embedding],
                 documents=[chunk["content"]],
-                metadatas=[chunk["metadata"]]
+                metadatas=[metadata]
             )
 
 
-        print(f"Indexed {len(chunks)} chunks")
+        print(
+            f"Indexed {len(chunks)} chunks"
+        )
+
 
     def search(self, query, k=5):
 
@@ -62,14 +80,24 @@ class VectorStore:
 
         results = self.collection.query(
             query_embeddings=[query_embedding],
-            n_results=k
+            n_results=15
+        )
+
+        print(
+            "Retrieved metadata:"
+        )
+
+        print(
+            results["metadatas"][0]
         )
 
 
         output = []
 
 
-        for i in range(len(results["documents"][0])):
+        for i in range(
+            len(results["documents"][0])
+        ):
 
             output.append(
                 {
@@ -80,13 +108,18 @@ class VectorStore:
             )
 
 
-        return output
+        return rerank(
+            output,
+            query
+        )[:k]
+
 
 if __name__ == "__main__":
 
     store = VectorStore()
 
     store.index_chunks()
+
 
     results = store.search(
         "Where is authentication implemented?",
@@ -95,6 +128,13 @@ if __name__ == "__main__":
 
 
     for result in results:
+
         print("\n----------------")
-        print(result["metadata"])
-        print(result["distance"])
+
+        print(
+            result["metadata"]
+        )
+
+        print(
+            result["distance"]
+        )

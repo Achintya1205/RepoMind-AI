@@ -7,22 +7,6 @@ class ImportResolver:
 
         self.repo_root = Path(repo_root)
 
-    def resolve_python_import(self, current_file, import_path):
-
-        module_path = import_path.replace(".", "/")
-
-        candidates = [
-            self.repo_root / f"{module_path}.py",
-            self.repo_root / module_path / "__init__.py"
-        ]
-
-        for candidate in candidates:
-
-            if candidate.exists():
-                return str(candidate)
-
-        return None
-
     def extract_import_path(self, statement):
 
         if "from" in statement:

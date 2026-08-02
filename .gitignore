@@ -60,3 +60,5 @@ embeddings/
 # Test outputs
 coverage/
 .pytest_cache/
+
+chroma_db/

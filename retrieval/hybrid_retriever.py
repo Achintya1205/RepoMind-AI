@@ -49,11 +49,10 @@ class HybridRetriever:
                 seen.add(key)
                 unique_candidates.append(chunk)
 
-                candidates = unique_candidates
 
+        candidates = unique_candidates
 
-        # remove duplicate chunks later
-
+        # remove duplicate chunks
 
         pairs = []
 

@@ -24,13 +24,16 @@ print("Nodes:", graph.number_of_nodes())
 print("Edges:", graph.number_of_edges())
 
 
-print("\nCALL EDGES:\n")
+print("\nCALL EDGES")
 
 for u, v, data in graph.edges(data=True):
 
     if data.get("edge_type") == "CALLS":
-        print(u, "----CALLS---->", v)
-
+        print(
+            u,
+            "----CALLS---->",
+            v
+        )
 
 
 print("\nEdge types:")

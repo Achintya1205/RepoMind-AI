@@ -29,7 +29,7 @@ class RouterNode:
                 "overview"
             ]
         ):
-            state["current_agent"] = "architecture"
+            state["current_agent"] = "qa"
 
 
         elif any(
@@ -67,8 +67,13 @@ class RouterNode:
 
 
         else:
-
             state["current_agent"] = "qa"
 
-
         return state
+
+
+router = RouterNode()
+
+
+def route_query(state):
+    return router.route(state)

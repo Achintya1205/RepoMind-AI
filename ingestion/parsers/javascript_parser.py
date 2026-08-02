@@ -155,7 +155,8 @@ class JavascriptParser:
             )
 
         return exports
-    def extract_calls(self, tree, source):
+            
+    def extract_calls(self, tree, source, functions):
 
         cursor = QueryCursor(self.query)
 
@@ -165,15 +166,26 @@ class JavascriptParser:
 
         for node in captures.get("call.name", []):
 
+            caller = None
+
+            for function in functions:
+
+                if (
+                    function["start_byte"] <= node.start_byte
+                    <= function["end_byte"]
+                ):
+                    caller = function["name"]
+                    break
+
             calls.append(
                 {
                     "name": source[node.start_byte:node.end_byte].decode(),
+                    "caller": caller,
                     "start_line": node.start_point[0] + 1
                 }
             )
 
         return calls
-
     def extract_jsx(self, tree, source):
 
         cursor = QueryCursor(self.query)
@@ -198,9 +210,16 @@ class JavascriptParser:
 
         tree, source = self.parse_file(file_path)
 
-        functions = self.extract_functions(
-            tree,
-            source
+        functions = (
+            self.extract_functions(
+                tree,
+                source
+            )
+            +
+            self.extract_arrow_functions(
+                tree,
+                source
+            )
         )
         classes = self.extract_classes(
            tree,
@@ -216,8 +235,9 @@ class JavascriptParser:
             source
         )
         calls = self.extract_calls(
-            tree, 
-            source
+            tree,
+            source,
+            functions
         )
         arrows = self.extract_arrow_functions(
             tree,
