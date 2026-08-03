@@ -3,6 +3,10 @@ from langgraph.graph import StateGraph, START, END
 from agents.state import AgentState
 from agents.router import route_query
 
+from agents.synthesizer import Synthesizer
+
+synthesizer = Synthesizer()
+
 def qa_node(state: AgentState):
 
     print("QA Agent")
@@ -52,7 +56,20 @@ def verifier_node(state: AgentState):
 
     print("Verifier")
 
-    return state
+    return {
+        "verified": {
+            "passed": True,
+            "reasons": []
+        }
+    }
+
+def synthesizer_node(state: AgentState):
+
+    print("Synthesizer")
+
+    return {
+        "final_answer": synthesizer.format(state)
+    }
 
 workflow = StateGraph(AgentState)
 workflow.add_node("router", route_query)
@@ -79,6 +96,10 @@ workflow.add_conditional_edges(
         "docs": "docs"
     }
 )
+workflow.add_node(
+    "synthesizer",
+    synthesizer_node
+)
 
 workflow.add_edge("qa", "verifier")
 workflow.add_edge("debug", "verifier")
@@ -86,6 +107,14 @@ workflow.add_edge("impact", "verifier")
 workflow.add_edge("refactor", "verifier")
 workflow.add_edge("docs", "verifier")
 
-workflow.add_edge("verifier", END)
+workflow.add_edge(
+    "verifier",
+    "synthesizer"
+)
+
+workflow.add_edge(
+    "synthesizer",
+    END
+)
 
 app = workflow.compile()

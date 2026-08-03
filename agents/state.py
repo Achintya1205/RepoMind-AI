@@ -19,3 +19,11 @@ class AgentState(TypedDict):
 
     # final response
     answer: str
+
+    # verification
+    verified: Dict[str, Any]
+
+    # synthesizer output
+    final_answer: Dict[str, Any]
+
+    metadata: List[Dict[str, Any]]
