@@ -5,9 +5,10 @@ from agents.router import route_query
 
 from agents.synthesizer import Synthesizer
 from agents.architecture.architecture_agent import ArchitectureAgent
+from agents.debug.debug_agent import DebugAgent
 
+debug_agent = DebugAgent()
 architecture_agent = ArchitectureAgent()
-
 synthesizer = Synthesizer()
 
 def qa_node(state: AgentState):
@@ -33,8 +34,13 @@ def debug_node(state: AgentState):
 
     print("Debugger")
 
+    result = debug_agent.analyze(
+        state["query"]
+    )
+
     return {
-        "answer": "Handled by Debugger"
+        "answer": result["explanation"],
+        "metadata": result
     }
 
 

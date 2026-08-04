@@ -5,21 +5,38 @@ class RouterNode:
 
         query = state["query"].lower()
 
-
         if any(
+            word in query
+            for word in [
+                "traceback",
+                "stack trace",
+                "exception",
+                "error:",
+                "bug",
+                "error",
+                "issue",
+                "fix"
+            ]
+        ):
+            state["current_agent"] = "debug"
+
+
+        # Impact analysis
+        elif any(
             word in query
             for word in [
                 "break",
                 "impact",
                 "depend",
-                "call",
                 "caller",
-                "dependency"
+                "dependency",
+                "calls"
             ]
         ):
             state["current_agent"] = "impact_analysis"
 
 
+        # Architecture
         elif any(
             word in query
             for word in [
@@ -32,18 +49,7 @@ class RouterNode:
             state["current_agent"] = "architecture"
 
 
-        elif any(
-            word in query
-            for word in [
-                "bug",
-                "error",
-                "issue",
-                "fix"
-            ]
-        ):
-            state["current_agent"] = "debug"
-
-
+        # Refactoring
         elif any(
             word in query
             for word in [
@@ -55,21 +61,24 @@ class RouterNode:
             state["current_agent"] = "refactor"
 
 
+        # Documentation
         elif any(
             word in query
             for word in [
                 "documentation",
-                "docs",
-                "explain"
+                "docs"
             ]
         ):
             state["current_agent"] = "docs"
 
 
+        # General questions
         else:
             state["current_agent"] = "qa"
 
+
         return state
+
 
 
 router = RouterNode()
