@@ -29,7 +29,7 @@ class RouterNode:
                 "overview"
             ]
         ):
-            state["current_agent"] = "qa"
+            state["current_agent"] = "architecture"
 
 
         elif any(

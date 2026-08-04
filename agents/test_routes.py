@@ -5,6 +5,7 @@ queries = [
     "Where is authentication implemented?",
     "What breaks if sendToClient changes?",
     "How can I refactor this function?",
+    "Explain repository architecture"
 ]
 
 

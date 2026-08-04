@@ -13,7 +13,7 @@ def rerank(results, query):
         name = metadata.get("name", "").lower()
 
 
-        # Start with semantic similarity
+        # semantic similarity
         score = 1 - item["distance"]
 
 

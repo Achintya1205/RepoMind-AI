@@ -4,6 +4,9 @@ from agents.state import AgentState
 from agents.router import route_query
 
 from agents.synthesizer import Synthesizer
+from agents.architecture.architecture_agent import ArchitectureAgent
+
+architecture_agent = ArchitectureAgent()
 
 synthesizer = Synthesizer()
 
@@ -15,6 +18,16 @@ def qa_node(state: AgentState):
         "answer": "Handled by QA agent"
     }
 
+def architecture_node(state: AgentState):
+
+    print("Architecture Agent")
+
+    result = architecture_agent.analyze()
+
+    return {
+        "answer": result["explanation"],
+        "metadata": result["summary"]
+    }
 
 def debug_node(state: AgentState):
 
@@ -84,7 +97,6 @@ workflow.add_edge(
     START,
     "router"
 )
-
 workflow.add_conditional_edges(
     "router",
     lambda state: state["current_agent"],
@@ -93,7 +105,8 @@ workflow.add_conditional_edges(
         "debug": "debug",
         "impact_analysis": "impact",
         "refactor": "refactor",
-        "docs": "docs"
+        "docs": "docs",
+        "architecture": "architecture"
     }
 )
 workflow.add_node(
@@ -110,6 +123,14 @@ workflow.add_edge("docs", "verifier")
 workflow.add_edge(
     "verifier",
     "synthesizer"
+)
+workflow.add_node(
+    "architecture",
+    architecture_node
+)
+workflow.add_edge(
+    "architecture",
+    "verifier"
 )
 
 workflow.add_edge(
