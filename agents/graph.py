@@ -6,7 +6,9 @@ from agents.router import route_query
 from agents.synthesizer import Synthesizer
 from agents.architecture.architecture_agent import ArchitectureAgent
 from agents.debug.debug_agent import DebugAgent
+from agents.refactor.refactor_agent import RefactorAgent
 
+refactor_agent = RefactorAgent()
 debug_agent = DebugAgent()
 architecture_agent = ArchitectureAgent()
 synthesizer = Synthesizer()
@@ -53,12 +55,17 @@ def impact_node(state: AgentState):
     }
 
 
-def refactor_node(state: AgentState):
+def refactor_node(state):
 
     print("Refactor Planner")
 
+    result = refactor_agent.analyze(
+        "sendToClient"
+    )
+
     return {
-        "answer": "Handled by Refactor Planner"
+        "answer": result["plan"],
+        "metadata": result
     }
 
 
