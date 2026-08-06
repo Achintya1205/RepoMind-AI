@@ -84,7 +84,7 @@ class QAAgent:
             contents=user_message,
             config={
                 "system_instruction": SYSTEM_PROMPT,
-                "max_output_tokens": 800
+                "max_output_tokens": 1500
             }
         )
 

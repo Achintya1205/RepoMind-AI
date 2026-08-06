@@ -33,14 +33,14 @@ class TraceParser:
         # Javascript:
         # at login (src/auth.js:20:5)
         js_match = re.search(
-            r'at (.+) \((.+):(\d+):\d+\)',
+            r'at (.+) \((.+):(\d+)(?::\d+)?\)',
             trace
         )
 
 
         if js_match:
 
-            result["function"] = js_match.group(1)
+            result["function"] = js_match.group(1).split(".")[-1]
             result["file"] = js_match.group(2)
             result["line"] = int(js_match.group(3))
 

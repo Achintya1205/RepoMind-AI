@@ -4,9 +4,9 @@ from agents.impact_analyzer import ImpactAnalyzer
 class RefactorAgent:
 
 
-    def __init__(self):
+    def __init__(self, graph):
 
-        self.impact_analyzer = ImpactAnalyzer()
+        self.impact_analyzer = ImpactAnalyzer(graph)
 
 
     def analyze(self, symbol):
@@ -14,7 +14,7 @@ class RefactorAgent:
         impact = self.impact_analyzer.analyze(symbol)
 
 
-        affected = impact["affected_nodes"]
+        affected = impact["affected_files"]
 
 
         plan = self.generate_plan(

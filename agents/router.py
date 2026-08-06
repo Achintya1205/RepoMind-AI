@@ -1,43 +1,12 @@
 class RouterNode:
 
-
     def route(self, state):
 
         query = state["query"].lower()
 
-        if any(
-            word in query
-            for word in [
-                "traceback",
-                "stack trace",
-                "exception",
-                "error:",
-                "bug",
-                "error",
-                "issue",
-                "fix"
-            ]
-        ):
-            state["current_agent"] = "debug"
-
-
-        # Impact analysis
-        elif any(
-            word in query
-            for word in [
-                "break",
-                "impact",
-                "depend",
-                "caller",
-                "dependency",
-                "calls"
-            ]
-        ):
-            state["current_agent"] = "impact_analysis"
-
 
         # Architecture
-        elif any(
+        if any(
             word in query
             for word in [
                 "architecture",
@@ -49,40 +18,70 @@ class RouterNode:
             state["current_agent"] = "architecture"
 
 
-        # Refactoring
-        elif any(
-            word in query
-            for word in [
-                "refactor",
-                "clean",
-                "improve"
-            ]
-        ):
-            state["current_agent"] = "refactor"
-
-
         # Documentation
         elif any(
             word in query
             for word in [
                 "documentation",
-                "docs"
+                "docstring",
+                "readme",
+                "generate docs",
+                "document"
             ]
         ):
             state["current_agent"] = "docs"
 
 
-        # General questions
+        # Refactoring
+        elif any(
+            word in query
+            for word in [
+                "refactor",
+                "clean up",
+                "improve code"
+            ]
+        ):
+            state["current_agent"] = "refactor"
+
+
+        # Impact analysis
+        elif any(
+            word in query
+            for word in [
+                "impact",
+                "caller",
+                "dependency",
+                "depends on",
+                "what breaks",
+                "calls"
+            ]
+        ):
+            state["current_agent"] = "impact_analysis"
+
+
+        # Debugging
+        elif any(
+            word in query
+            for word in [
+                "traceback",
+                "stack trace",
+                "exception",
+                "error:",
+                "bug",
+                "runtime error",
+                "crash"
+            ]
+        ):
+            state["current_agent"] = "debug"
+
+
         else:
             state["current_agent"] = "qa"
 
 
         return state
 
-
-
 router = RouterNode()
-
 
 def route_query(state):
     return router.route(state)

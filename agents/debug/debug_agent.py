@@ -12,7 +12,8 @@ class DebugAgent:
 
 
     def analyze(self, trace):
-
+        print("TRACE RECEIVED:")
+        print(trace)
         parsed = self.parser.parse(trace)
 
 

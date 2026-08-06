@@ -1,26 +1,23 @@
-from agents.tools.graph_tool import GraphTool
-from agents.impact_explainer import ImpactExplainer
-
-
 class ImpactAnalyzer:
 
-    def __init__(self):
-        self.graph_tool = GraphTool()
-        self.explainer = ImpactExplainer()
+
+    def __init__(self, graph):
+        self.graph = graph
 
 
     def analyze(self, symbol):
 
-        impacted = self.graph_tool.impact(symbol)
+        callers = self.graph.impact(symbol)
 
-        result = {
-            "changed_symbol": symbol,
-            "impact_count": len(impacted),
-            "affected_nodes": impacted
+
+        return {
+            "symbol": symbol,
+            "affected_files": callers,
+            "impact": f"""
+Changing {symbol} may affect:
+
+{callers}
+
+Review these callers before modifying.
+"""
         }
-
-        result["explanation"] = (
-            self.explainer.explain(result)
-        )
-
-        return result

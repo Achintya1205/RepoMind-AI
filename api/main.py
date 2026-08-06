@@ -1,45 +1,45 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-from retrieval.hybrid_retriever import HybridRetriever
+from agents.graph import app
 
 
-app = FastAPI(
-    title="RepoMind AI"
+api = FastAPI(
+    title="RepoMind AI API"
 )
 
 
-retriever = HybridRetriever()
-
-
-class QueryRequest(BaseModel):
-
+class ChatRequest(BaseModel):
     query: str
-    k: int = 5
 
 
 
-@app.get("/")
-def home():
+@api.post("/chat")
+def chat(request: ChatRequest):
 
-    return {
-        "message": "RepoMind AI API running"
+    initial_state = {
+        "query": request.query,
+        "conversation_history": [],
+
+        "retrieved_chunks": [],
+        "graph_results": [],
+
+        "retry_count": 0,
+        "current_agent": "",
+
+        "answer": "",
+        "verified": {},
+
+        "final_answer": {},
+        "metadata": []
     }
 
 
-
-@app.post("/query")
-def query_repo(
-    request: QueryRequest
-):
-
-    results = retriever.hybrid_retrieve(
-        request.query,
-        request.k
-    )
+    result = app.invoke(initial_state)
 
 
     return {
-        "query": request.query,
-        "results": results
+        "answer": result.get("answer"),
+        "agent": result.get("current_agent"),
+        "citations": result.get("metadata")
     }

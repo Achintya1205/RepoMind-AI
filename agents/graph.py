@@ -1,14 +1,20 @@
 from langgraph.graph import StateGraph, START, END
-
+from agents.tools.graph_tool import GraphTool
+from agents.impact_analyzer import ImpactAnalyzer
 from agents.state import AgentState
 from agents.router import route_query
-
+from agents.qa.qa_agent import QAAgent
 from agents.synthesizer import Synthesizer
 from agents.architecture.architecture_agent import ArchitectureAgent
 from agents.debug.debug_agent import DebugAgent
 from agents.refactor.refactor_agent import RefactorAgent
+from agents.documentation import DocumentationGenerator
 
-refactor_agent = RefactorAgent()
+code_graph = GraphTool()
+qa_agent = QAAgent()
+doc_generator = DocumentationGenerator()
+refactor_agent = RefactorAgent(code_graph)
+impact_agent = ImpactAnalyzer(code_graph)
 debug_agent = DebugAgent()
 architecture_agent = ArchitectureAgent()
 synthesizer = Synthesizer()
@@ -17,8 +23,13 @@ def qa_node(state: AgentState):
 
     print("QA Agent")
 
+    result = qa_agent.answer(
+        state["query"]
+    )
+
     return {
-        "answer": "Handled by QA agent"
+        "answer": result["answer"],
+        "metadata": result["sources"]
     }
 
 def architecture_node(state: AgentState):
@@ -32,26 +43,34 @@ def architecture_node(state: AgentState):
         "metadata": result["summary"]
     }
 
-def debug_node(state: AgentState):
+def debug_node(state):
 
     print("Debugger")
 
-    result = debug_agent.analyze(
-        state["query"]
-    )
+    result = debug_agent.analyze(state["query"])
+
+    if "error" in result:
+        return {
+            "answer": result["error"],
+            "metadata": {}
+        }
 
     return {
         "answer": result["explanation"],
         "metadata": result
     }
 
-
 def impact_node(state: AgentState):
 
     print("Impact Analyzer")
 
+    result = impact_agent.analyze(
+        "sendToClient"
+    )
+
     return {
-        "answer": "Handled by Impact Analyzer"
+        "answer": result["impact"],
+        "metadata": result
     }
 
 
@@ -60,7 +79,7 @@ def refactor_node(state):
     print("Refactor Planner")
 
     result = refactor_agent.analyze(
-        "sendToClient"
+        "sendToClient"      
     )
 
     return {
@@ -69,23 +88,30 @@ def refactor_node(state):
     }
 
 
-def docs_node(state: AgentState):
+def docs_node(state):
 
     print("Docs Agent")
 
+    result = doc_generator.generate(
+        state["query"]
+    )
+
     return {
-        "answer": "Handled by Docs Agent"
+        "answer": result["documentation"],
+        "metadata": result["citations"]
     }
 
 
-def verifier_node(state: AgentState):
+def verifier_node(state):
 
-    print("Verifier")
+    passed = bool(
+        state.get("answer")
+    )
 
     return {
-        "verified": {
-            "passed": True,
-            "reasons": []
+        "verified":{
+            "passed":passed,
+            "reasons":[]
         }
     }
 
