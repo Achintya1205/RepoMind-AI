@@ -1,26 +1,53 @@
-export function streamMessage(
-    query:string,
-    onMessage:(data:any)=>void
+export async function streamMessage(
+    query: string,
+    onMessage: (data:any)=>void
 ){
 
-const eventSource = new EventSource(
-`http://127.0.0.1:8000/stream?query=${query}`
-);
+    const response = await fetch(
+        "http://127.0.0.1:8000/chat/stream",
+        {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                query
+            })
+        }
+    );
 
 
-eventSource.onmessage = (event)=>{
+    const reader = response.body?.getReader();
 
-    const data = JSON.parse(event.data);
-
-    onMessage(data);
-
-};
+    if(!reader) return;
 
 
-eventSource.onerror = ()=>{
+    const decoder = new TextDecoder();
 
-    eventSource.close();
 
-};
+    while(true){
 
+        const {done,value}=await reader.read();
+
+        if(done) break;
+
+
+        const chunk = decoder.decode(value);
+
+
+        chunk
+        .split("\n\n")
+        .forEach(event=>{
+
+            if(event.startsWith("data:")){
+
+                const data = JSON.parse(
+                    event.replace("data: ","")
+                );
+
+                onMessage(data);
+            }
+
+        });
+    }
 }

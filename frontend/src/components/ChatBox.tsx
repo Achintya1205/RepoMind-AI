@@ -1,37 +1,65 @@
 import { useState } from "react";
-import { sendMessage } from "../api/chat";
+import { streamMessage } from "../api/stream";
+
+export default function ChatBox() {
+
+    const [query, setQuery] = useState("");
+    const [messages, setMessages] = useState<any[]>([]);
+    const [citations, setCitations] = useState<any[]>([]);
 
 
-export default function ChatBox(){
+    function handleSend() {
 
-    const [query,setQuery] = useState("");
-    const [messages,setMessages] = useState<any[]>([]);
-
-
-    async function handleSend(){
-
-        if(!query.trim()) return;
+        if (!query.trim()) return;
 
 
-        setMessages(prev=>[
+        setMessages(prev => [
             ...prev,
             {
-                role:"user",
-                text:query
+                role: "user",
+                text: query
+            },
+            {
+                role: "assistant",
+                text: ""
             }
         ]);
 
 
-        const result = await sendMessage(query);
+        streamMessage(query, (data: any) => {
 
 
-        setMessages(prev=>[
-            ...prev,
-            {
-                role:"assistant",
-                text:result.answer
+            if (data.type === "answer") {
+
+                setMessages(prev => {
+
+                    const updated = [...prev];
+
+                    updated[updated.length - 1].text = data.message;
+
+                    return updated;
+                });
+
             }
-        ]);
+
+
+            if (data.type === "citations") {
+
+                setCitations(data.data);
+
+                console.log("Citations:", data.data);
+
+            }
+
+
+            if (data.type === "status" || data.type === "agent") {
+
+                console.log(data.message);
+
+            }
+
+
+        });
 
 
         setQuery("");
@@ -43,7 +71,7 @@ export default function ChatBox(){
         <div>
 
             {
-                messages.map((msg,index)=>(
+                messages.map((msg, index) => (
                     <div key={index}>
                         <b>{msg.role}</b>
                         <p>{msg.text}</p>
@@ -52,9 +80,18 @@ export default function ChatBox(){
             }
 
 
+            {
+                citations.map((c, index) => (
+                    <p key={index}>
+                        📄 {c.file}:{c.start_line}-{c.end_line}
+                    </p>
+                ))
+            }
+
+
             <input
                 value={query}
-                onChange={(e)=>setQuery(e.target.value)}
+                onChange={(e) => setQuery(e.target.value)}
                 placeholder="Ask about repository..."
             />
 
