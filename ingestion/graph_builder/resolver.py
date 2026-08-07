@@ -7,12 +7,22 @@ class ImportResolver:
 
         self.repo_root = Path(repo_root)
 
+
     def extract_import_path(self, statement):
 
         if "from" in statement:
-            return statement.split("from")[-1].strip().replace("'", "").replace('"', "").replace(";", "")
+
+            return (
+                statement
+                .split("from")[-1]
+                .strip()
+                .replace("'", "")
+                .replace('"', "")
+                .replace(";", "")
+            )
 
         return None
+
 
     def resolve_python_import(self, current_file, import_name):
 
@@ -20,8 +30,6 @@ class ImportResolver:
 
         possible_paths = []
 
-
-        # import utils
         module_path = import_name.replace(".", "/")
 
         possible_paths.append(
@@ -33,7 +41,6 @@ class ImportResolver:
         )
 
 
-        # check relative to current file
         for path in possible_paths:
 
             if path.exists():
@@ -49,15 +56,63 @@ class ImportResolver:
 
         current_file = Path(current_file)
 
-        if not import_path.startswith("."):
+
+        # ----------------------------
+        # Relative imports
+        # ./file
+        # ../file
+        # ----------------------------
+
+        if import_path.startswith("."):
+
+            base_path = (
+                current_file.parent /
+                import_path
+            )
+
+
+        # ----------------------------
+        # Alias imports
+        # @/ -> app/src/
+        # Example:
+        # @/lib/authorization
+        # ----------------------------
+
+        elif import_path.startswith("@/"):
+
+            relative = import_path.replace("@/", "")
+
+
+            parts = current_file.parts
+
+            app_name = None
+
+
+            if "apps" in parts:
+
+                index = parts.index("apps")
+
+                app_name = parts[index + 1]
+
+
+            if app_name is None:
+
+                return None
+
+
+            base_path = (
+                self.repo_root
+                / "apps"
+                / app_name
+                / "src"
+                / relative
+            )
+
+
+        else:
 
             return None
 
-
-        base_path = (
-            current_file.parent /
-            import_path
-        )
 
 
         extensions = [
@@ -68,6 +123,8 @@ class ImportResolver:
             ".tsx"
         ]
 
+
+        # direct file match
 
         for ext in extensions:
 
@@ -80,7 +137,8 @@ class ImportResolver:
                 return str(candidate)
 
 
-        # index files
+
+        # index file match
 
         for ext in extensions[1:]:
 

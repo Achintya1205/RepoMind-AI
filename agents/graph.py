@@ -255,3 +255,4 @@ workflow.add_edge(
 )
 
 app = workflow.compile()
+dependency_graph = code_graph

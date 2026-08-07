@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { streamMessage } from "../api/stream";
+import { getGraph } from "../api/graph";
+import GraphView from "./GraphViewer";
 
 export default function ChatBox() {
 
     const [query, setQuery] = useState("");
     const [messages, setMessages] = useState<any[]>([]);
     const [citations, setCitations] = useState<any[]>([]);
+    const [graphData, setGraphData] = useState({
+        nodes: [],
+        edges: []
+    });
 
 
     function handleSend() {
@@ -67,6 +73,15 @@ export default function ChatBox() {
     }
 
 
+    async function showGraph() {
+
+        const data = await getGraph("sendToClient");
+
+        setGraphData(data);
+
+    }
+
+
     return (
         <div>
 
@@ -86,6 +101,20 @@ export default function ChatBox() {
                         📄 {c.file}:{c.start_line}-{c.end_line}
                     </p>
                 ))
+            }
+
+
+            <button onClick={showGraph}>
+                Show Graph
+            </button>
+
+
+            {
+                graphData.nodes.length > 0 &&
+                <GraphView
+                    nodes={graphData.nodes}
+                    edges={graphData.edges}
+                />
             }
 
 

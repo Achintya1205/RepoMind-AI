@@ -1,19 +1,12 @@
-import ChatBox from "./components/ChatBox";
+import GraphViewer from "./components/GraphViewer";
 
 
-function App(){
+function App() {
 
     return (
-        <div>
-            <h1>
-                RepoMind AI
-            </h1>
-
-            <ChatBox/>
-        </div>
+        <GraphViewer />
     );
 
 }
-
 
 export default App;

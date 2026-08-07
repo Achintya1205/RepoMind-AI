@@ -81,9 +81,22 @@ class PythonParser:
 
         for node in captures.get("call.name", []):
 
+            caller = None
+
+            for function in functions:
+
+                if (
+                    function["start_line"] <= node.start_point[0] + 1
+                    <= function["end_line"]
+                ):
+                    caller = function["name"]
+                    break
+
+
             calls.append(
                 {
                     "name": source[node.start_byte:node.end_byte].decode(),
+                    "caller": caller,
                     "start_line": node.start_point[0] + 1
                 }
             )
