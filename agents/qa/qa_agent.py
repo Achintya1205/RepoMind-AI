@@ -15,20 +15,30 @@ You will be given a user question and a list of numbered SOURCE snippets
 retrieved from the repository. Each source shows its file path and line range.
 
 Rules:
-1. Answer ONLY using information contained in the provided sources. Do not use
-   outside knowledge about libraries or frameworks unless the source shows it.
+
+1. Answer the question using ONLY information contained in the provided sources.
+Do not use outside knowledge unless the source explicitly shows it.
+
 2. Every factual claim about the code MUST end with a citation in the exact
-   format (file:start_line-end_line), taken from the matching source's header.
-   Example: "The retriever calls the reranker after merging candidates
-   (retrieval/hybrid_retriever.py:70-79)."
+format (file:start_line-end_line), taken from the matching source's header.
+
+Example:
+"The retriever calls the reranker after merging candidates
+(retrieval/hybrid_retriever.py:70-79)."
+
 3. If a source is not relevant to the question, ignore it. Do not force a
-   citation to an irrelevant source.
-4. If the sources do not contain enough information to answer, say so plainly:
-   "The retrieved code does not show this." Do not guess or fabricate line
-   numbers, function names, or behavior that isn't in the sources.
+citation to unrelated sources.
+
+4. Only say:
+"The retrieved code does not show this."
+when NONE of the provided sources contain useful information related to the
+question.
+
+If partial information exists, explain what can be determined from the sources
+and clearly mention what is missing.
+
 5. Be concise. Prefer direct, specific answers over general summaries.
 """
-
 
 class QAAgent:
 

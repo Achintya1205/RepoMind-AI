@@ -9,6 +9,10 @@ from agents.architecture.architecture_agent import ArchitectureAgent
 from agents.debug.debug_agent import DebugAgent
 from agents.refactor.refactor_agent import RefactorAgent
 from agents.documentation import DocumentationGenerator
+from agents.utils.symbol_extractor import extract_symbol
+from agents.verifier.verifier import Verifier
+
+MAX_RETRIES = 2
 
 code_graph = GraphTool()
 qa_agent = QAAgent()
@@ -64,9 +68,20 @@ def impact_node(state: AgentState):
 
     print("Impact Analyzer")
 
-    result = impact_agent.analyze(
-        "sendToClient"
-    )
+    symbol = extract_symbol(state["query"], code_graph)
+
+    if symbol is None:
+
+        return {
+            "answer": (
+                "Couldn't identify a known function or class name in "
+                "that question. Try naming the exact symbol, e.g. "
+                "\"what breaks if I change getUserById?\""
+            ),
+            "metadata": {}
+        }
+
+    result = impact_agent.analyze(symbol)
 
     return {
         "answer": result["impact"],
@@ -78,9 +93,20 @@ def refactor_node(state):
 
     print("Refactor Planner")
 
-    result = refactor_agent.analyze(
-        "sendToClient"      
-    )
+    symbol = extract_symbol(state["query"], code_graph)
+
+    if symbol is None:
+
+        return {
+            "answer": (
+                "Couldn't identify a known function or class name in "
+                "that question. Try naming the exact symbol, e.g. "
+                "\"refactor getUserById\""
+            ),
+            "metadata": {}
+        }
+
+    result = refactor_agent.analyze(symbol)
 
     return {
         "answer": result["plan"],
@@ -104,16 +130,56 @@ def docs_node(state):
 
 def verifier_node(state):
 
+    # qa/docs are LLM-generated free text, so this only makes sense for
+    # them - see grounded_verifier_node below. impact/refactor/architecture
+    # are deterministic graph/template output (no hallucination risk to
+    # check), so this is deliberately just an "did we produce anything"
+    # check, not a grounding check.
+
     passed = bool(
         state.get("answer")
     )
 
     return {
-        "verified":{
-            "passed":passed,
-            "reasons":[]
+        "verified": {
+            "passed": passed,
+            "reasons": []
         }
     }
+
+
+def grounded_verifier_node(state):
+
+    verifier = Verifier(
+        state.get("metadata", []),
+        code_graph
+    )
+
+    result = verifier.verify(
+        state.get("answer", "")
+    )
+
+    retry_count = state.get("retry_count", 0)
+
+    if not result["passed"]:
+        retry_count += 1
+
+    return {
+        "verified": result,
+        "retry_count": retry_count
+    }
+
+
+def route_after_grounded_verifier(state):
+
+    if state["verified"]["passed"]:
+        return "synthesizer"
+
+    if state["retry_count"] > MAX_RETRIES:
+        return "synthesizer"
+
+    # loop back to whichever of qa/docs produced this answer, and retry
+    return state["current_agent"]
 
 def synthesizer_node(state: AgentState):
 
@@ -131,6 +197,7 @@ workflow.add_node("impact", impact_node)
 workflow.add_node("refactor", refactor_node)
 workflow.add_node("docs", docs_node)
 workflow.add_node("verifier", verifier_node)
+workflow.add_node("grounded_verifier", grounded_verifier_node)
 
 workflow.add_edge(
     START,
@@ -153,15 +220,25 @@ workflow.add_node(
     synthesizer_node
 )
 
-workflow.add_edge("qa", "verifier")
+workflow.add_edge("qa", "grounded_verifier")
 workflow.add_edge("debug", "verifier")
 workflow.add_edge("impact", "verifier")
 workflow.add_edge("refactor", "verifier")
-workflow.add_edge("docs", "verifier")
+workflow.add_edge("docs", "grounded_verifier")
 
 workflow.add_edge(
     "verifier",
     "synthesizer"
+)
+
+workflow.add_conditional_edges(
+    "grounded_verifier",
+    route_after_grounded_verifier,
+    {
+        "synthesizer": "synthesizer",
+        "qa": "qa",
+        "docs": "docs"
+    }
 )
 workflow.add_node(
     "architecture",

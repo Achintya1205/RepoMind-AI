@@ -17,6 +17,10 @@ class DependencyGraphBuilder:
 
         self.function_nodes = {}
 
+        # name -> list of node_ids, across ALL files, so calls to functions
+        # defined elsewhere can be resolved (not just same-file calls)
+        self.functions_by_name = {}
+
     def load_ast(self, json_file):
 
         with open(json_file, "r", encoding="utf-8") as f:
@@ -49,6 +53,10 @@ class DependencyGraphBuilder:
             (file_path, function["name"])
         ] = node_id
 
+        self.functions_by_name.setdefault(
+            function["name"], []
+        ).append(node_id)
+
     def add_class_node(self, file_path, cls):
 
         node_id = f"{file_path}::{cls['name']}"
@@ -73,34 +81,68 @@ class DependencyGraphBuilder:
 
             caller_name = call.get("caller")
 
-            callee_name = call.get("name")
+            raw_callee = call.get("name")
 
-            if caller_name is None:
+            if caller_name is None or raw_callee is None:
                 continue
 
+            # obj.method() -> method: local functions are never dotted,
+            # so the last segment is the only part that can match one.
+            callee_name = raw_callee.split(".")[-1]
 
             caller_id = self.function_nodes.get(
-                (
-                    current_file,
-                    caller_name
-                )
+                (current_file, caller_name)
             )
 
-            callee_id = self.function_nodes.get(
-                (
-                    current_file,
-                    callee_name
-                )
+            if caller_id is None:
+                continue
+
+            callee_id = self._resolve_callee(
+                current_file,
+                callee_name
             )
 
-
-            if (caller_id and callee_id and caller_id != callee_id):
+            if callee_id and callee_id != caller_id:
 
                 self.graph.add_edge(
                     caller_id,
                     callee_id,
                     edge_type="CALLS"
                 )
+
+    def _resolve_callee(self, current_file, callee_name):
+
+        # 1) same file
+        same_file = self.function_nodes.get(
+            (current_file, callee_name)
+        )
+
+        if same_file:
+            return same_file
+
+        # 2) a file this one imports (using IMPORTS edges already built)
+        imported_files = [
+            v for u, v, d in self.graph.out_edges(current_file, data=True)
+            if d.get("edge_type") == "IMPORTS"
+        ]
+
+        for imported_file in imported_files:
+
+            candidate = self.function_nodes.get(
+                (imported_file, callee_name)
+            )
+
+            if candidate:
+                return candidate
+
+        # 3) fall back to a global name match, but only if it's unambiguous
+        # (a shared name across many files is a false-positive risk)
+        candidates = self.functions_by_name.get(callee_name)
+
+        if candidates and len(candidates) == 1:
+            return candidates[0]
+
+        return None
 
     def add_import_edges(self, file_data):
 
@@ -194,6 +236,7 @@ class DependencyGraphBuilder:
             for cls in file_data.get("classes", []):
                 self.add_class_node(file_path, cls)
 
+        for file_data in ast_data:
             self.add_call_edges(file_data)
 
         Path("graph_output").mkdir(exist_ok=True)
@@ -202,4 +245,3 @@ class DependencyGraphBuilder:
             pickle.dump(self.graph, f)
 
         return self.graph
-    

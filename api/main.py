@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-
+from fastapi.middleware.cors import CORSMiddleware
 from agents.graph import app
+from api.stream import stream_chat
 
 
 api = FastAPI(
@@ -12,7 +13,17 @@ api = FastAPI(
 class ChatRequest(BaseModel):
     query: str
 
+api.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
+@api.get("/stream")
+def stream(query: str):
+    return stream_chat(query)
 
 @api.post("/chat")
 def chat(request: ChatRequest):
@@ -39,7 +50,7 @@ def chat(request: ChatRequest):
 
 
     return {
-        "answer": result.get("answer"),
-        "agent": result.get("current_agent"),
-        "citations": result.get("metadata")
+        "answer": result.get("answer", ""),
+        "agent": result.get("current_agent", ""),
+        "citations": result.get("metadata", [])
     }
