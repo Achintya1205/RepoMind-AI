@@ -1,7 +1,6 @@
 from pathlib import Path
 import pickle
 
-
 GRAPH_PATH = Path("graph_output/dependency_graph.pkl")
 
 
@@ -11,10 +10,19 @@ class GraphTool:
         with open(GRAPH_PATH, "rb") as f:
             self.graph = pickle.load(f)
 
+    def get_nodes(self, symbol):
+        return [
+            node
+            for node in self.graph.nodes
+            if node.endswith(f"::{symbol}")
+        ]
+
     def get_node(self, symbol):
-        for node in self.graph.nodes:
-            if node.endswith(f"::{symbol}"):
-                return node
+        nodes = self.get_nodes(symbol)
+
+        if len(nodes) == 1:
+            return nodes[0]
+
         return None
 
     def callers(self, symbol):
@@ -39,7 +47,6 @@ class GraphTool:
         if not caller_node or not callee_node:
             return False
 
-
         return self.graph.has_edge(
             caller_node,
             callee_node
@@ -47,14 +54,14 @@ class GraphTool:
 
     def impact(self, symbol):
 
-        node = self.get_node(symbol)
+        nodes = self.get_nodes(symbol)
 
-        if node is None:
+        if not nodes:
             return []
 
         impacted = []
         visited = set()
-        queue = [node]
+        queue = list(nodes)
 
         while queue:
 
@@ -92,5 +99,3 @@ class GraphTool:
                 callees.append(dst)
 
         return callees
-
-    

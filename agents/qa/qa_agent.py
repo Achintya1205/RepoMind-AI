@@ -70,7 +70,7 @@ class QAAgent:
 
     def answer(self, query, k=5):
 
-        retrieved = self.retriever.hybrid_retrieve(query, k=k)
+        retrieved = self.retriever.hybrid_retrieve(query, k=3)
 
         if not retrieved:
 
