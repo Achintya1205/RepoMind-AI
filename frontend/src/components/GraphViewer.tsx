@@ -73,8 +73,8 @@ export default function GraphViewer() {
 
     const loadGraph = () => {
         fetch(`http://127.0.0.1:8000/graph/${query}`)
-            .then(res => res.json())
-            .then(data => {
+            .then((res) => res.json())
+            .then((data) => {
                 const formattedNodes = data.nodes.map((node: any) => ({
                     id: node.id,
                     data: {
@@ -103,18 +103,56 @@ export default function GraphViewer() {
     const selectNode = (node: any) => {
         setSelectedNode({
             ...node,
-            relations: null
+            relations: null,
+            impact: null
         });
 
         fetch(
             `http://127.0.0.1:8000/symbol/${encodeURIComponent(node.id)}`
         )
-            .then(res => res.json())
-            .then(data => {
-                setSelectedNode({
-                    ...node,
+            .then((res) => res.json())
+            .then((data) => {
+                setSelectedNode((current: any) => ({
+                    ...current,
                     relations: data
-                });
+                }));
+            });
+
+        fetch(
+            `http://127.0.0.1:8000/impact/${encodeURIComponent(node.id)}`
+        )
+            .then((res) => res.json())
+            .then((data) => {
+                const affected = new Set(data.affected_nodes);
+
+                setNodes((currentNodes) =>
+                    currentNodes.map((n) => ({
+                        ...n,
+                        style: {
+                            ...n.style,
+                            opacity: affected.has(n.id) ? 1 : 0.2
+                        }
+                    }))
+                );
+
+                setEdges((currentEdges) =>
+                    currentEdges.map((e) => ({
+                        ...e,
+                        style: {
+                            ...e.style,
+                            opacity:
+                                affected.has(e.source) &&
+                                affected.has(e.target)
+                                    ? 1
+                                    : 0.15
+                        }
+                    }))
+                );
+
+                setSelectedNode((current: any) => ({
+                    ...current,
+                    impact: data
+                }));
             });
     };
 
@@ -157,6 +195,8 @@ export default function GraphViewer() {
                         right: 20,
                         top: 20,
                         width: 350,
+                        maxHeight: "90vh",
+                        overflowY: "auto",
                         background: "white",
                         padding: 20,
                         border: "1px solid black",
@@ -176,14 +216,46 @@ export default function GraphViewer() {
                     {selectedNode.relations && (
                         <>
                             <b>Callers:</b>
-                            {selectedNode.relations.callers.map((x: string) => (
-                                <p key={x}>{x}</p>
-                            ))}
+
+                            {selectedNode.relations.callers.map(
+                                (x: string) => (
+                                    <p key={x}>{x}</p>
+                                )
+                            )}
 
                             <b>Callees:</b>
-                            {selectedNode.relations.callees.map((x: string) => (
-                                <p key={x}>{x}</p>
-                            ))}
+
+                            {selectedNode.relations.callees.map(
+                                (x: string) => (
+                                    <p key={x}>{x}</p>
+                                )
+                            )}
+                        </>
+                    )}
+
+                    {selectedNode.impact && (
+                        <>
+                            <hr />
+
+                            <h3>Impact Analysis</h3>
+
+                            <p>
+                                <b>Affected nodes:</b>{" "}
+                                {selectedNode.impact.affected_nodes?.length || 0}
+                            </p>
+
+                            <p>
+                                <b>Risk:</b>{" "}
+                                {selectedNode.impact.risk || "Not available"}
+                            </p>
+
+                            {selectedNode.impact.summary && (
+                                <p>
+                                    <b>Summary:</b>
+                                    <br />
+                                    {selectedNode.impact.summary}
+                                </p>
+                            )}
                         </>
                     )}
                 </div>

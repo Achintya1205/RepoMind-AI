@@ -179,7 +179,56 @@ def get_symbol(symbol_id: str):
 
     return result
 
+@api.get("/impact/{symbol_id:path}")
+def get_impact(symbol_id: str):
+    graph = dependency_graph.graph
 
+    if symbol_id not in graph:
+        return {
+            "symbol": symbol_id,
+            "affected_nodes": [],
+            "affected_edges": []
+        }
+
+    affected = set()
+
+    # All callers recursively affected by changing this symbol
+    stack = [symbol_id]
+
+    while stack:
+        current = stack.pop()
+
+        for caller in graph.predecessors(current):
+            edge = graph.get_edge_data(caller, current)
+
+            if edge and edge.get("edge_type") == "CALLS":
+                if caller not in affected:
+                    affected.add(caller)
+                    stack.append(caller)
+
+    nodes = {symbol_id}
+    nodes.update(affected)
+
+    edges = []
+
+    for source in nodes:
+        for target in graph.successors(source):
+            if target in nodes:
+                edge = graph.get_edge_data(source, target)
+
+                if edge and edge.get("edge_type") == "CALLS":
+                    edges.append({
+                        "id": f"{source}-{target}",
+                        "source": str(source),
+                        "target": str(target),
+                        "type": "CALLS"
+                    })
+
+    return {
+        "symbol": symbol_id,
+        "affected_nodes": list(nodes),
+        "affected_edges": edges
+    }
 
 
 @api.post("/chat")
