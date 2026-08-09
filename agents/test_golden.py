@@ -4,7 +4,7 @@ from agents.graph import app
 DATASET = "evaluation/golden/bulletproof-react.jsonl"
 
 with open(DATASET, "r", encoding="utf-8") as f:
-    questions = [json.loads(next(f))]
+    questions = [json.loads(line) for line in f if line.strip()]
 
 for item in questions:
     state = {
@@ -27,4 +27,7 @@ for item in questions:
     print("QUESTION:", item["question"])
     print("EXPECTED:", item["expected_agent"])
     print("ACTUAL:", result.get("current_agent"))
-    print("ANSWER:", result.get("final_answer") or result.get("answer", ""))
+    print(
+        "ANSWER:",
+        result.get("final_answer") or result.get("answer", "")
+    )

@@ -9,11 +9,12 @@ class HybridRetriever:
     def __init__(self):
 
         self.vector_store = VectorStore()
-
         self.keyword_search = KeywordSearch()
 
+        # Smaller/faster reranker than bge-reranker-base.
+        # Good enough for our current retrieval evaluation.
         self.reranker = CrossEncoder(
-            "BAAI/bge-reranker-base"
+            "cross-encoder/ms-marco-MiniLM-L-6-v2"
         )
 
     def hybrid_retrieve(self, query, k=5):
@@ -28,60 +29,58 @@ class HybridRetriever:
             k=10
         )
 
-
         candidates = []
 
         candidates.extend(vector_results)
         candidates.extend(keyword_results)
 
+        # Remove duplicate chunks.
         seen = set()
         unique_candidates = []
 
         for chunk in candidates:
 
+            metadata = chunk["metadata"]
+
             key = (
-                chunk["metadata"]["file"],
-                chunk["metadata"]["name"],
-                chunk["metadata"]["type"]
+                metadata["file"],
+                metadata["name"],
+                metadata["type"]
             )
 
             if key not in seen:
+
                 seen.add(key)
                 unique_candidates.append(chunk)
 
-
         candidates = unique_candidates
 
-        # remove duplicate chunks
+        if not candidates:
+            return []
 
-        pairs = []
-
-        for chunk in candidates:
-
-            pairs.append(
-                [
-                    query,
-                    chunk["content"]
-                ]
-            )
-
+        # Rerank only the unique candidate set.
+        pairs = [
+            [query, chunk["content"]]
+            for chunk in candidates
+        ]
 
         scores = self.reranker.predict(
-            pairs
+            pairs,
+            batch_size=8,
+            show_progress_bar=False
         )
-
 
         ranked = sorted(
             zip(candidates, scores),
-            key=lambda x:x[1],
+            key=lambda x: x[1],
             reverse=True
         )
 
         return [
-        {
-            "chunk": chunk["content"],
-            "metadata": chunk["metadata"],
-            "rerank_score": float(score)
-        }
-        for chunk, score in ranked[:k]
+            {
+                "chunk": chunk["content"],
+                "metadata": chunk["metadata"],
+                "rerank_score": float(score)
+            }
+            for chunk, score in ranked[:k]
         ]

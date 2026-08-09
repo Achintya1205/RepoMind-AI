@@ -9,6 +9,7 @@ class Embedder:
             "BAAI/bge-small-en-v1.5"
         )
 
+
     def embed(self, text):
 
         embedding = self.model.encode(
@@ -24,7 +25,7 @@ if __name__ == "__main__":
     embedder = Embedder()
 
     embedding = embedder.embed(
-        "Hello World"
+        "function getUserById(id) { return users.find(id); }"
     )
 
     print(type(embedding))

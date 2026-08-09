@@ -47,10 +47,12 @@ class GraphTool:
         if not caller_node or not callee_node:
             return False
 
-        return self.graph.has_edge(
+        edge = self.graph.get_edge_data(
             caller_node,
             callee_node
         )
+
+        return edge is not None and edge.get("edge_type") == "CALLS"
 
     def impact(self, symbol):
 
@@ -87,15 +89,19 @@ class GraphTool:
         return impacted
 
     def callees(self, symbol):
-        node = self.get_node(symbol)
+        nodes = self.get_nodes(symbol)
 
-        if node is None:
+        if not nodes:
             return []
 
         callees = []
 
-        for src, dst, data in self.graph.edges(data=True):
-            if src == node and data.get("edge_type") == "CALLS":
-                callees.append(dst)
+        for node in nodes:
+            for _, dst, data in self.graph.out_edges(
+                node,
+                data=True
+            ):
+                if data.get("edge_type") == "CALLS":
+                    callees.append(dst)
 
         return callees

@@ -1,6 +1,5 @@
 import json
 from pathlib import Path
-from retrieval.reranker import rerank
 
 import chromadb
 
@@ -50,7 +49,6 @@ class VectorStore:
             ).tolist()
 
 
-            # Remove None values before storing in Chroma
             metadata = {
                 k: v
                 for k, v in chunk["metadata"].items()
@@ -80,15 +78,7 @@ class VectorStore:
 
         results = self.collection.query(
             query_embeddings=[query_embedding],
-            n_results=15
-        )
-
-        print(
-            "Retrieved metadata:"
-        )
-
-        print(
-            results["metadatas"][0]
+            n_results=k
         )
 
 
@@ -108,10 +98,7 @@ class VectorStore:
             )
 
 
-        return rerank(
-            output,
-            query
-        )[:k]
+        return output
 
 
 if __name__ == "__main__":

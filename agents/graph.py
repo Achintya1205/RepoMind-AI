@@ -88,6 +88,44 @@ def impact_node(state: AgentState):
         "metadata": result
     }
 
+def graph_node(state: AgentState):
+
+    print("Graph Agent")
+
+    symbol = extract_symbol(state["query"], code_graph)
+
+    if symbol is None:
+        return {
+            "answer": (
+                "Couldn't identify a known function or class name in "
+                "that question."
+            ),
+            "metadata": {}
+        }
+
+    callees = code_graph.callees(symbol)
+
+    if not callees:
+        return {
+            "answer": f"No CALLS relationships were found for {symbol}.",
+            "metadata": {
+                "symbol": symbol,
+                "callees": []
+            }
+        }
+
+    answer = (
+        f"{symbol} calls:\n\n"
+        + "\n".join(f"- {callee}" for callee in callees)
+    )
+
+    return {
+        "answer": answer,
+        "metadata": {
+            "symbol": symbol,
+            "callees": callees
+        }
+    }
 
 def refactor_node(state):
 
@@ -191,6 +229,7 @@ def synthesizer_node(state: AgentState):
 
 workflow = StateGraph(AgentState)
 workflow.add_node("router", route_query)
+workflow.add_node("graph", graph_node)
 workflow.add_node("qa", qa_node)
 workflow.add_node("debug", debug_node)
 workflow.add_node("impact", impact_node)
@@ -212,8 +251,9 @@ workflow.add_conditional_edges(
         "impact_analysis": "impact",
         "refactor": "refactor",
         "docs": "docs",
-        "architecture": "architecture"
-    }
+        "architecture": "architecture",
+        "graph": "graph"
+    }   
 )
 workflow.add_node(
     "synthesizer",
@@ -223,6 +263,7 @@ workflow.add_node(
 workflow.add_edge("qa", "grounded_verifier")
 workflow.add_edge("debug", "verifier")
 workflow.add_edge("impact", "verifier")
+workflow.add_edge("graph", "verifier")
 workflow.add_edge("refactor", "verifier")
 workflow.add_edge("docs", "grounded_verifier")
 

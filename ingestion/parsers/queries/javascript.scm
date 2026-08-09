@@ -12,19 +12,18 @@
   import_statement
 ) @import
 
-
 (
   export_statement
 ) @export
 
 (
   call_expression
-    (identifier) @call.name
+    function: (identifier) @call.name
 )
 
 (
   call_expression
-    (member_expression) @call.name
+    function: (member_expression) @call.name
 )
 
 (
@@ -32,6 +31,7 @@
     name: (identifier) @arrow.name
     value: (arrow_function) @arrow.definition
 )
+
 (
   jsx_element
 ) @jsx
