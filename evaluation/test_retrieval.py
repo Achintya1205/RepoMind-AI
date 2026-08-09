@@ -6,6 +6,30 @@ from retrieval.hybrid_retriever import HybridRetriever
 DATASET = "evaluation/golden/bulletproof-react.jsonl"
 
 
+def is_hit(result_metadata, item):
+    """
+    A retrieved chunk counts as a real hit only if it's the actual
+    labeled answer - not because a name happens to appear in the query.
+
+    Golden entries can label the expected answer two ways:
+      - "expected_symbol": exact function/class name (preferred, precise)
+      - "expected_file":   just the file (looser, use when the question
+                            is about a file/module rather than one symbol)
+    """
+
+    if item.get("expected_symbol"):
+        return (
+            result_metadata.get("name") == item["expected_symbol"]
+        )
+
+    if item.get("expected_file"):
+        return (
+            result_metadata.get("file") == item["expected_file"]
+        )
+
+    return False
+
+
 def main():
     retriever = HybridRetriever()
 
@@ -19,53 +43,45 @@ def main():
     total = len(questions)
     recall_hits = 0
     reciprocal_rank_sum = 0.0
+    unlabeled = 0
 
     for item in questions:
-        query = item["question"]
+
+        if not item.get("expected_symbol") and not item.get("expected_file"):
+            unlabeled += 1
+            continue
 
         results = retriever.hybrid_retrieve(
-            query,
+            item["question"],
             k=5
         )
 
-        # For this first evaluation pass, we consider retrieval successful
-        # when at least one retrieved chunk belongs to the expected domain
-        # implied by the question's expected agent.
-        expected_agent = item["expected_agent"]
+        hit_rank = None
 
-        names = [
-            result["metadata"].get("name", "").lower()
-            for result in results
-        ]
-
-        query_lower = query.lower()
-
-        # Symbol-oriented questions
-        symbol_hit = False
-
-        for name in names:
-            if name and name in query_lower:
-                symbol_hit = True
+        for rank, result in enumerate(results, start=1):
+            if is_hit(result["metadata"], item):
+                hit_rank = rank
                 break
 
-        if symbol_hit:
+        if hit_rank is not None:
             recall_hits += 1
+            reciprocal_rank_sum += 1.0 / hit_rank
 
-            for rank, result in enumerate(results, start=1):
-                name = result["metadata"].get("name", "").lower()
+    scored = total - unlabeled
 
-                if name and name in query_lower:
-                    reciprocal_rank_sum += 1.0 / rank
-                    break
-
-    recall_at_5 = recall_hits / total if total else 0.0
-    mrr = reciprocal_rank_sum / total if total else 0.0
+    recall_at_5 = recall_hits / scored if scored else 0.0
+    mrr = reciprocal_rank_sum / scored if scored else 0.0
 
     print("\nRepoMind AI - Retrieval Evaluation")
     print("=" * 50)
-    print(f"Questions evaluated: {total}")
-    print(f"Recall@5:             {recall_at_5:.2f}")
-    print(f"MRR:                  {mrr:.2f}")
+    print(f"Questions in dataset:  {total}")
+
+    if unlabeled:
+        print(f"Skipped (no ground truth label): {unlabeled}")
+
+    print(f"Questions scored:      {scored}")
+    print(f"Recall@5:              {recall_at_5:.2f}")
+    print(f"MRR:                   {mrr:.2f}")
 
 
 if __name__ == "__main__":

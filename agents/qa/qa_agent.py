@@ -7,7 +7,7 @@ load_dotenv()
 
 from retrieval.hybrid_retriever import HybridRetriever
 
-MODEL = os.environ.get("REPOMIND_MODEL", "gemini-2.5-flash")
+MODEL = os.environ.get("REPOMIND_MODEL", "gemini-2.5-flash-lite")
 
 SYSTEM_PROMPT = """You are a code Q&A agent for a codebase called RepoMind-AI.
 

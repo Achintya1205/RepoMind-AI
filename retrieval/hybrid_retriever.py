@@ -11,11 +11,7 @@ class HybridRetriever:
         self.vector_store = VectorStore()
         self.keyword_search = KeywordSearch()
 
-        # Smaller/faster reranker than bge-reranker-base.
-        # Good enough for our current retrieval evaluation.
-        self.reranker = CrossEncoder(
-            "cross-encoder/ms-marco-MiniLM-L-6-v2"
-        )
+        self.reranker = CrossEncoder("BAAI/bge-reranker-base")
 
     def hybrid_retrieve(self, query, k=5):
 

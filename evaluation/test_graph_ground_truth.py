@@ -78,9 +78,9 @@ def main():
         print(f"Precision:          {precision:.2f}")
         print(f"Recall:             {recall:.2f}")
 
-        print("Status:", "PASS" if predicted == actual else "CHECK")
+        print("Status:", "PASS" if set(predicted) == set(actual) else "CHECK")
 
-        if predicted != actual:
+        if set(predicted) != set(actual):
             print("\nMissing:")
             for item in sorted(set(actual) - set(predicted)):
                 print(f"  {item}")
