@@ -1,12 +1,17 @@
 import json
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).parent))
 
 from python_parser import PythonParser
 
 
-REPO_PATH = Path("sample_repos/full-stack-fastapi-template")
+PROJECT_ROOT = Path(__file__).parent.parent.parent
 
-OUTPUT_PATH = Path("ingestion/parsers/output/python_ast_output.json")
+REPO_PATH = PROJECT_ROOT / "sample_repos" / "full-stack-fastapi-template"
+
+OUTPUT_PATH = PROJECT_ROOT / "ingestion" / "parsers" / "output" / "python_ast_output.json"
 
 
 def collect_python_files(repo_path):

@@ -8,6 +8,19 @@ class ImportResolver:
         self.repo_root = Path(repo_root)
 
 
+    def _infer_repo_root(self, current_file):
+
+        parts = current_file.parts
+
+        if "sample_repos" in parts:
+
+            index = parts.index("sample_repos")
+
+            # sample_repos/<repo-name>
+            return Path(*parts[:index + 2])
+
+        return self.repo_root
+
     def extract_import_path(self, statement):
 
         if "from" in statement:
@@ -28,25 +41,34 @@ class ImportResolver:
 
         current_file = Path(current_file)
 
-        possible_paths = []
-
         module_path = import_name.replace(".", "/")
 
-        possible_paths.append(
-            self.repo_root / f"{module_path}.py"
-        )
+        repo_boundary = self._infer_repo_root(current_file)
 
-        possible_paths.append(
-            self.repo_root / module_path / "__init__.py"
-        )
+        # Try every ancestor directory between the importing file and the
+        # sample repo's own root as a candidate package root - handles
+        # any layout (backend/app/, src/app/, app/ directly, etc.)
+        # without hardcoding a specific subfolder name.
+        candidate_root = current_file.parent
 
+        candidates = [candidate_root]
 
-        for path in possible_paths:
+        while candidate_root != repo_boundary and repo_boundary in candidate_root.parents:
+            candidate_root = candidate_root.parent
+            candidates.append(candidate_root)
 
-            if path.exists():
+        if repo_boundary not in candidates:
+            candidates.append(repo_boundary)
 
-                return str(path)
+        for root in candidates:
 
+            for candidate in (
+                root / f"{module_path}.py",
+                root / module_path / "__init__.py"
+            ):
+
+                if candidate.exists():
+                    return str(candidate)
 
         return None
 
@@ -101,7 +123,7 @@ class ImportResolver:
 
 
             base_path = (
-                self.repo_root
+                self._infer_repo_root(current_file)
                 / "apps"
                 / app_name
                 / "src"

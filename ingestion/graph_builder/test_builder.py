@@ -5,6 +5,9 @@ from ingestion.graph_builder.builder import DependencyGraphBuilder
 from ingestion.graph_builder.graph_io import save_graph
 
 
+# repo_root passed here is only a fallback default for files that don't
+# live under sample_repos/<name>/ - real per-file resolution now infers
+# the correct root from each file's own path (see resolver.py).
 builder = DependencyGraphBuilder(
     "sample_repos/bulletproof-react"
 )
@@ -14,8 +17,14 @@ javascript_ast = builder.load_ast(
     Path("ingestion/parsers/output/javascript_ast_output.json")
 )
 
+python_ast = builder.load_ast(
+    Path("ingestion/parsers/output/python_ast_output.json")
+)
 
-graph = builder.build_graph(javascript_ast)
+combined_ast = javascript_ast + python_ast
+
+
+graph = builder.build_graph(combined_ast)
 
 
 print()

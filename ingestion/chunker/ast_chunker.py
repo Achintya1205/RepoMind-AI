@@ -2,8 +2,12 @@ import json
 from pathlib import Path
 
 
-INPUT_PATH = Path(
+JAVASCRIPT_INPUT_PATH = Path(
     "ingestion/parsers/output/javascript_ast_output.json"
+)
+
+PYTHON_INPUT_PATH = Path(
+    "ingestion/parsers/output/python_ast_output.json"
 )
 
 OUTPUT_PATH = Path(
@@ -108,16 +112,25 @@ def generate_chunks(ast_data):
 
     return chunks
 
+def load_ast_data():
+
+    all_data = []
+
+    for path in (JAVASCRIPT_INPUT_PATH, PYTHON_INPUT_PATH):
+
+        if not path.exists():
+            print(f"Skipping missing {path}")
+            continue
+
+        with open(path, "r", encoding="utf-8") as f:
+            all_data.extend(json.load(f))
+
+    return all_data
+
+
 def main():
 
-    with open(
-        INPUT_PATH,
-        "r",
-        encoding="utf-8"
-    ) as f:
-
-        ast_data = json.load(f)
-
+    ast_data = load_ast_data()
 
     chunks = generate_chunks(ast_data)
 

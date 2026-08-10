@@ -42,23 +42,35 @@ class PythonParser:
         decorators = []
         calls = []
 
-        for node in captures.get("function.name", []):
+        for name_node, def_node in zip(
+            captures.get("function.name", []),
+            captures.get("function.definition", [])
+        ):
 
             functions.append(
                 {
-                    "name": source[node.start_byte:node.end_byte].decode(),
-                    "start_line": node.start_point[0] + 1,
-                    "end_line": node.end_point[0] + 1
+                    "name": source[name_node.start_byte:name_node.end_byte].decode(),
+                    "start_line": def_node.start_point[0] + 1,
+                    "end_line": def_node.end_point[0] + 1,
+                    "start_byte": def_node.start_byte,
+                    "end_byte": def_node.end_byte,
+                    "code": source[def_node.start_byte:def_node.end_byte].decode()
                 }
             )
 
-        for node in captures.get("class.name", []):
+        for name_node, def_node in zip(
+            captures.get("class.name", []),
+            captures.get("class.definition", [])
+        ):
 
             classes.append(
                 {
-                    "name": source[node.start_byte:node.end_byte].decode(),
-                    "start_line": node.start_point[0] + 1,
-                    "end_line": node.end_point[0] + 1
+                    "name": source[name_node.start_byte:name_node.end_byte].decode(),
+                    "start_line": def_node.start_point[0] + 1,
+                    "end_line": def_node.end_point[0] + 1,
+                    "start_byte": def_node.start_byte,
+                    "end_byte": def_node.end_byte,
+                    "code": source[def_node.start_byte:def_node.end_byte].decode()
                 }
             )
         for node in captures.get("import", []):
