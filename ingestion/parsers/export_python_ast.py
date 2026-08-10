@@ -38,6 +38,7 @@ def main():
 
         try:
             result = parser.process_file(file)
+            result["file"] = str(file.relative_to(PROJECT_ROOT))
             results.append(result)
 
         except Exception as e:
