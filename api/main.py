@@ -3,11 +3,16 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 
-from agents.graph import dependency_graph
+from agents import graph as agent_graph
 from agents.graph import app
+from agents.impact_explainer import ImpactExplainer
+
+from ingestion.pipeline import index_repository, IndexingError
 
 import json
 import time
+import threading
+import queue as queue_module
 
 
 api = FastAPI(
@@ -17,6 +22,27 @@ api = FastAPI(
 
 class ChatRequest(BaseModel):
     query: str
+
+
+class IndexRequest(BaseModel):
+    repo_url: str
+
+
+_indexing_lock = threading.Lock()
+
+impact_explainer = ImpactExplainer()
+
+
+def readable_label(node_id):
+    # function/class nodes are "path::name" - show just the name.
+    # file nodes are a raw path - show just the filename, not the
+    # full (often long, Windows-style) path.
+    node_str = str(node_id)
+
+    if "::" in node_str:
+        return node_str.split("::")[-1]
+
+    return node_str.replace("\\", "/").split("/")[-1]
 
 
 api.add_middleware(
@@ -50,6 +76,8 @@ def create_initial_state(query: str):
 @api.get("/graph/{symbol}")
 def get_graph(symbol: str):
 
+    dependency_graph = agent_graph.get_dependency_graph()
+
     nodes = {}
     edges = []
     visited_edges = set()
@@ -63,7 +91,7 @@ def get_graph(symbol: str):
             nodes[str(node)] = {
                 "id": str(node),
                 "data": {
-                    "label": str(node),
+                    "label": readable_label(node),
                     "type": "function"
                 }
             }
@@ -75,7 +103,7 @@ def get_graph(symbol: str):
                 nodes[str(neighbor)] = {
                     "id": str(neighbor),
                     "data": {
-                        "label": str(neighbor),
+                        "label": readable_label(neighbor),
                         "type": "function"
                     }
                 }
@@ -100,7 +128,7 @@ def get_graph(symbol: str):
                 nodes[str(caller)] = {
                     "id": str(caller),
                     "data": {
-                        "label": str(caller),
+                        "label": readable_label(caller),
                         "type": "function"
                     }
                 }
@@ -134,7 +162,7 @@ def get_symbol(symbol_id: str):
     }
 
 
-    graph = dependency_graph.graph
+    graph = agent_graph.get_dependency_graph().graph
 
 
     if symbol_id not in graph:
@@ -158,7 +186,7 @@ def get_symbol(symbol_id: str):
 
         if edge.get("edge_type") == "CALLS":
 
-            result["callers"].append(caller)
+            result["callers"].append(readable_label(caller))
 
 
 
@@ -173,7 +201,7 @@ def get_symbol(symbol_id: str):
 
         if edge.get("edge_type") == "CALLS":
 
-            result["callees"].append(callee)
+            result["callees"].append(readable_label(callee))
 
 
 
@@ -181,13 +209,15 @@ def get_symbol(symbol_id: str):
 
 @api.get("/impact/{symbol_id:path}")
 def get_impact(symbol_id: str):
-    graph = dependency_graph.graph
+    graph = agent_graph.get_dependency_graph().graph
 
     if symbol_id not in graph:
         return {
             "symbol": symbol_id,
             "affected_nodes": [],
-            "affected_edges": []
+            "affected_edges": [],
+            "summary": None,
+            "risk": "Unknown"
         }
 
     affected = set()
@@ -224,10 +254,23 @@ def get_impact(symbol_id: str):
                         "type": "CALLS"
                     })
 
+    summary = impact_explainer.explain({
+        "changed_symbol": readable_label(symbol_id),
+        "affected_nodes": [readable_label(n) for n in affected]
+    })
+
+    risk = (
+        "High" if len(affected) > 5
+        else "Medium" if len(affected) > 0
+        else "Low"
+    )
+
     return {
         "symbol": symbol_id,
         "affected_nodes": list(nodes),
-        "affected_edges": edges
+        "affected_edges": edges,
+        "summary": summary,
+        "risk": risk
     }
 
 
@@ -287,6 +330,93 @@ def chat_stream(request: ChatRequest):
         yield f"data: {json.dumps({'type':'done'})}\n\n"
 
 
+
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/event-stream"
+    )
+
+
+@api.post("/index/stream")
+def index_stream(request: IndexRequest):
+    """
+    Real dynamic repo indexing: clone -> parse -> chunk -> embed -> graph,
+    streamed as it happens. index_repository() is synchronous/blocking
+    (git clone, parsing, embedding all take real time), so it runs in a
+    background thread and progress is relayed through a queue - this is
+    the standard pattern for streaming progress out of blocking work in
+    a sync FastAPI endpoint.
+
+    On success, reload_state() is called so the already-running server
+    actually starts using the newly built index/graph immediately,
+    instead of requiring a restart.
+    """
+
+    progress_queue = queue_module.Queue()
+
+    if not _indexing_lock.acquire(blocking=False):
+
+        def already_running():
+            yield f"data: {json.dumps({'type': 'error', 'message': 'Another indexing run is already in progress. Please wait for it to finish.'})}\n\n"
+
+        return StreamingResponse(
+            already_running(),
+            media_type="text/event-stream"
+        )
+
+    def run_indexing():
+
+        try:
+
+            def report(message):
+                progress_queue.put({
+                    "type": "status",
+                    "message": message
+                })
+
+            stats = index_repository(
+                request.repo_url,
+                progress=report
+            )
+
+            agent_graph.reload_state()
+
+            progress_queue.put({
+                "type": "done",
+                "stats": stats
+            })
+
+        except IndexingError as e:
+
+            progress_queue.put({
+                "type": "error",
+                "message": str(e)
+            })
+
+        except Exception as e:
+
+            progress_queue.put({
+                "type": "error",
+                "message": f"Unexpected error during indexing: {e}"
+            })
+
+        finally:
+
+            _indexing_lock.release()
+
+    thread = threading.Thread(target=run_indexing, daemon=True)
+    thread.start()
+
+    def event_generator():
+
+        while True:
+
+            event = progress_queue.get()
+
+            yield f"data: {json.dumps(event)}\n\n"
+
+            if event["type"] in ("done", "error"):
+                break
 
     return StreamingResponse(
         event_generator(),

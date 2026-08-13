@@ -41,6 +41,11 @@ class ImportResolver:
 
         current_file = Path(current_file)
 
+        if import_name.startswith("."):
+            return self._resolve_relative_python_import(
+                current_file, import_name
+            )
+
         module_path = import_name.replace(".", "/")
 
         repo_boundary = self._infer_repo_root(current_file)
@@ -69,6 +74,47 @@ class ImportResolver:
 
                 if candidate.exists():
                     return str(candidate)
+
+        return None
+
+
+    def _resolve_relative_python_import(self, current_file, import_name):
+        """
+        Handles `from .module import x` / `from ..module import x` /
+        `from . import x`. Dot count means how many package levels up
+        from the importing file's own directory - NOT a literal path
+        separator, so this can't reuse the naive dot-to-slash logic
+        used for absolute imports (that turns a leading dot into a
+        leading slash, which pathlib then treats as a full path reset).
+        """
+
+        stripped = import_name.lstrip(".")
+
+        dot_count = len(import_name) - len(stripped)
+
+        base_dir = current_file.parent
+
+        for _ in range(dot_count - 1):
+            base_dir = base_dir.parent
+
+        if not stripped:
+            # "from . import x" - x lives directly in base_dir's package
+            candidate = base_dir / "__init__.py"
+
+            if candidate.exists():
+                return str(candidate)
+
+            return None
+
+        module_path = stripped.replace(".", "/")
+
+        for candidate in (
+            base_dir / f"{module_path}.py",
+            base_dir / module_path / "__init__.py"
+        ):
+
+            if candidate.exists():
+                return str(candidate)
 
         return None
 

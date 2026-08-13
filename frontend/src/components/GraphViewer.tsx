@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dagre from "dagre";
 import ReactFlow, { Background, Controls } from "reactflow";
 import type { Node, Edge } from "reactflow";
@@ -65,14 +65,21 @@ const nodeStyle = (type: string) => {
     };
 };
 
-export default function GraphViewer() {
+interface Props {
+    suggestedSymbol?: string;
+}
+
+export default function GraphViewer({ suggestedSymbol }: Props) {
     const [nodes, setNodes] = useState<Node[]>([]);
     const [edges, setEdges] = useState<Edge[]>([]);
-    const [query, setQuery] = useState("useAuthorization");
+    const [query, setQuery] = useState("");
     const [selectedNode, setSelectedNode] = useState<any>(null);
 
-    const loadGraph = () => {
-        fetch(`http://127.0.0.1:8000/graph/${query}`)
+    const loadGraph = (symbolOverride?: string) => {
+        const symbol = symbolOverride ?? query;
+        if (!symbol) return;
+
+        fetch(`http://127.0.0.1:8000/graph/${symbol}`)
             .then((res) => res.json())
             .then((data) => {
                 const formattedNodes = data.nodes.map((node: any) => ({
@@ -99,6 +106,13 @@ export default function GraphViewer() {
                 setEdges(layout.edges);
             });
     };
+
+    useEffect(() => {
+        if (suggestedSymbol) {
+            setQuery(suggestedSymbol);
+            loadGraph(suggestedSymbol);
+        }
+    }, [suggestedSymbol]);
 
     const selectNode = (node: any) => {
         setSelectedNode({
@@ -173,7 +187,7 @@ export default function GraphViewer() {
                     onChange={(e) => setQuery(e.target.value)}
                 />
 
-                <button onClick={loadGraph}>
+                <button onClick={() => loadGraph()}>
                     Load
                 </button>
             </div>
@@ -204,32 +218,46 @@ export default function GraphViewer() {
                     }}
                 >
                     <h3>
-                        {selectedNode.data.label.split("::")[1] || "File"}
+                        {selectedNode.data.label}
                     </h3>
 
                     <p>
                         <b>Path:</b>
                         <br />
-                        {selectedNode.data.label.split("::")[0]}
+                        {selectedNode.id.includes("::")
+                            ? selectedNode.id.split("::")[0]
+                            : selectedNode.id}
                     </p>
 
                     {selectedNode.relations && (
                         <>
-                            <b>Callers:</b>
+                            <div style={{ marginTop: 10 }}>
+                                <b>Callers:</b>
 
-                            {selectedNode.relations.callers.map(
-                                (x: string) => (
-                                    <p key={x}>{x}</p>
-                                )
-                            )}
+                                {selectedNode.relations.callers.length === 0 ? (
+                                    <p style={{ color: "#888" }}>None found</p>
+                                ) : (
+                                    selectedNode.relations.callers.map(
+                                        (x: string) => (
+                                            <p key={x}>{x}</p>
+                                        )
+                                    )
+                                )}
+                            </div>
 
-                            <b>Callees:</b>
+                            <div style={{ marginTop: 10 }}>
+                                <b>Callees:</b>
 
-                            {selectedNode.relations.callees.map(
-                                (x: string) => (
-                                    <p key={x}>{x}</p>
-                                )
-                            )}
+                                {selectedNode.relations.callees.length === 0 ? (
+                                    <p style={{ color: "#888" }}>None found</p>
+                                ) : (
+                                    selectedNode.relations.callees.map(
+                                        (x: string) => (
+                                            <p key={x}>{x}</p>
+                                        )
+                                    )
+                                )}
+                            </div>
                         </>
                     )}
 

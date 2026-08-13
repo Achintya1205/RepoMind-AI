@@ -1190,23 +1190,23 @@
         }
     },
     {
-        "content": "File: sample_repos\\bulletproof-react\\apps\\react-vite\\src\\testing\\mocks\\utils.ts\n\nLines: 32-37\n\nType: function\n\nName: decode\n\nCode:\n\n() => {\r\n  const delayTime = import.meta.env.TEST\r\n    ? 200\r\n    : Math.floor(Math.random() * 700) + 300;\r\n  return delay(delayTime);\r\n}",
+        "content": "File: sample_repos\\bulletproof-react\\apps\\react-vite\\src\\testing\\mocks\\utils.ts\n\nLines: 22-30\n\nType: function\n\nName: decode\n\nCode:\n\n(str: string) => {\r\n  let hash = 5381,\r\n    i = str.length;\r\n\r\n  while (i) {\r\n    hash = (hash * 33) ^ str.charCodeAt(--i);\r\n  }\r\n  return String(hash >>> 0);\r\n}",
         "metadata": {
             "file": "sample_repos\\bulletproof-react\\apps\\react-vite\\src\\testing\\mocks\\utils.ts",
             "type": "function",
             "name": "decode",
-            "start_line": 32,
-            "end_line": 37
+            "start_line": 22,
+            "end_line": 30
         }
     },
     {
-        "content": "File: sample_repos\\bulletproof-react\\apps\\react-vite\\src\\testing\\mocks\\utils.ts\n\nLines: 22-30\n\nType: function\n\nName: hash\n\nCode:\n\n(str: string) => {\r\n  let hash = 5381,\r\n    i = str.length;\r\n\r\n  while (i) {\r\n    hash = (hash * 33) ^ str.charCodeAt(--i);\r\n  }\r\n  return String(hash >>> 0);\r\n}",
+        "content": "File: sample_repos\\bulletproof-react\\apps\\react-vite\\src\\testing\\mocks\\utils.ts\n\nLines: 32-37\n\nType: function\n\nName: hash\n\nCode:\n\n() => {\r\n  const delayTime = import.meta.env.TEST\r\n    ? 200\r\n    : Math.floor(Math.random() * 700) + 300;\r\n  return delay(delayTime);\r\n}",
         "metadata": {
             "file": "sample_repos\\bulletproof-react\\apps\\react-vite\\src\\testing\\mocks\\utils.ts",
             "type": "function",
             "name": "hash",
-            "start_line": 22,
-            "end_line": 30
+            "start_line": 32,
+            "end_line": 37
         }
     },
     {
@@ -3230,33 +3230,33 @@
         }
     },
     {
-        "content": "File: sample_repos\\bulletproof-react\\apps\\react-vite\\src\\components\\ui\\table\\pagination.tsx\n\nLines: 48-70\n\nType: function\n\nName: PaginationNext\n\nCode:\n\n({\r\n  className,\r\n  isActive,\r\n  size = 'icon',\r\n  children,\r\n  href,\r\n  ...props\r\n}: PaginationLinkProps) => (\r\n  <Link\r\n    to={href as string}\r\n    aria-current={isActive ? 'page' : undefined}\r\n    className={cn(\r\n      buttonVariants({\r\n        variant: isActive ? 'outline' : 'ghost',\r\n        size,\r\n      }),\r\n      className,\r\n    )}\r\n    {...props}\r\n  >\r\n    {children}\r\n  </Link>\r\n)",
+        "content": "File: sample_repos\\bulletproof-react\\apps\\react-vite\\src\\components\\ui\\table\\pagination.tsx\n\nLines: 73-86\n\nType: function\n\nName: PaginationNext\n\nCode:\n\n({\r\n  className,\r\n  ...props\r\n}: React.ComponentProps<typeof PaginationLink>) => (\r\n  <PaginationLink\r\n    aria-label=\"Go to previous page\"\r\n    size=\"default\"\r\n    className={cn('gap-1 pl-2.5', className)}\r\n    {...props}\r\n  >\r\n    <ChevronLeftIcon className=\"size-4\" />\r\n    <span>Previous</span>\r\n  </PaginationLink>\r\n)",
         "metadata": {
             "file": "sample_repos\\bulletproof-react\\apps\\react-vite\\src\\components\\ui\\table\\pagination.tsx",
             "type": "function",
             "name": "PaginationNext",
+            "start_line": 73,
+            "end_line": 86
+        }
+    },
+    {
+        "content": "File: sample_repos\\bulletproof-react\\apps\\react-vite\\src\\components\\ui\\table\\pagination.tsx\n\nLines: 48-70\n\nType: function\n\nName: PaginationEllipsis\n\nCode:\n\n({\r\n  className,\r\n  isActive,\r\n  size = 'icon',\r\n  children,\r\n  href,\r\n  ...props\r\n}: PaginationLinkProps) => (\r\n  <Link\r\n    to={href as string}\r\n    aria-current={isActive ? 'page' : undefined}\r\n    className={cn(\r\n      buttonVariants({\r\n        variant: isActive ? 'outline' : 'ghost',\r\n        size,\r\n      }),\r\n      className,\r\n    )}\r\n    {...props}\r\n  >\r\n    {children}\r\n  </Link>\r\n)",
+        "metadata": {
+            "file": "sample_repos\\bulletproof-react\\apps\\react-vite\\src\\components\\ui\\table\\pagination.tsx",
+            "type": "function",
+            "name": "PaginationEllipsis",
             "start_line": 48,
             "end_line": 70
         }
     },
     {
-        "content": "File: sample_repos\\bulletproof-react\\apps\\react-vite\\src\\components\\ui\\table\\pagination.tsx\n\nLines: 89-102\n\nType: function\n\nName: PaginationEllipsis\n\nCode:\n\n({\r\n  className,\r\n  ...props\r\n}: React.ComponentProps<typeof PaginationLink>) => (\r\n  <PaginationLink\r\n    aria-label=\"Go to next page\"\r\n    size=\"default\"\r\n    className={cn('gap-1 pr-2.5', className)}\r\n    {...props}\r\n  >\r\n    <span>Next</span>\r\n    <ChevronRightIcon className=\"size-4\" />\r\n  </PaginationLink>\r\n)",
-        "metadata": {
-            "file": "sample_repos\\bulletproof-react\\apps\\react-vite\\src\\components\\ui\\table\\pagination.tsx",
-            "type": "function",
-            "name": "PaginationEllipsis",
-            "start_line": 89,
-            "end_line": 102
-        }
-    },
-    {
-        "content": "File: sample_repos\\bulletproof-react\\apps\\react-vite\\src\\components\\ui\\table\\pagination.tsx\n\nLines: 73-86\n\nType: function\n\nName: PaginationPrevious\n\nCode:\n\n({\r\n  className,\r\n  ...props\r\n}: React.ComponentProps<typeof PaginationLink>) => (\r\n  <PaginationLink\r\n    aria-label=\"Go to previous page\"\r\n    size=\"default\"\r\n    className={cn('gap-1 pl-2.5', className)}\r\n    {...props}\r\n  >\r\n    <ChevronLeftIcon className=\"size-4\" />\r\n    <span>Previous</span>\r\n  </PaginationLink>\r\n)",
+        "content": "File: sample_repos\\bulletproof-react\\apps\\react-vite\\src\\components\\ui\\table\\pagination.tsx\n\nLines: 89-102\n\nType: function\n\nName: PaginationPrevious\n\nCode:\n\n({\r\n  className,\r\n  ...props\r\n}: React.ComponentProps<typeof PaginationLink>) => (\r\n  <PaginationLink\r\n    aria-label=\"Go to next page\"\r\n    size=\"default\"\r\n    className={cn('gap-1 pr-2.5', className)}\r\n    {...props}\r\n  >\r\n    <span>Next</span>\r\n    <ChevronRightIcon className=\"size-4\" />\r\n  </PaginationLink>\r\n)",
         "metadata": {
             "file": "sample_repos\\bulletproof-react\\apps\\react-vite\\src\\components\\ui\\table\\pagination.tsx",
             "type": "function",
             "name": "PaginationPrevious",
-            "start_line": 73,
-            "end_line": 86
+            "start_line": 89,
+            "end_line": 102
         }
     },
     {
@@ -3440,31 +3440,21 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\crud.py\n\nLines: 10-17\n\nType: function\n\nName: get_user_by_email\n\nCode:\n\ndef create_user(*, session: Session, user_create: UserCreate) -> User:\r\n    db_obj = User.model_validate(\r\n        user_create, update={\"hashed_password\": get_password_hash(user_create.password)}\r\n    )\r\n    session.add(db_obj)\r\n    session.commit()\r\n    session.refresh(db_obj)\r\n    return db_obj",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\crud.py\n\nLines: 10-17\n\nType: function\n\nName: create_item\n\nCode:\n\ndef create_user(*, session: Session, user_create: UserCreate) -> User:\r\n    db_obj = User.model_validate(\r\n        user_create, update={\"hashed_password\": get_password_hash(user_create.password)}\r\n    )\r\n    session.add(db_obj)\r\n    session.commit()\r\n    session.refresh(db_obj)\r\n    return db_obj",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\crud.py",
             "type": "function",
-            "name": "get_user_by_email",
+            "name": "create_item",
             "start_line": 10,
             "end_line": 17
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\crud.py\n\nLines: 63-68\n\nType: function\n\nName: create_item\n\nCode:\n\ndef create_item(*, session: Session, item_in: ItemCreate, owner_id: uuid.UUID) -> Item:\r\n    db_item = Item.model_validate(item_in, update={\"owner_id\": owner_id})\r\n    session.add(db_item)\r\n    session.commit()\r\n    session.refresh(db_item)\r\n    return db_item",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\crud.py\n\nLines: 45-60\n\nType: function\n\nName: get_user_by_email\n\nCode:\n\ndef authenticate(*, session: Session, email: str, password: str) -> User | None:\r\n    db_user = get_user_by_email(session=session, email=email)\r\n    if not db_user:\r\n        # Prevent timing attacks by running password verification even when user doesn't exist\r\n        # This ensures the response time is similar whether or not the email exists\r\n        verify_password(password, DUMMY_HASH)\r\n        return None\r\n    verified, updated_password_hash = verify_password(password, db_user.hashed_password)\r\n    if not verified:\r\n        return None\r\n    if updated_password_hash:\r\n        db_user.hashed_password = updated_password_hash\r\n        session.add(db_user)\r\n        session.commit()\r\n        session.refresh(db_user)\r\n    return db_user",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\crud.py",
             "type": "function",
-            "name": "create_item",
-            "start_line": 63,
-            "end_line": 68
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\crud.py\n\nLines: 45-60\n\nType: function\n\nName: update_user\n\nCode:\n\ndef authenticate(*, session: Session, email: str, password: str) -> User | None:\r\n    db_user = get_user_by_email(session=session, email=email)\r\n    if not db_user:\r\n        # Prevent timing attacks by running password verification even when user doesn't exist\r\n        # This ensures the response time is similar whether or not the email exists\r\n        verify_password(password, DUMMY_HASH)\r\n        return None\r\n    verified, updated_password_hash = verify_password(password, db_user.hashed_password)\r\n    if not verified:\r\n        return None\r\n    if updated_password_hash:\r\n        db_user.hashed_password = updated_password_hash\r\n        session.add(db_user)\r\n        session.commit()\r\n        session.refresh(db_user)\r\n    return db_user",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\crud.py",
-            "type": "function",
-            "name": "update_user",
+            "name": "get_user_by_email",
             "start_line": 45,
             "end_line": 60
         }
@@ -3477,6 +3467,16 @@
             "name": "authenticate",
             "start_line": 34,
             "end_line": 37
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\crud.py\n\nLines: 63-68\n\nType: function\n\nName: update_user\n\nCode:\n\ndef create_item(*, session: Session, item_in: ItemCreate, owner_id: uuid.UUID) -> Item:\r\n    db_item = Item.model_validate(item_in, update={\"owner_id\": owner_id})\r\n    session.add(db_item)\r\n    session.commit()\r\n    session.refresh(db_item)\r\n    return db_item",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\crud.py",
+            "type": "function",
+            "name": "update_user",
+            "start_line": 63,
+            "end_line": 68
         }
     },
     {
@@ -3520,151 +3520,21 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 116-117\n\nType: class\n\nName: UsersPublic\n\nCode:\n\nclass Message(SQLModel):\r\n    message: str",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
-            "type": "class",
-            "name": "UsersPublic",
-            "start_line": 116,
-            "end_line": 117
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 121-123\n\nType: class\n\nName: UserPublic\n\nCode:\n\nclass Token(SQLModel):\r\n    access_token: str\r\n    token_type: str = \"bearer\"",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
-            "type": "class",
-            "name": "UserPublic",
-            "start_line": 121,
-            "end_line": 123
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 131-133\n\nType: class\n\nName: ItemsPublic\n\nCode:\n\nclass NewPassword(SQLModel):\r\n    token: str\r\n    new_password: str = Field(min_length=8, max_length=128)",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 14-18\n\nType: class\n\nName: ItemsPublic\n\nCode:\n\nclass UserBase(SQLModel):\r\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\r\n    is_active: bool = True\r\n    is_superuser: bool = False\r\n    full_name: str | None = Field(default=None, max_length=255)",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
             "type": "class",
             "name": "ItemsPublic",
-            "start_line": 131,
-            "end_line": 133
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 33-38\n\nType: class\n\nName: ItemUpdate\n\nCode:\n\nclass UserUpdate(SQLModel):\r\n    email: EmailStr | None = Field(default=None, max_length=255)\r\n    is_active: bool | None = None\r\n    is_superuser: bool | None = None\r\n    full_name: str | None = Field(default=None, max_length=255)\r\n    password: str | None = Field(default=None, min_length=8, max_length=128)",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
-            "type": "class",
-            "name": "ItemUpdate",
-            "start_line": 33,
-            "end_line": 38
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 63-65\n\nType: class\n\nName: ItemPublic\n\nCode:\n\nclass UserPublic(UserBase):\r\n    id: uuid.UUID\r\n    created_at: datetime | None = None",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
-            "type": "class",
-            "name": "ItemPublic",
-            "start_line": 63,
-            "end_line": 65
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 104-107\n\nType: class\n\nName: NewPassword\n\nCode:\n\nclass ItemPublic(ItemBase):\r\n    id: uuid.UUID\r\n    owner_id: uuid.UUID\r\n    created_at: datetime | None = None",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
-            "type": "class",
-            "name": "NewPassword",
-            "start_line": 104,
-            "end_line": 107
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 110-112\n\nType: class\n\nName: UserBase\n\nCode:\n\nclass ItemsPublic(SQLModel):\r\n    data: list[ItemPublic]\r\n    count: int",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
-            "type": "class",
-            "name": "UserBase",
-            "start_line": 110,
-            "end_line": 112
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 26-29\n\nType: class\n\nName: UserCreate\n\nCode:\n\nclass UserRegister(SQLModel):\r\n    email: EmailStr = Field(max_length=255)\r\n    password: str = Field(min_length=8, max_length=128)\r\n    full_name: str | None = Field(default=None, max_length=255)",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
-            "type": "class",
-            "name": "UserCreate",
-            "start_line": 26,
-            "end_line": 29
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 52-59\n\nType: class\n\nName: UserRegister\n\nCode:\n\nclass User(UserBase, table=True):\r\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\r\n    hashed_password: str\r\n    created_at: datetime | None = Field(\r\n        default_factory=get_datetime_utc,\r\n        sa_type=DateTime(timezone=True),  # type: ignore\r\n    )\r\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
-            "type": "class",
-            "name": "UserRegister",
-            "start_line": 52,
-            "end_line": 59
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 91-100\n\nType: class\n\nName: UserUpdateMe\n\nCode:\n\nclass Item(ItemBase, table=True):\r\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\r\n    created_at: datetime | None = Field(\r\n        default_factory=get_datetime_utc,\r\n        sa_type=DateTime(timezone=True),  # type: ignore\r\n    )\r\n    owner_id: uuid.UUID = Field(\r\n        foreign_key=\"user.id\", nullable=False, ondelete=\"CASCADE\"\r\n    )\r\n    owner: User | None = Relationship(back_populates=\"items\")",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
-            "type": "class",
-            "name": "UserUpdateMe",
-            "start_line": 91,
-            "end_line": 100
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 85-87\n\nType: class\n\nName: UserUpdate\n\nCode:\n\nclass ItemUpdate(SQLModel):\r\n    title: str | None = Field(default=None, min_length=1, max_length=255)\r\n    description: str | None = Field(default=None, max_length=255)",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
-            "type": "class",
-            "name": "UserUpdate",
-            "start_line": 85,
-            "end_line": 87
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 80-81\n\nType: class\n\nName: UpdatePassword\n\nCode:\n\nclass ItemCreate(ItemBase):\r\n    pass",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
-            "type": "class",
-            "name": "UpdatePassword",
-            "start_line": 80,
-            "end_line": 81
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 22-23\n\nType: class\n\nName: TokenPayload\n\nCode:\n\nclass UserCreate(UserBase):\r\n    password: str = Field(min_length=8, max_length=128)",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
-            "type": "class",
-            "name": "TokenPayload",
-            "start_line": 22,
-            "end_line": 23
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 14-18\n\nType: class\n\nName: Message\n\nCode:\n\nclass UserBase(SQLModel):\r\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\r\n    is_active: bool = True\r\n    is_superuser: bool = False\r\n    full_name: str | None = Field(default=None, max_length=255)",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
-            "type": "class",
-            "name": "Message",
             "start_line": 14,
             "end_line": 18
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 41-43\n\nType: class\n\nName: Token\n\nCode:\n\nclass UserUpdateMe(SQLModel):\r\n    full_name: str | None = Field(default=None, max_length=255)\r\n    email: EmailStr | None = Field(default=None, max_length=255)",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 41-43\n\nType: class\n\nName: ItemPublic\n\nCode:\n\nclass UserUpdateMe(SQLModel):\r\n    full_name: str | None = Field(default=None, max_length=255)\r\n    email: EmailStr | None = Field(default=None, max_length=255)",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
             "type": "class",
-            "name": "Token",
+            "name": "ItemPublic",
             "start_line": 41,
             "end_line": 43
         }
@@ -3680,33 +3550,163 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 46-48\n\nType: class\n\nName: ItemCreate\n\nCode:\n\nclass UpdatePassword(SQLModel):\r\n    current_password: str = Field(min_length=8, max_length=128)\r\n    new_password: str = Field(min_length=8, max_length=128)",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 46-48\n\nType: class\n\nName: Message\n\nCode:\n\nclass UpdatePassword(SQLModel):\r\n    current_password: str = Field(min_length=8, max_length=128)\r\n    new_password: str = Field(min_length=8, max_length=128)",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
             "type": "class",
-            "name": "ItemCreate",
+            "name": "Message",
             "start_line": 46,
             "end_line": 48
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 68-70\n\nType: class\n\nName: ItemBase\n\nCode:\n\nclass UsersPublic(SQLModel):\r\n    data: list[UserPublic]\r\n    count: int",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 68-70\n\nType: class\n\nName: ItemUpdate\n\nCode:\n\nclass UsersPublic(SQLModel):\r\n    data: list[UserPublic]\r\n    count: int",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
             "type": "class",
-            "name": "ItemBase",
+            "name": "ItemUpdate",
             "start_line": 68,
             "end_line": 70
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 127-128\n\nType: class\n\nName: User\n\nCode:\n\nclass TokenPayload(SQLModel):\r\n    sub: str | None = None",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 127-128\n\nType: class\n\nName: ItemCreate\n\nCode:\n\nclass TokenPayload(SQLModel):\r\n    sub: str | None = None",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
+            "type": "class",
+            "name": "ItemCreate",
+            "start_line": 127,
+            "end_line": 128
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 80-81\n\nType: class\n\nName: ItemBase\n\nCode:\n\nclass ItemCreate(ItemBase):\r\n    pass",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
+            "type": "class",
+            "name": "ItemBase",
+            "start_line": 80,
+            "end_line": 81
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 22-23\n\nType: class\n\nName: Token\n\nCode:\n\nclass UserCreate(UserBase):\r\n    password: str = Field(min_length=8, max_length=128)",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
+            "type": "class",
+            "name": "Token",
+            "start_line": 22,
+            "end_line": 23
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 26-29\n\nType: class\n\nName: UserBase\n\nCode:\n\nclass UserRegister(SQLModel):\r\n    email: EmailStr = Field(max_length=255)\r\n    password: str = Field(min_length=8, max_length=128)\r\n    full_name: str | None = Field(default=None, max_length=255)",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
+            "type": "class",
+            "name": "UserBase",
+            "start_line": 26,
+            "end_line": 29
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 52-59\n\nType: class\n\nName: UserUpdateMe\n\nCode:\n\nclass User(UserBase, table=True):\r\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\r\n    hashed_password: str\r\n    created_at: datetime | None = Field(\r\n        default_factory=get_datetime_utc,\r\n        sa_type=DateTime(timezone=True),  # type: ignore\r\n    )\r\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
+            "type": "class",
+            "name": "UserUpdateMe",
+            "start_line": 52,
+            "end_line": 59
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 91-100\n\nType: class\n\nName: UserUpdate\n\nCode:\n\nclass Item(ItemBase, table=True):\r\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\r\n    created_at: datetime | None = Field(\r\n        default_factory=get_datetime_utc,\r\n        sa_type=DateTime(timezone=True),  # type: ignore\r\n    )\r\n    owner_id: uuid.UUID = Field(\r\n        foreign_key=\"user.id\", nullable=False, ondelete=\"CASCADE\"\r\n    )\r\n    owner: User | None = Relationship(back_populates=\"items\")",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
+            "type": "class",
+            "name": "UserUpdate",
+            "start_line": 91,
+            "end_line": 100
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 85-87\n\nType: class\n\nName: UserCreate\n\nCode:\n\nclass ItemUpdate(SQLModel):\r\n    title: str | None = Field(default=None, min_length=1, max_length=255)\r\n    description: str | None = Field(default=None, max_length=255)",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
+            "type": "class",
+            "name": "UserCreate",
+            "start_line": 85,
+            "end_line": 87
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 116-117\n\nType: class\n\nName: UserRegister\n\nCode:\n\nclass Message(SQLModel):\r\n    message: str",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
+            "type": "class",
+            "name": "UserRegister",
+            "start_line": 116,
+            "end_line": 117
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 121-123\n\nType: class\n\nName: UpdatePassword\n\nCode:\n\nclass Token(SQLModel):\r\n    access_token: str\r\n    token_type: str = \"bearer\"",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
+            "type": "class",
+            "name": "UpdatePassword",
+            "start_line": 121,
+            "end_line": 123
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 131-133\n\nType: class\n\nName: User\n\nCode:\n\nclass NewPassword(SQLModel):\r\n    token: str\r\n    new_password: str = Field(min_length=8, max_length=128)",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
             "type": "class",
             "name": "User",
-            "start_line": 127,
-            "end_line": 128
+            "start_line": 131,
+            "end_line": 133
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 33-38\n\nType: class\n\nName: UserPublic\n\nCode:\n\nclass UserUpdate(SQLModel):\r\n    email: EmailStr | None = Field(default=None, max_length=255)\r\n    is_active: bool | None = None\r\n    is_superuser: bool | None = None\r\n    full_name: str | None = Field(default=None, max_length=255)\r\n    password: str | None = Field(default=None, min_length=8, max_length=128)",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
+            "type": "class",
+            "name": "UserPublic",
+            "start_line": 33,
+            "end_line": 38
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 63-65\n\nType: class\n\nName: UsersPublic\n\nCode:\n\nclass UserPublic(UserBase):\r\n    id: uuid.UUID\r\n    created_at: datetime | None = None",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
+            "type": "class",
+            "name": "UsersPublic",
+            "start_line": 63,
+            "end_line": 65
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 104-107\n\nType: class\n\nName: NewPassword\n\nCode:\n\nclass ItemPublic(ItemBase):\r\n    id: uuid.UUID\r\n    owner_id: uuid.UUID\r\n    created_at: datetime | None = None",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
+            "type": "class",
+            "name": "NewPassword",
+            "start_line": 104,
+            "end_line": 107
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py\n\nLines: 110-112\n\nType: class\n\nName: TokenPayload\n\nCode:\n\nclass ItemsPublic(SQLModel):\r\n    data: list[ItemPublic]\r\n    count: int",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\models.py",
+            "type": "class",
+            "name": "TokenPayload",
+            "start_line": 110,
+            "end_line": 112
         }
     },
     {
@@ -3730,41 +3730,41 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py\n\nLines: 25-30\n\nType: function\n\nName: verify_password_reset_token\n\nCode:\n\ndef render_email_template(*, template_name: str, context: dict[str, Any]) -> str:\r\n    template_str = (\r\n        Path(__file__).parent / \"email-templates\" / \"build\" / template_name\r\n    ).read_text()\r\n    html_content = Template(template_str).render(context)\r\n    return html_content",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py\n\nLines: 25-30\n\nType: function\n\nName: generate_new_account_email\n\nCode:\n\ndef render_email_template(*, template_name: str, context: dict[str, Any]) -> str:\r\n    template_str = (\r\n        Path(__file__).parent / \"email-templates\" / \"build\" / template_name\r\n    ).read_text()\r\n    html_content = Template(template_str).render(context)\r\n    return html_content",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py",
             "type": "function",
-            "name": "verify_password_reset_token",
+            "name": "generate_new_account_email",
             "start_line": 25,
             "end_line": 30
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py\n\nLines: 86-101\n\nType: function\n\nName: generate_reset_password_email\n\nCode:\n\ndef generate_new_account_email(\r\n    email_to: str, username: str, password: str\r\n) -> EmailData:\r\n    project_name = settings.PROJECT_NAME\r\n    subject = f\"{project_name} - New account for user {username}\"\r\n    html_content = render_email_template(\r\n        template_name=\"new_account.html\",\r\n        context={\r\n            \"project_name\": settings.PROJECT_NAME,\r\n            \"username\": username,\r\n            \"password\": password,\r\n            \"email\": email_to,\r\n            \"link\": settings.FRONTEND_HOST,\r\n        },\r\n    )\r\n    return EmailData(html_content=html_content, subject=subject)",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py\n\nLines: 59-66\n\nType: function\n\nName: generate_reset_password_email\n\nCode:\n\ndef generate_test_email(email_to: str) -> EmailData:\r\n    project_name = settings.PROJECT_NAME\r\n    subject = f\"{project_name} - Test email\"\r\n    html_content = render_email_template(\r\n        template_name=\"test_email.html\",\r\n        context={\"project_name\": settings.PROJECT_NAME, \"email\": email_to},\r\n    )\r\n    return EmailData(html_content=html_content, subject=subject)",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py",
             "type": "function",
             "name": "generate_reset_password_email",
-            "start_line": 86,
-            "end_line": 101
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py\n\nLines: 59-66\n\nType: function\n\nName: generate_test_email\n\nCode:\n\ndef generate_test_email(email_to: str) -> EmailData:\r\n    project_name = settings.PROJECT_NAME\r\n    subject = f\"{project_name} - Test email\"\r\n    html_content = render_email_template(\r\n        template_name=\"test_email.html\",\r\n        context={\"project_name\": settings.PROJECT_NAME, \"email\": email_to},\r\n    )\r\n    return EmailData(html_content=html_content, subject=subject)",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py",
-            "type": "function",
-            "name": "generate_test_email",
             "start_line": 59,
             "end_line": 66
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py\n\nLines: 33-56\n\nType: function\n\nName: send_email\n\nCode:\n\ndef send_email(\r\n    *,\r\n    email_to: str,\r\n    subject: str = \"\",\r\n    html_content: str = \"\",\r\n) -> None:\r\n    assert settings.emails_enabled, \"no provided configuration for email variables\"\r\n    assert settings.EMAILS_FROM_EMAIL  # For type checker\r\n    message = emails.message.Message(\r\n        subject=subject,\r\n        html=html_content,\r\n        mail_from=(settings.EMAILS_FROM_NAME, settings.EMAILS_FROM_EMAIL),\r\n    )\r\n    smtp_options = {\"host\": settings.SMTP_HOST, \"port\": settings.SMTP_PORT}\r\n    if settings.SMTP_TLS:\r\n        smtp_options[\"tls\"] = True\r\n    elif settings.SMTP_SSL:\r\n        smtp_options[\"ssl\"] = True\r\n    if settings.SMTP_USER:\r\n        smtp_options[\"user\"] = settings.SMTP_USER\r\n    if settings.SMTP_PASSWORD:\r\n        smtp_options[\"password\"] = settings.SMTP_PASSWORD\r\n    response = message.send(to=email_to, smtp=smtp_options)\r\n    logger.info(f\"send email result: {response}\")",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py\n\nLines: 86-101\n\nType: function\n\nName: send_email\n\nCode:\n\ndef generate_new_account_email(\r\n    email_to: str, username: str, password: str\r\n) -> EmailData:\r\n    project_name = settings.PROJECT_NAME\r\n    subject = f\"{project_name} - New account for user {username}\"\r\n    html_content = render_email_template(\r\n        template_name=\"new_account.html\",\r\n        context={\r\n            \"project_name\": settings.PROJECT_NAME,\r\n            \"username\": username,\r\n            \"password\": password,\r\n            \"email\": email_to,\r\n            \"link\": settings.FRONTEND_HOST,\r\n        },\r\n    )\r\n    return EmailData(html_content=html_content, subject=subject)",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py",
             "type": "function",
             "name": "send_email",
+            "start_line": 86,
+            "end_line": 101
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py\n\nLines: 33-56\n\nType: function\n\nName: generate_test_email\n\nCode:\n\ndef send_email(\r\n    *,\r\n    email_to: str,\r\n    subject: str = \"\",\r\n    html_content: str = \"\",\r\n) -> None:\r\n    assert settings.emails_enabled, \"no provided configuration for email variables\"\r\n    assert settings.EMAILS_FROM_EMAIL  # For type checker\r\n    message = emails.message.Message(\r\n        subject=subject,\r\n        html=html_content,\r\n        mail_from=(settings.EMAILS_FROM_NAME, settings.EMAILS_FROM_EMAIL),\r\n    )\r\n    smtp_options = {\"host\": settings.SMTP_HOST, \"port\": settings.SMTP_PORT}\r\n    if settings.SMTP_TLS:\r\n        smtp_options[\"tls\"] = True\r\n    elif settings.SMTP_SSL:\r\n        smtp_options[\"ssl\"] = True\r\n    if settings.SMTP_USER:\r\n        smtp_options[\"user\"] = settings.SMTP_USER\r\n    if settings.SMTP_PASSWORD:\r\n        smtp_options[\"password\"] = settings.SMTP_PASSWORD\r\n    response = message.send(to=email_to, smtp=smtp_options)\r\n    logger.info(f\"send email result: {response}\")",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py",
+            "type": "function",
+            "name": "generate_test_email",
             "start_line": 33,
             "end_line": 56
         }
@@ -3780,11 +3780,11 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py\n\nLines: 104-114\n\nType: function\n\nName: generate_new_account_email\n\nCode:\n\ndef generate_password_reset_token(email: str) -> str:\r\n    delta = timedelta(hours=settings.EMAIL_RESET_TOKEN_EXPIRE_HOURS)\r\n    now = datetime.now(UTC)\r\n    expires = now + delta\r\n    exp = expires.timestamp()\r\n    encoded_jwt = jwt.encode(\r\n        {\"exp\": exp, \"nbf\": now, \"sub\": email},\r\n        settings.SECRET_KEY,\r\n        algorithm=security.ALGORITHM,\r\n    )\r\n    return encoded_jwt",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py\n\nLines: 104-114\n\nType: function\n\nName: verify_password_reset_token\n\nCode:\n\ndef generate_password_reset_token(email: str) -> str:\r\n    delta = timedelta(hours=settings.EMAIL_RESET_TOKEN_EXPIRE_HOURS)\r\n    now = datetime.now(UTC)\r\n    expires = now + delta\r\n    exp = expires.timestamp()\r\n    encoded_jwt = jwt.encode(\r\n        {\"exp\": exp, \"nbf\": now, \"sub\": email},\r\n        settings.SECRET_KEY,\r\n        algorithm=security.ALGORITHM,\r\n    )\r\n    return encoded_jwt",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\utils.py",
             "type": "function",
-            "name": "generate_new_account_email",
+            "name": "verify_password_reset_token",
             "start_line": 104,
             "end_line": 114
         }
@@ -3950,113 +3950,103 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\deps.py\n\nLines: 30-46\n\nType: function\n\nName: get_current_active_superuser\n\nCode:\n\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\r\n    try:\r\n        payload = jwt.decode(\r\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\r\n        )\r\n        token_data = TokenPayload(**payload)\r\n    except InvalidTokenError, ValidationError:\r\n        raise HTTPException(\r\n            status_code=status.HTTP_403_FORBIDDEN,\r\n            detail=\"Could not validate credentials\",\r\n        )\r\n    user = session.get(User, token_data.sub)\r\n    if not user:\r\n        raise HTTPException(status_code=404, detail=\"User not found\")\r\n    if not user.is_active:\r\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\r\n    return user",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\deps.py\n\nLines: 52-57\n\nType: function\n\nName: get_current_active_superuser\n\nCode:\n\ndef get_current_active_superuser(current_user: CurrentUser) -> User:\r\n    if not current_user.is_superuser:\r\n        raise HTTPException(\r\n            status_code=403, detail=\"The user doesn't have enough privileges\"\r\n        )\r\n    return current_user",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\deps.py",
             "type": "function",
             "name": "get_current_active_superuser",
-            "start_line": 30,
-            "end_line": 46
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\deps.py\n\nLines: 52-57\n\nType: function\n\nName: get_current_user\n\nCode:\n\ndef get_current_active_superuser(current_user: CurrentUser) -> User:\r\n    if not current_user.is_superuser:\r\n        raise HTTPException(\r\n            status_code=403, detail=\"The user doesn't have enough privileges\"\r\n        )\r\n    return current_user",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\deps.py",
-            "type": "function",
-            "name": "get_current_user",
             "start_line": 52,
             "end_line": 57
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py\n\nLines: 14-45\n\nType: function\n\nName: delete_item\n\nCode:\n\ndef read_items(\r\n    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100\r\n) -> Any:\r\n    \"\"\"\r\n    Retrieve items.\r\n    \"\"\"\r\n\r\n    if current_user.is_superuser:\r\n        count_statement = select(func.count()).select_from(Item)\r\n        count = session.exec(count_statement).one()\r\n        statement = (\r\n            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)\r\n        )\r\n        items = session.exec(statement).all()\r\n    else:\r\n        count_statement = (\r\n            select(func.count())\r\n            .select_from(Item)\r\n            .where(Item.owner_id == current_user.id)\r\n        )\r\n        count = session.exec(count_statement).one()\r\n        statement = (\r\n            select(Item)\r\n            .where(Item.owner_id == current_user.id)\r\n            .order_by(col(Item.created_at).desc())\r\n            .offset(skip)\r\n            .limit(limit)\r\n        )\r\n        items = session.exec(statement).all()\r\n\r\n    items_public = [ItemPublic.model_validate(item) for item in items]\r\n    return ItemsPublic(data=items_public, count=count)",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\deps.py\n\nLines: 30-46\n\nType: function\n\nName: get_current_user\n\nCode:\n\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\r\n    try:\r\n        payload = jwt.decode(\r\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\r\n        )\r\n        token_data = TokenPayload(**payload)\r\n    except InvalidTokenError, ValidationError:\r\n        raise HTTPException(\r\n            status_code=status.HTTP_403_FORBIDDEN,\r\n            detail=\"Could not validate credentials\",\r\n        )\r\n    user = session.get(User, token_data.sub)\r\n    if not user:\r\n        raise HTTPException(status_code=404, detail=\"User not found\")\r\n    if not user.is_active:\r\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\r\n    return user",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\deps.py",
+            "type": "function",
+            "name": "get_current_user",
+            "start_line": 30,
+            "end_line": 46
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py\n\nLines: 14-45\n\nType: function\n\nName: read_item\n\nCode:\n\ndef read_items(\r\n    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100\r\n) -> Any:\r\n    \"\"\"\r\n    Retrieve items.\r\n    \"\"\"\r\n\r\n    if current_user.is_superuser:\r\n        count_statement = select(func.count()).select_from(Item)\r\n        count = session.exec(count_statement).one()\r\n        statement = (\r\n            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)\r\n        )\r\n        items = session.exec(statement).all()\r\n    else:\r\n        count_statement = (\r\n            select(func.count())\r\n            .select_from(Item)\r\n            .where(Item.owner_id == current_user.id)\r\n        )\r\n        count = session.exec(count_statement).one()\r\n        statement = (\r\n            select(Item)\r\n            .where(Item.owner_id == current_user.id)\r\n            .order_by(col(Item.created_at).desc())\r\n            .offset(skip)\r\n            .limit(limit)\r\n        )\r\n        items = session.exec(statement).all()\r\n\r\n    items_public = [ItemPublic.model_validate(item) for item in items]\r\n    return ItemsPublic(data=items_public, count=count)",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py",
             "type": "function",
-            "name": "delete_item",
+            "name": "read_item",
             "start_line": 14,
             "end_line": 45
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py\n\nLines: 100-113\n\nType: function\n\nName: update_item\n\nCode:\n\ndef delete_item(\r\n    session: SessionDep, current_user: CurrentUser, id: uuid.UUID\r\n) -> Message:\r\n    \"\"\"\r\n    Delete an item.\r\n    \"\"\"\r\n    item = session.get(Item, id)\r\n    if not item:\r\n        raise HTTPException(status_code=404, detail=\"Item not found\")\r\n    if not current_user.is_superuser and (item.owner_id != current_user.id):\r\n        raise HTTPException(status_code=403, detail=\"Not enough permissions\")\r\n    session.delete(item)\r\n    session.commit()\r\n    return Message(message=\"Item deleted successfully\")",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py\n\nLines: 76-96\n\nType: function\n\nName: update_item\n\nCode:\n\ndef update_item(\r\n    *,\r\n    session: SessionDep,\r\n    current_user: CurrentUser,\r\n    id: uuid.UUID,\r\n    item_in: ItemUpdate,\r\n) -> Any:\r\n    \"\"\"\r\n    Update an item.\r\n    \"\"\"\r\n    item = session.get(Item, id)\r\n    if not item:\r\n        raise HTTPException(status_code=404, detail=\"Item not found\")\r\n    if not current_user.is_superuser and (item.owner_id != current_user.id):\r\n        raise HTTPException(status_code=403, detail=\"Not enough permissions\")\r\n    update_dict = item_in.model_dump(exclude_unset=True)\r\n    item.sqlmodel_update(update_dict)\r\n    session.add(item)\r\n    session.commit()\r\n    session.refresh(item)\r\n    return item",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py",
             "type": "function",
             "name": "update_item",
-            "start_line": 100,
-            "end_line": 113
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py\n\nLines: 62-72\n\nType: function\n\nName: read_item\n\nCode:\n\ndef create_item(\r\n    *, session: SessionDep, current_user: CurrentUser, item_in: ItemCreate\r\n) -> Any:\r\n    \"\"\"\r\n    Create new item.\r\n    \"\"\"\r\n    item = Item.model_validate(item_in, update={\"owner_id\": current_user.id})\r\n    session.add(item)\r\n    session.commit()\r\n    session.refresh(item)\r\n    return item",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py",
-            "type": "function",
-            "name": "read_item",
-            "start_line": 62,
-            "end_line": 72
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py\n\nLines: 76-96\n\nType: function\n\nName: create_item\n\nCode:\n\ndef update_item(\r\n    *,\r\n    session: SessionDep,\r\n    current_user: CurrentUser,\r\n    id: uuid.UUID,\r\n    item_in: ItemUpdate,\r\n) -> Any:\r\n    \"\"\"\r\n    Update an item.\r\n    \"\"\"\r\n    item = session.get(Item, id)\r\n    if not item:\r\n        raise HTTPException(status_code=404, detail=\"Item not found\")\r\n    if not current_user.is_superuser and (item.owner_id != current_user.id):\r\n        raise HTTPException(status_code=403, detail=\"Not enough permissions\")\r\n    update_dict = item_in.model_dump(exclude_unset=True)\r\n    item.sqlmodel_update(update_dict)\r\n    session.add(item)\r\n    session.commit()\r\n    session.refresh(item)\r\n    return item",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py",
-            "type": "function",
-            "name": "create_item",
             "start_line": 76,
             "end_line": 96
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py\n\nLines: 49-58\n\nType: function\n\nName: read_items\n\nCode:\n\ndef read_item(session: SessionDep, current_user: CurrentUser, id: uuid.UUID) -> Any:\r\n    \"\"\"\r\n    Get item by ID.\r\n    \"\"\"\r\n    item = session.get(Item, id)\r\n    if not item:\r\n        raise HTTPException(status_code=404, detail=\"Item not found\")\r\n    if not current_user.is_superuser and (item.owner_id != current_user.id):\r\n        raise HTTPException(status_code=403, detail=\"Not enough permissions\")\r\n    return item",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py\n\nLines: 62-72\n\nType: function\n\nName: delete_item\n\nCode:\n\ndef create_item(\r\n    *, session: SessionDep, current_user: CurrentUser, item_in: ItemCreate\r\n) -> Any:\r\n    \"\"\"\r\n    Create new item.\r\n    \"\"\"\r\n    item = Item.model_validate(item_in, update={\"owner_id\": current_user.id})\r\n    session.add(item)\r\n    session.commit()\r\n    session.refresh(item)\r\n    return item",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py",
+            "type": "function",
+            "name": "delete_item",
+            "start_line": 62,
+            "end_line": 72
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py\n\nLines: 100-113\n\nType: function\n\nName: read_items\n\nCode:\n\ndef delete_item(\r\n    session: SessionDep, current_user: CurrentUser, id: uuid.UUID\r\n) -> Message:\r\n    \"\"\"\r\n    Delete an item.\r\n    \"\"\"\r\n    item = session.get(Item, id)\r\n    if not item:\r\n        raise HTTPException(status_code=404, detail=\"Item not found\")\r\n    if not current_user.is_superuser and (item.owner_id != current_user.id):\r\n        raise HTTPException(status_code=403, detail=\"Not enough permissions\")\r\n    session.delete(item)\r\n    session.commit()\r\n    return Message(message=\"Item deleted successfully\")",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py",
             "type": "function",
             "name": "read_items",
+            "start_line": 100,
+            "end_line": 113
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py\n\nLines: 49-58\n\nType: function\n\nName: create_item\n\nCode:\n\ndef read_item(session: SessionDep, current_user: CurrentUser, id: uuid.UUID) -> Any:\r\n    \"\"\"\r\n    Get item by ID.\r\n    \"\"\"\r\n    item = session.get(Item, id)\r\n    if not item:\r\n        raise HTTPException(status_code=404, detail=\"Item not found\")\r\n    if not current_user.is_superuser and (item.owner_id != current_user.id):\r\n        raise HTTPException(status_code=403, detail=\"Not enough permissions\")\r\n    return item",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\items.py",
+            "type": "function",
+            "name": "create_item",
             "start_line": 49,
             "end_line": 58
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\login.py\n\nLines: 24-42\n\nType: function\n\nName: reset_password\n\nCode:\n\ndef login_access_token(\r\n    session: SessionDep, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]\r\n) -> Token:\r\n    \"\"\"\r\n    OAuth2 compatible token login, get an access token for future requests\r\n    \"\"\"\r\n    user = crud.authenticate(\r\n        session=session, email=form_data.username, password=form_data.password\r\n    )\r\n    if not user:\r\n        raise HTTPException(status_code=400, detail=\"Incorrect email or password\")\r\n    elif not user.is_active:\r\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\r\n    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)\r\n    return Token(\r\n        access_token=security.create_access_token(\r\n            user.id, expires_delta=access_token_expires\r\n        )\r\n    )",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\login.py\n\nLines: 24-42\n\nType: function\n\nName: recover_password_html_content\n\nCode:\n\ndef login_access_token(\r\n    session: SessionDep, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]\r\n) -> Token:\r\n    \"\"\"\r\n    OAuth2 compatible token login, get an access token for future requests\r\n    \"\"\"\r\n    user = crud.authenticate(\r\n        session=session, email=form_data.username, password=form_data.password\r\n    )\r\n    if not user:\r\n        raise HTTPException(status_code=400, detail=\"Incorrect email or password\")\r\n    elif not user.is_active:\r\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\r\n    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)\r\n    return Token(\r\n        access_token=security.create_access_token(\r\n            user.id, expires_delta=access_token_expires\r\n        )\r\n    )",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\login.py",
             "type": "function",
-            "name": "reset_password",
+            "name": "recover_password_html_content",
             "start_line": 24,
             "end_line": 42
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\login.py\n\nLines: 78-97\n\nType: function\n\nName: recover_password_html_content\n\nCode:\n\ndef reset_password(session: SessionDep, body: NewPassword) -> Message:\r\n    \"\"\"\r\n    Reset password\r\n    \"\"\"\r\n    email = verify_password_reset_token(token=body.token)\r\n    if not email:\r\n        raise HTTPException(status_code=400, detail=\"Invalid token\")\r\n    user = crud.get_user_by_email(session=session, email=email)\r\n    if not user:\r\n        # Don't reveal that the user doesn't exist - use same error as invalid token\r\n        raise HTTPException(status_code=400, detail=\"Invalid token\")\r\n    elif not user.is_active:\r\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\r\n    user_in_update = UserUpdate(password=body.new_password)\r\n    crud.update_user(\r\n        session=session,\r\n        db_user=user,\r\n        user_in=user_in_update,\r\n    )\r\n    return Message(message=\"Password updated successfully\")",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\login.py",
-            "type": "function",
-            "name": "recover_password_html_content",
-            "start_line": 78,
-            "end_line": 97
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\login.py\n\nLines: 46-50\n\nType: function\n\nName: test_token\n\nCode:\n\ndef test_token(current_user: CurrentUser) -> Any:\r\n    \"\"\"\r\n    Test access token\r\n    \"\"\"\r\n    return current_user",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\login.py\n\nLines: 54-74\n\nType: function\n\nName: test_token\n\nCode:\n\ndef recover_password(email: str, session: SessionDep) -> Message:\r\n    \"\"\"\r\n    Password Recovery\r\n    \"\"\"\r\n    user = crud.get_user_by_email(session=session, email=email)\r\n\r\n    # Always return the same response to prevent email enumeration attacks\r\n    # Only send email if user actually exists\r\n    if user:\r\n        password_reset_token = generate_password_reset_token(email=email)\r\n        email_data = generate_reset_password_email(\r\n            email_to=user.email, email=email, token=password_reset_token\r\n        )\r\n        send_email(\r\n            email_to=user.email,\r\n            subject=email_data.subject,\r\n            html_content=email_data.html_content,\r\n        )\r\n    return Message(\r\n        message=\"If that email is registered, we sent a password recovery link\"\r\n    )",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\login.py",
             "type": "function",
             "name": "test_token",
-            "start_line": 46,
-            "end_line": 50
+            "start_line": 54,
+            "end_line": 74
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\login.py\n\nLines: 54-74\n\nType: function\n\nName: recover_password\n\nCode:\n\ndef recover_password(email: str, session: SessionDep) -> Message:\r\n    \"\"\"\r\n    Password Recovery\r\n    \"\"\"\r\n    user = crud.get_user_by_email(session=session, email=email)\r\n\r\n    # Always return the same response to prevent email enumeration attacks\r\n    # Only send email if user actually exists\r\n    if user:\r\n        password_reset_token = generate_password_reset_token(email=email)\r\n        email_data = generate_reset_password_email(\r\n            email_to=user.email, email=email, token=password_reset_token\r\n        )\r\n        send_email(\r\n            email_to=user.email,\r\n            subject=email_data.subject,\r\n            html_content=email_data.html_content,\r\n        )\r\n    return Message(\r\n        message=\"If that email is registered, we sent a password recovery link\"\r\n    )",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\login.py\n\nLines: 78-97\n\nType: function\n\nName: reset_password\n\nCode:\n\ndef reset_password(session: SessionDep, body: NewPassword) -> Message:\r\n    \"\"\"\r\n    Reset password\r\n    \"\"\"\r\n    email = verify_password_reset_token(token=body.token)\r\n    if not email:\r\n        raise HTTPException(status_code=400, detail=\"Invalid token\")\r\n    user = crud.get_user_by_email(session=session, email=email)\r\n    if not user:\r\n        # Don't reveal that the user doesn't exist - use same error as invalid token\r\n        raise HTTPException(status_code=400, detail=\"Invalid token\")\r\n    elif not user.is_active:\r\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\r\n    user_in_update = UserUpdate(password=body.new_password)\r\n    crud.update_user(\r\n        session=session,\r\n        db_user=user,\r\n        user_in=user_in_update,\r\n    )\r\n    return Message(message=\"Password updated successfully\")",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\login.py",
             "type": "function",
-            "name": "recover_password",
-            "start_line": 54,
-            "end_line": 74
+            "name": "reset_password",
+            "start_line": 78,
+            "end_line": 97
         }
     },
     {
@@ -4067,6 +4057,16 @@
             "name": "login_access_token",
             "start_line": 105,
             "end_line": 123
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\login.py\n\nLines: 46-50\n\nType: function\n\nName: recover_password\n\nCode:\n\ndef test_token(current_user: CurrentUser) -> Any:\r\n    \"\"\"\r\n    Test access token\r\n    \"\"\"\r\n    return current_user",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\login.py",
+            "type": "function",
+            "name": "recover_password",
+            "start_line": 46,
+            "end_line": 50
         }
     },
     {
@@ -4090,23 +4090,23 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py\n\nLines: 37-51\n\nType: function\n\nName: read_user_me\n\nCode:\n\ndef read_users(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:\r\n    \"\"\"\r\n    Retrieve users.\r\n    \"\"\"\r\n\r\n    count_statement = select(func.count()).select_from(User)\r\n    count = session.exec(count_statement).one()\r\n\r\n    statement = (\r\n        select(User).order_by(col(User.created_at).desc()).offset(skip).limit(limit)\r\n    )\r\n    users = session.exec(statement).all()\r\n\r\n    users_public = [UserPublic.model_validate(user) for user in users]\r\n    return UsersPublic(data=users_public, count=count)",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py\n\nLines: 37-51\n\nType: function\n\nName: update_user\n\nCode:\n\ndef read_users(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:\r\n    \"\"\"\r\n    Retrieve users.\r\n    \"\"\"\r\n\r\n    count_statement = select(func.count()).select_from(User)\r\n    count = session.exec(count_statement).one()\r\n\r\n    statement = (\r\n        select(User).order_by(col(User.created_at).desc()).offset(skip).limit(limit)\r\n    )\r\n    users = session.exec(statement).all()\r\n\r\n    users_public = [UserPublic.model_validate(user) for user in users]\r\n    return UsersPublic(data=users_public, count=count)",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py",
             "type": "function",
-            "name": "read_user_me",
+            "name": "update_user",
             "start_line": 37,
             "end_line": 51
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py\n\nLines: 57-78\n\nType: function\n\nName: update_password_me\n\nCode:\n\ndef create_user(*, session: SessionDep, user_in: UserCreate) -> Any:\r\n    \"\"\"\r\n    Create new user.\r\n    \"\"\"\r\n    user = crud.get_user_by_email(session=session, email=user_in.email)\r\n    if user:\r\n        raise HTTPException(\r\n            status_code=400,\r\n            detail=\"The user with this email already exists in the system.\",\r\n        )\r\n\r\n    user = crud.create_user(session=session, user_create=user_in)\r\n    if settings.emails_enabled and user_in.email:\r\n        email_data = generate_new_account_email(\r\n            email_to=user_in.email, username=user_in.email, password=user_in.password\r\n        )\r\n        send_email(\r\n            email_to=user_in.email,\r\n            subject=email_data.subject,\r\n            html_content=email_data.html_content,\r\n        )\r\n    return user",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py\n\nLines: 104-121\n\nType: function\n\nName: read_user_by_id\n\nCode:\n\ndef update_password_me(\r\n    *, session: SessionDep, body: UpdatePassword, current_user: CurrentUser\r\n) -> Any:\r\n    \"\"\"\r\n    Update own password.\r\n    \"\"\"\r\n    verified, _ = verify_password(body.current_password, current_user.hashed_password)\r\n    if not verified:\r\n        raise HTTPException(status_code=400, detail=\"Incorrect password\")\r\n    if body.current_password == body.new_password:\r\n        raise HTTPException(\r\n            status_code=400, detail=\"New password cannot be the same as the current one\"\r\n        )\r\n    hashed_password = get_password_hash(body.new_password)\r\n    current_user.hashed_password = hashed_password\r\n    session.add(current_user)\r\n    session.commit()\r\n    return Message(message=\"Password updated successfully\")",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py",
             "type": "function",
-            "name": "update_password_me",
-            "start_line": 57,
-            "end_line": 78
+            "name": "read_user_by_id",
+            "start_line": 104,
+            "end_line": 121
         }
     },
     {
@@ -4120,61 +4120,61 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py\n\nLines: 104-121\n\nType: function\n\nName: delete_user_me\n\nCode:\n\ndef update_password_me(\r\n    *, session: SessionDep, body: UpdatePassword, current_user: CurrentUser\r\n) -> Any:\r\n    \"\"\"\r\n    Update own password.\r\n    \"\"\"\r\n    verified, _ = verify_password(body.current_password, current_user.hashed_password)\r\n    if not verified:\r\n        raise HTTPException(status_code=400, detail=\"Incorrect password\")\r\n    if body.current_password == body.new_password:\r\n        raise HTTPException(\r\n            status_code=400, detail=\"New password cannot be the same as the current one\"\r\n        )\r\n    hashed_password = get_password_hash(body.new_password)\r\n    current_user.hashed_password = hashed_password\r\n    session.add(current_user)\r\n    session.commit()\r\n    return Message(message=\"Password updated successfully\")",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py\n\nLines: 57-78\n\nType: function\n\nName: update_password_me\n\nCode:\n\ndef create_user(*, session: SessionDep, user_in: UserCreate) -> Any:\r\n    \"\"\"\r\n    Create new user.\r\n    \"\"\"\r\n    user = crud.get_user_by_email(session=session, email=user_in.email)\r\n    if user:\r\n        raise HTTPException(\r\n            status_code=400,\r\n            detail=\"The user with this email already exists in the system.\",\r\n        )\r\n\r\n    user = crud.create_user(session=session, user_create=user_in)\r\n    if settings.emails_enabled and user_in.email:\r\n        email_data = generate_new_account_email(\r\n            email_to=user_in.email, username=user_in.email, password=user_in.password\r\n        )\r\n        send_email(\r\n            email_to=user_in.email,\r\n            subject=email_data.subject,\r\n            html_content=email_data.html_content,\r\n        )\r\n    return user",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py",
+            "type": "function",
+            "name": "update_password_me",
+            "start_line": 57,
+            "end_line": 78
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py\n\nLines: 125-129\n\nType: function\n\nName: delete_user_me\n\nCode:\n\ndef read_user_me(current_user: CurrentUser) -> Any:\r\n    \"\"\"\r\n    Get current user.\r\n    \"\"\"\r\n    return current_user",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py",
             "type": "function",
             "name": "delete_user_me",
-            "start_line": 104,
-            "end_line": 121
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py\n\nLines: 125-129\n\nType: function\n\nName: read_user_by_id\n\nCode:\n\ndef read_user_me(current_user: CurrentUser) -> Any:\r\n    \"\"\"\r\n    Get current user.\r\n    \"\"\"\r\n    return current_user",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py",
-            "type": "function",
-            "name": "read_user_by_id",
             "start_line": 125,
             "end_line": 129
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py\n\nLines: 133-143\n\nType: function\n\nName: update_user\n\nCode:\n\ndef delete_user_me(session: SessionDep, current_user: CurrentUser) -> Any:\r\n    \"\"\"\r\n    Delete own user.\r\n    \"\"\"\r\n    if current_user.is_superuser:\r\n        raise HTTPException(\r\n            status_code=403, detail=\"Super users are not allowed to delete themselves\"\r\n        )\r\n    session.delete(current_user)\r\n    session.commit()\r\n    return Message(message=\"User deleted successfully\")",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py\n\nLines: 133-143\n\nType: function\n\nName: delete_user\n\nCode:\n\ndef delete_user_me(session: SessionDep, current_user: CurrentUser) -> Any:\r\n    \"\"\"\r\n    Delete own user.\r\n    \"\"\"\r\n    if current_user.is_superuser:\r\n        raise HTTPException(\r\n            status_code=403, detail=\"Super users are not allowed to delete themselves\"\r\n        )\r\n    session.delete(current_user)\r\n    session.commit()\r\n    return Message(message=\"User deleted successfully\")",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py",
             "type": "function",
-            "name": "update_user",
+            "name": "delete_user",
             "start_line": 133,
             "end_line": 143
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py\n\nLines: 147-159\n\nType: function\n\nName: delete_user\n\nCode:\n\ndef register_user(session: SessionDep, user_in: UserRegister) -> Any:\r\n    \"\"\"\r\n    Create new user without the need to be logged in.\r\n    \"\"\"\r\n    user = crud.get_user_by_email(session=session, email=user_in.email)\r\n    if user:\r\n        raise HTTPException(\r\n            status_code=400,\r\n            detail=\"The user with this email already exists in the system\",\r\n        )\r\n    user_create = UserCreate.model_validate(user_in)\r\n    user = crud.create_user(session=session, user_create=user_create)\r\n    return user",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py\n\nLines: 147-159\n\nType: function\n\nName: read_user_me\n\nCode:\n\ndef register_user(session: SessionDep, user_in: UserRegister) -> Any:\r\n    \"\"\"\r\n    Create new user without the need to be logged in.\r\n    \"\"\"\r\n    user = crud.get_user_by_email(session=session, email=user_in.email)\r\n    if user:\r\n        raise HTTPException(\r\n            status_code=400,\r\n            detail=\"The user with this email already exists in the system\",\r\n        )\r\n    user_create = UserCreate.model_validate(user_in)\r\n    user = crud.create_user(session=session, user_create=user_create)\r\n    return user",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py",
             "type": "function",
-            "name": "delete_user",
+            "name": "read_user_me",
             "start_line": 147,
             "end_line": 159
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py\n\nLines: 163-179\n\nType: function\n\nName: update_user_me\n\nCode:\n\ndef read_user_by_id(\r\n    user_id: uuid.UUID, session: SessionDep, current_user: CurrentUser\r\n) -> Any:\r\n    \"\"\"\r\n    Get a specific user by id.\r\n    \"\"\"\r\n    user = session.get(User, user_id)\r\n    if user == current_user:\r\n        return user\r\n    if not current_user.is_superuser:\r\n        raise HTTPException(\r\n            status_code=403,\r\n            detail=\"The user doesn't have enough privileges\",\r\n        )\r\n    if user is None:\r\n        raise HTTPException(status_code=404, detail=\"User not found\")\r\n    return user",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py\n\nLines: 163-179\n\nType: function\n\nName: read_users\n\nCode:\n\ndef read_user_by_id(\r\n    user_id: uuid.UUID, session: SessionDep, current_user: CurrentUser\r\n) -> Any:\r\n    \"\"\"\r\n    Get a specific user by id.\r\n    \"\"\"\r\n    user = session.get(User, user_id)\r\n    if user == current_user:\r\n        return user\r\n    if not current_user.is_superuser:\r\n        raise HTTPException(\r\n            status_code=403,\r\n            detail=\"The user doesn't have enough privileges\",\r\n        )\r\n    if user is None:\r\n        raise HTTPException(status_code=404, detail=\"User not found\")\r\n    return user",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py",
             "type": "function",
-            "name": "update_user_me",
+            "name": "read_users",
             "start_line": 163,
             "end_line": 179
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py\n\nLines: 187-211\n\nType: function\n\nName: read_users\n\nCode:\n\ndef update_user(\r\n    *,\r\n    session: SessionDep,\r\n    user_id: uuid.UUID,\r\n    user_in: UserUpdate,\r\n) -> Any:\r\n    \"\"\"\r\n    Update a user.\r\n    \"\"\"\r\n\r\n    db_user = session.get(User, user_id)\r\n    if not db_user:\r\n        raise HTTPException(\r\n            status_code=404,\r\n            detail=\"The user with this id does not exist in the system\",\r\n        )\r\n    if user_in.email:\r\n        existing_user = crud.get_user_by_email(session=session, email=user_in.email)\r\n        if existing_user and existing_user.id != user_id:\r\n            raise HTTPException(\r\n                status_code=409, detail=\"User with this email already exists\"\r\n            )\r\n\r\n    db_user = crud.update_user(session=session, db_user=db_user, user_in=user_in)\r\n    return db_user",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py\n\nLines: 187-211\n\nType: function\n\nName: update_user_me\n\nCode:\n\ndef update_user(\r\n    *,\r\n    session: SessionDep,\r\n    user_id: uuid.UUID,\r\n    user_in: UserUpdate,\r\n) -> Any:\r\n    \"\"\"\r\n    Update a user.\r\n    \"\"\"\r\n\r\n    db_user = session.get(User, user_id)\r\n    if not db_user:\r\n        raise HTTPException(\r\n            status_code=404,\r\n            detail=\"The user with this id does not exist in the system\",\r\n        )\r\n    if user_in.email:\r\n        existing_user = crud.get_user_by_email(session=session, email=user_in.email)\r\n        if existing_user and existing_user.id != user_id:\r\n            raise HTTPException(\r\n                status_code=409, detail=\"User with this email already exists\"\r\n            )\r\n\r\n    db_user = crud.update_user(session=session, db_user=db_user, user_in=user_in)\r\n    return db_user",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\api\\routes\\users.py",
             "type": "function",
-            "name": "read_users",
+            "name": "update_user_me",
             "start_line": 187,
             "end_line": 211
         }
@@ -4210,23 +4210,13 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\config.py\n\nLines: 17-22\n\nType: function\n\nName: emails_enabled\n\nCode:\n\ndef parse_cors(v: Any) -> list[str] | str:\r\n    if isinstance(v, str) and not v.startswith(\"[\"):\r\n        return [i.strip() for i in v.split(\",\") if i.strip()]\r\n    elif isinstance(v, list | str):\r\n        return v\r\n    raise ValueError(v)",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\config.py",
-            "type": "function",
-            "name": "emails_enabled",
-            "start_line": 17,
-            "end_line": 22
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\config.py\n\nLines: 45-48\n\nType: function\n\nName: parse_cors\n\nCode:\n\ndef all_cors_origins(self) -> list[str]:\r\n        return [str(origin).rstrip(\"/\") for origin in self.BACKEND_CORS_ORIGINS] + [\r\n            self.FRONTEND_HOST\r\n        ]",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\config.py\n\nLines: 17-22\n\nType: function\n\nName: parse_cors\n\nCode:\n\ndef parse_cors(v: Any) -> list[str] | str:\r\n    if isinstance(v, str) and not v.startswith(\"[\"):\r\n        return [i.strip() for i in v.split(\",\") if i.strip()]\r\n    elif isinstance(v, list | str):\r\n        return v\r\n    raise ValueError(v)",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\config.py",
             "type": "function",
             "name": "parse_cors",
-            "start_line": 45,
-            "end_line": 48
+            "start_line": 17,
+            "end_line": 22
         }
     },
     {
@@ -4240,11 +4230,21 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\config.py\n\nLines: 89-90\n\nType: function\n\nName: _check_default_secret\n\nCode:\n\ndef emails_enabled(self) -> bool:\r\n        return bool(self.SMTP_HOST and self.EMAILS_FROM_EMAIL)",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\config.py\n\nLines: 45-48\n\nType: function\n\nName: _check_default_secret\n\nCode:\n\ndef all_cors_origins(self) -> list[str]:\r\n        return [str(origin).rstrip(\"/\") for origin in self.BACKEND_CORS_ORIGINS] + [\r\n            self.FRONTEND_HOST\r\n        ]",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\config.py",
             "type": "function",
             "name": "_check_default_secret",
+            "start_line": 45,
+            "end_line": 48
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\config.py\n\nLines: 89-90\n\nType: function\n\nName: emails_enabled\n\nCode:\n\ndef emails_enabled(self) -> bool:\r\n        return bool(self.SMTP_HOST and self.EMAILS_FROM_EMAIL)",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\config.py",
+            "type": "function",
+            "name": "emails_enabled",
             "start_line": 89,
             "end_line": 90
         }
@@ -4310,23 +4310,23 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\security.py\n\nLines: 29-32\n\nType: function\n\nName: verify_password\n\nCode:\n\ndef verify_password(\r\n    plain_password: str, hashed_password: str\r\n) -> tuple[bool, str | None]:\r\n    return password_hash.verify_and_update(plain_password, hashed_password)",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\security.py\n\nLines: 35-36\n\nType: function\n\nName: verify_password\n\nCode:\n\ndef get_password_hash(password: str) -> str:\r\n    return password_hash.hash(password)",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\security.py",
             "type": "function",
             "name": "verify_password",
-            "start_line": 29,
-            "end_line": 32
+            "start_line": 35,
+            "end_line": 36
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\security.py\n\nLines: 35-36\n\nType: function\n\nName: get_password_hash\n\nCode:\n\ndef get_password_hash(password: str) -> str:\r\n    return password_hash.hash(password)",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\security.py\n\nLines: 29-32\n\nType: function\n\nName: get_password_hash\n\nCode:\n\ndef verify_password(\r\n    plain_password: str, hashed_password: str\r\n) -> tuple[bool, str | None]:\r\n    return password_hash.verify_and_update(plain_password, hashed_password)",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\app\\core\\security.py",
             "type": "function",
             "name": "get_password_hash",
-            "start_line": 35,
-            "end_line": 36
+            "start_line": 29,
+            "end_line": 32
         }
     },
     {
@@ -4340,43 +4340,53 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\conftest.py\n\nLines: 28-30\n\nType: function\n\nName: normal_user_token_headers\n\nCode:\n\ndef client() -> Generator[TestClient]:\r\n    with TestClient(app) as c:\r\n        yield c",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\conftest.py\n\nLines: 39-42\n\nType: function\n\nName: client\n\nCode:\n\ndef normal_user_token_headers(client: TestClient, db: Session) -> dict[str, str]:\r\n    return authentication_token_from_email(\r\n        client=client, email=settings.EMAIL_TEST_USER, db=db\r\n    )",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\conftest.py",
             "type": "function",
-            "name": "normal_user_token_headers",
-            "start_line": 28,
-            "end_line": 30
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\conftest.py\n\nLines: 39-42\n\nType: function\n\nName: superuser_token_headers\n\nCode:\n\ndef normal_user_token_headers(client: TestClient, db: Session) -> dict[str, str]:\r\n    return authentication_token_from_email(\r\n        client=client, email=settings.EMAIL_TEST_USER, db=db\r\n    )",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\conftest.py",
-            "type": "function",
-            "name": "superuser_token_headers",
+            "name": "client",
             "start_line": 39,
             "end_line": 42
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\conftest.py\n\nLines: 34-35\n\nType: function\n\nName: client\n\nCode:\n\ndef superuser_token_headers(client: TestClient) -> dict[str, str]:\r\n    return get_superuser_token_headers(client)",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\conftest.py\n\nLines: 34-35\n\nType: function\n\nName: normal_user_token_headers\n\nCode:\n\ndef superuser_token_headers(client: TestClient) -> dict[str, str]:\r\n    return get_superuser_token_headers(client)",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\conftest.py",
             "type": "function",
-            "name": "client",
+            "name": "normal_user_token_headers",
             "start_line": 34,
             "end_line": 35
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 10-24\n\nType: function\n\nName: test_update_item_not_enough_permissions\n\nCode:\n\ndef test_create_item(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    data = {\"title\": \"Foo\", \"description\": \"Fighters\"}\r\n    response = client.post(\r\n        f\"{settings.API_V1_STR}/items/\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert response.status_code == 200\r\n    content = response.json()\r\n    assert content[\"title\"] == data[\"title\"]\r\n    assert content[\"description\"] == data[\"description\"]\r\n    assert \"id\" in content\r\n    assert \"owner_id\" in content",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\conftest.py\n\nLines: 28-30\n\nType: function\n\nName: superuser_token_headers\n\nCode:\n\ndef client() -> Generator[TestClient]:\r\n    with TestClient(app) as c:\r\n        yield c",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\conftest.py",
+            "type": "function",
+            "name": "superuser_token_headers",
+            "start_line": 28,
+            "end_line": 30
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 10-24\n\nType: function\n\nName: test_delete_item_not_enough_permissions\n\nCode:\n\ndef test_create_item(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    data = {\"title\": \"Foo\", \"description\": \"Fighters\"}\r\n    response = client.post(\r\n        f\"{settings.API_V1_STR}/items/\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert response.status_code == 200\r\n    content = response.json()\r\n    assert content[\"title\"] == data[\"title\"]\r\n    assert content[\"description\"] == data[\"description\"]\r\n    assert \"id\" in content\r\n    assert \"owner_id\" in content",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py",
             "type": "function",
-            "name": "test_update_item_not_enough_permissions",
+            "name": "test_delete_item_not_enough_permissions",
             "start_line": 10,
             "end_line": 24
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 68-79\n\nType: function\n\nName: test_read_item\n\nCode:\n\ndef test_read_items(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    create_random_item(db)\r\n    create_random_item(db)\r\n    response = client.get(\r\n        f\"{settings.API_V1_STR}/items/\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert response.status_code == 200\r\n    content = response.json()\r\n    assert len(content[\"data\"]) >= 2",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py",
+            "type": "function",
+            "name": "test_read_item",
+            "start_line": 68,
+            "end_line": 79
         }
     },
     {
@@ -4390,101 +4400,91 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 68-79\n\nType: function\n\nName: test_read_item_not_found\n\nCode:\n\ndef test_read_items(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    create_random_item(db)\r\n    create_random_item(db)\r\n    response = client.get(\r\n        f\"{settings.API_V1_STR}/items/\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert response.status_code == 200\r\n    content = response.json()\r\n    assert len(content[\"data\"]) >= 2",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 100-111\n\nType: function\n\nName: test_read_item_not_found\n\nCode:\n\ndef test_update_item_not_found(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    data = {\"title\": \"Updated title\", \"description\": \"Updated description\"}\r\n    response = client.put(\r\n        f\"{settings.API_V1_STR}/items/{uuid.uuid4()}\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert response.status_code == 404\r\n    content = response.json()\r\n    assert content[\"detail\"] == \"Item not found\"",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py",
             "type": "function",
             "name": "test_read_item_not_found",
-            "start_line": 68,
-            "end_line": 79
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 100-111\n\nType: function\n\nName: test_update_item\n\nCode:\n\ndef test_update_item_not_found(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    data = {\"title\": \"Updated title\", \"description\": \"Updated description\"}\r\n    response = client.put(\r\n        f\"{settings.API_V1_STR}/items/{uuid.uuid4()}\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert response.status_code == 404\r\n    content = response.json()\r\n    assert content[\"detail\"] == \"Item not found\"",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py",
-            "type": "function",
-            "name": "test_update_item",
             "start_line": 100,
             "end_line": 111
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 129-139\n\nType: function\n\nName: test_update_item_not_found\n\nCode:\n\ndef test_delete_item(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    item = create_random_item(db)\r\n    response = client.delete(\r\n        f\"{settings.API_V1_STR}/items/{item.id}\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert response.status_code == 200\r\n    content = response.json()\r\n    assert content[\"message\"] == \"Item deleted successfully\"",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 129-139\n\nType: function\n\nName: test_update_item\n\nCode:\n\ndef test_delete_item(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    item = create_random_item(db)\r\n    response = client.delete(\r\n        f\"{settings.API_V1_STR}/items/{item.id}\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert response.status_code == 200\r\n    content = response.json()\r\n    assert content[\"message\"] == \"Item deleted successfully\"",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py",
             "type": "function",
-            "name": "test_update_item_not_found",
+            "name": "test_update_item",
             "start_line": 129,
             "end_line": 139
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 27-40\n\nType: function\n\nName: test_delete_item\n\nCode:\n\ndef test_read_item(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    item = create_random_item(db)\r\n    response = client.get(\r\n        f\"{settings.API_V1_STR}/items/{item.id}\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert response.status_code == 200\r\n    content = response.json()\r\n    assert content[\"title\"] == item.title\r\n    assert content[\"description\"] == item.description\r\n    assert content[\"id\"] == str(item.id)\r\n    assert content[\"owner_id\"] == str(item.owner_id)",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 27-40\n\nType: function\n\nName: test_update_item_not_found\n\nCode:\n\ndef test_read_item(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    item = create_random_item(db)\r\n    response = client.get(\r\n        f\"{settings.API_V1_STR}/items/{item.id}\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert response.status_code == 200\r\n    content = response.json()\r\n    assert content[\"title\"] == item.title\r\n    assert content[\"description\"] == item.description\r\n    assert content[\"id\"] == str(item.id)\r\n    assert content[\"owner_id\"] == str(item.owner_id)",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py",
             "type": "function",
-            "name": "test_delete_item",
+            "name": "test_update_item_not_found",
             "start_line": 27,
             "end_line": 40
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 55-65\n\nType: function\n\nName: test_delete_item_not_found\n\nCode:\n\ndef test_read_item_not_enough_permissions(\r\n    client: TestClient, normal_user_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    item = create_random_item(db)\r\n    response = client.get(\r\n        f\"{settings.API_V1_STR}/items/{item.id}\",\r\n        headers=normal_user_token_headers,\r\n    )\r\n    assert response.status_code == 403\r\n    content = response.json()\r\n    assert content[\"detail\"] == \"Not enough permissions\"",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 55-65\n\nType: function\n\nName: test_delete_item\n\nCode:\n\ndef test_read_item_not_enough_permissions(\r\n    client: TestClient, normal_user_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    item = create_random_item(db)\r\n    response = client.get(\r\n        f\"{settings.API_V1_STR}/items/{item.id}\",\r\n        headers=normal_user_token_headers,\r\n    )\r\n    assert response.status_code == 403\r\n    content = response.json()\r\n    assert content[\"detail\"] == \"Not enough permissions\"",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py",
             "type": "function",
-            "name": "test_delete_item_not_found",
+            "name": "test_delete_item",
             "start_line": 55,
             "end_line": 65
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 82-97\n\nType: function\n\nName: test_delete_item_not_enough_permissions\n\nCode:\n\ndef test_update_item(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    item = create_random_item(db)\r\n    data = {\"title\": \"Updated title\", \"description\": \"Updated description\"}\r\n    response = client.put(\r\n        f\"{settings.API_V1_STR}/items/{item.id}\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert response.status_code == 200\r\n    content = response.json()\r\n    assert content[\"title\"] == data[\"title\"]\r\n    assert content[\"description\"] == data[\"description\"]\r\n    assert content[\"id\"] == str(item.id)\r\n    assert content[\"owner_id\"] == str(item.owner_id)",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 82-97\n\nType: function\n\nName: test_delete_item_not_found\n\nCode:\n\ndef test_update_item(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    item = create_random_item(db)\r\n    data = {\"title\": \"Updated title\", \"description\": \"Updated description\"}\r\n    response = client.put(\r\n        f\"{settings.API_V1_STR}/items/{item.id}\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert response.status_code == 200\r\n    content = response.json()\r\n    assert content[\"title\"] == data[\"title\"]\r\n    assert content[\"description\"] == data[\"description\"]\r\n    assert content[\"id\"] == str(item.id)\r\n    assert content[\"owner_id\"] == str(item.owner_id)",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py",
             "type": "function",
-            "name": "test_delete_item_not_enough_permissions",
+            "name": "test_delete_item_not_found",
             "start_line": 82,
             "end_line": 97
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 114-126\n\nType: function\n\nName: test_read_item\n\nCode:\n\ndef test_update_item_not_enough_permissions(\r\n    client: TestClient, normal_user_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    item = create_random_item(db)\r\n    data = {\"title\": \"Updated title\", \"description\": \"Updated description\"}\r\n    response = client.put(\r\n        f\"{settings.API_V1_STR}/items/{item.id}\",\r\n        headers=normal_user_token_headers,\r\n        json=data,\r\n    )\r\n    assert response.status_code == 403\r\n    content = response.json()\r\n    assert content[\"detail\"] == \"Not enough permissions\"",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 114-126\n\nType: function\n\nName: test_update_item_not_enough_permissions\n\nCode:\n\ndef test_update_item_not_enough_permissions(\r\n    client: TestClient, normal_user_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    item = create_random_item(db)\r\n    data = {\"title\": \"Updated title\", \"description\": \"Updated description\"}\r\n    response = client.put(\r\n        f\"{settings.API_V1_STR}/items/{item.id}\",\r\n        headers=normal_user_token_headers,\r\n        json=data,\r\n    )\r\n    assert response.status_code == 403\r\n    content = response.json()\r\n    assert content[\"detail\"] == \"Not enough permissions\"",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py",
             "type": "function",
-            "name": "test_read_item",
+            "name": "test_update_item_not_enough_permissions",
             "start_line": 114,
             "end_line": 126
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 142-151\n\nType: function\n\nName: test_read_items\n\nCode:\n\ndef test_delete_item_not_found(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    response = client.delete(\r\n        f\"{settings.API_V1_STR}/items/{uuid.uuid4()}\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert response.status_code == 404\r\n    content = response.json()\r\n    assert content[\"detail\"] == \"Item not found\"",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 142-151\n\nType: function\n\nName: test_read_item_not_enough_permissions\n\nCode:\n\ndef test_delete_item_not_found(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    response = client.delete(\r\n        f\"{settings.API_V1_STR}/items/{uuid.uuid4()}\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert response.status_code == 404\r\n    content = response.json()\r\n    assert content[\"detail\"] == \"Item not found\"",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py",
             "type": "function",
-            "name": "test_read_items",
+            "name": "test_read_item_not_enough_permissions",
             "start_line": 142,
             "end_line": 151
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 154-164\n\nType: function\n\nName: test_read_item_not_enough_permissions\n\nCode:\n\ndef test_delete_item_not_enough_permissions(\r\n    client: TestClient, normal_user_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    item = create_random_item(db)\r\n    response = client.delete(\r\n        f\"{settings.API_V1_STR}/items/{item.id}\",\r\n        headers=normal_user_token_headers,\r\n    )\r\n    assert response.status_code == 403\r\n    content = response.json()\r\n    assert content[\"detail\"] == \"Not enough permissions\"",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py\n\nLines: 154-164\n\nType: function\n\nName: test_read_items\n\nCode:\n\ndef test_delete_item_not_enough_permissions(\r\n    client: TestClient, normal_user_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    item = create_random_item(db)\r\n    response = client.delete(\r\n        f\"{settings.API_V1_STR}/items/{item.id}\",\r\n        headers=normal_user_token_headers,\r\n    )\r\n    assert response.status_code == 403\r\n    content = response.json()\r\n    assert content[\"detail\"] == \"Not enough permissions\"",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_items.py",
             "type": "function",
-            "name": "test_read_item_not_enough_permissions",
+            "name": "test_read_items",
             "start_line": 154,
             "end_line": 164
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_login.py\n\nLines: 16-25\n\nType: function\n\nName: test_login_with_bcrypt_password_upgrades_to_argon2\n\nCode:\n\ndef test_get_access_token(client: TestClient) -> None:\r\n    login_data = {\r\n        \"username\": settings.FIRST_SUPERUSER,\r\n        \"password\": settings.FIRST_SUPERUSER_PASSWORD,\r\n    }\r\n    r = client.post(f\"{settings.API_V1_STR}/login/access-token\", data=login_data)\r\n    tokens = r.json()\r\n    assert r.status_code == 200\r\n    assert \"access_token\" in tokens\r\n    assert tokens[\"access_token\"]",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_login.py\n\nLines: 16-25\n\nType: function\n\nName: test_get_access_token_incorrect_password\n\nCode:\n\ndef test_get_access_token(client: TestClient) -> None:\r\n    login_data = {\r\n        \"username\": settings.FIRST_SUPERUSER,\r\n        \"password\": settings.FIRST_SUPERUSER_PASSWORD,\r\n    }\r\n    r = client.post(f\"{settings.API_V1_STR}/login/access-token\", data=login_data)\r\n    tokens = r.json()\r\n    assert r.status_code == 200\r\n    assert \"access_token\" in tokens\r\n    assert tokens[\"access_token\"]",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_login.py",
             "type": "function",
-            "name": "test_login_with_bcrypt_password_upgrades_to_argon2",
+            "name": "test_get_access_token_incorrect_password",
             "start_line": 16,
             "end_line": 25
         }
@@ -4540,31 +4540,31 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_login.py\n\nLines: 82-110\n\nType: function\n\nName: test_get_access_token_incorrect_password\n\nCode:\n\ndef test_reset_password(client: TestClient, db: Session) -> None:\r\n    email = random_email()\r\n    password = random_lower_string()\r\n    new_password = random_lower_string()\r\n\r\n    user_create = UserCreate(\r\n        email=email,\r\n        full_name=\"Test User\",\r\n        password=password,\r\n        is_active=True,\r\n        is_superuser=False,\r\n    )\r\n    user = create_user(session=db, user_create=user_create)\r\n    token = generate_password_reset_token(email=email)\r\n    headers = user_authentication_headers(client=client, email=email, password=password)\r\n    data = {\"new_password\": new_password, \"token\": token}\r\n\r\n    r = client.post(\r\n        f\"{settings.API_V1_STR}/reset-password/\",\r\n        headers=headers,\r\n        json=data,\r\n    )\r\n\r\n    assert r.status_code == 200\r\n    assert r.json() == {\"message\": \"Password updated successfully\"}\r\n\r\n    db.refresh(user)\r\n    verified, _ = verify_password(new_password, user.hashed_password)\r\n    assert verified",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_login.py\n\nLines: 82-110\n\nType: function\n\nName: test_login_with_bcrypt_password_upgrades_to_argon2\n\nCode:\n\ndef test_reset_password(client: TestClient, db: Session) -> None:\r\n    email = random_email()\r\n    password = random_lower_string()\r\n    new_password = random_lower_string()\r\n\r\n    user_create = UserCreate(\r\n        email=email,\r\n        full_name=\"Test User\",\r\n        password=password,\r\n        is_active=True,\r\n        is_superuser=False,\r\n    )\r\n    user = create_user(session=db, user_create=user_create)\r\n    token = generate_password_reset_token(email=email)\r\n    headers = user_authentication_headers(client=client, email=email, password=password)\r\n    data = {\"new_password\": new_password, \"token\": token}\r\n\r\n    r = client.post(\r\n        f\"{settings.API_V1_STR}/reset-password/\",\r\n        headers=headers,\r\n        json=data,\r\n    )\r\n\r\n    assert r.status_code == 200\r\n    assert r.json() == {\"message\": \"Password updated successfully\"}\r\n\r\n    db.refresh(user)\r\n    verified, _ = verify_password(new_password, user.hashed_password)\r\n    assert verified",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_login.py",
             "type": "function",
-            "name": "test_get_access_token_incorrect_password",
+            "name": "test_login_with_bcrypt_password_upgrades_to_argon2",
             "start_line": 82,
             "end_line": 110
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_login.py\n\nLines: 129-162\n\nType: function\n\nName: test_recovery_password_user_not_exits\n\nCode:\n\ndef test_login_with_bcrypt_password_upgrades_to_argon2(\r\n    client: TestClient, db: Session\r\n) -> None:\r\n    \"\"\"Test that logging in with a bcrypt password hash upgrades it to argon2.\"\"\"\r\n    email = random_email()\r\n    password = random_lower_string()\r\n\r\n    # Create a bcrypt hash directly (simulating legacy password)\r\n    bcrypt_hasher = BcryptHasher()\r\n    bcrypt_hash = bcrypt_hasher.hash(password)\r\n    assert bcrypt_hash.startswith(\"$2\")  # bcrypt hashes start with $2\r\n\r\n    user = User(email=email, hashed_password=bcrypt_hash, is_active=True)\r\n    db.add(user)\r\n    db.commit()\r\n    db.refresh(user)\r\n\r\n    assert user.hashed_password.startswith(\"$2\")\r\n\r\n    login_data = {\"username\": email, \"password\": password}\r\n    r = client.post(f\"{settings.API_V1_STR}/login/access-token\", data=login_data)\r\n    assert r.status_code == 200\r\n    tokens = r.json()\r\n    assert \"access_token\" in tokens\r\n\r\n    db.refresh(user)\r\n\r\n    # Verify the hash was upgraded to argon2\r\n    assert user.hashed_password.startswith(\"$argon2\")\r\n\r\n    verified, updated_hash = verify_password(password, user.hashed_password)\r\n    assert verified\r\n    # Should not need another update since it's already argon2\r\n    assert updated_hash is None",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_login.py\n\nLines: 129-162\n\nType: function\n\nName: test_recovery_password\n\nCode:\n\ndef test_login_with_bcrypt_password_upgrades_to_argon2(\r\n    client: TestClient, db: Session\r\n) -> None:\r\n    \"\"\"Test that logging in with a bcrypt password hash upgrades it to argon2.\"\"\"\r\n    email = random_email()\r\n    password = random_lower_string()\r\n\r\n    # Create a bcrypt hash directly (simulating legacy password)\r\n    bcrypt_hasher = BcryptHasher()\r\n    bcrypt_hash = bcrypt_hasher.hash(password)\r\n    assert bcrypt_hash.startswith(\"$2\")  # bcrypt hashes start with $2\r\n\r\n    user = User(email=email, hashed_password=bcrypt_hash, is_active=True)\r\n    db.add(user)\r\n    db.commit()\r\n    db.refresh(user)\r\n\r\n    assert user.hashed_password.startswith(\"$2\")\r\n\r\n    login_data = {\"username\": email, \"password\": password}\r\n    r = client.post(f\"{settings.API_V1_STR}/login/access-token\", data=login_data)\r\n    assert r.status_code == 200\r\n    tokens = r.json()\r\n    assert \"access_token\" in tokens\r\n\r\n    db.refresh(user)\r\n\r\n    # Verify the hash was upgraded to argon2\r\n    assert user.hashed_password.startswith(\"$argon2\")\r\n\r\n    verified, updated_hash = verify_password(password, user.hashed_password)\r\n    assert verified\r\n    # Should not need another update since it's already argon2\r\n    assert updated_hash is None",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_login.py",
             "type": "function",
-            "name": "test_recovery_password_user_not_exits",
+            "name": "test_recovery_password",
             "start_line": 129,
             "end_line": 162
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_login.py\n\nLines: 165-191\n\nType: function\n\nName: test_recovery_password\n\nCode:\n\ndef test_login_with_argon2_password_keeps_hash(client: TestClient, db: Session) -> None:\r\n    \"\"\"Test that logging in with an argon2 password hash does not update it.\"\"\"\r\n    email = random_email()\r\n    password = random_lower_string()\r\n\r\n    # Create an argon2 hash (current default)\r\n    argon2_hash = get_password_hash(password)\r\n    assert argon2_hash.startswith(\"$argon2\")\r\n\r\n    # Create user with argon2 hash\r\n    user = User(email=email, hashed_password=argon2_hash, is_active=True)\r\n    db.add(user)\r\n    db.commit()\r\n    db.refresh(user)\r\n\r\n    original_hash = user.hashed_password\r\n\r\n    login_data = {\"username\": email, \"password\": password}\r\n    r = client.post(f\"{settings.API_V1_STR}/login/access-token\", data=login_data)\r\n    assert r.status_code == 200\r\n    tokens = r.json()\r\n    assert \"access_token\" in tokens\r\n\r\n    db.refresh(user)\r\n\r\n    assert user.hashed_password == original_hash\r\n    assert user.hashed_password.startswith(\"$argon2\")",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_login.py\n\nLines: 165-191\n\nType: function\n\nName: test_recovery_password_user_not_exits\n\nCode:\n\ndef test_login_with_argon2_password_keeps_hash(client: TestClient, db: Session) -> None:\r\n    \"\"\"Test that logging in with an argon2 password hash does not update it.\"\"\"\r\n    email = random_email()\r\n    password = random_lower_string()\r\n\r\n    # Create an argon2 hash (current default)\r\n    argon2_hash = get_password_hash(password)\r\n    assert argon2_hash.startswith(\"$argon2\")\r\n\r\n    # Create user with argon2 hash\r\n    user = User(email=email, hashed_password=argon2_hash, is_active=True)\r\n    db.add(user)\r\n    db.commit()\r\n    db.refresh(user)\r\n\r\n    original_hash = user.hashed_password\r\n\r\n    login_data = {\"username\": email, \"password\": password}\r\n    r = client.post(f\"{settings.API_V1_STR}/login/access-token\", data=login_data)\r\n    assert r.status_code == 200\r\n    tokens = r.json()\r\n    assert \"access_token\" in tokens\r\n\r\n    db.refresh(user)\r\n\r\n    assert user.hashed_password == original_hash\r\n    assert user.hashed_password.startswith(\"$argon2\")",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_login.py",
             "type": "function",
-            "name": "test_recovery_password",
+            "name": "test_recovery_password_user_not_exits",
             "start_line": 165,
             "end_line": 191
         }
@@ -4577,6 +4577,236 @@
             "name": "test_create_user",
             "start_line": 8,
             "end_line": 26
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 37-57\n\nType: function\n\nName: test_get_existing_user_current_user\n\nCode:\n\ndef test_create_user_new_email(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    with (\r\n        patch(\"app.utils.send_email\", return_value=None),\r\n        patch(\"app.core.config.settings.SMTP_HOST\", \"smtp.example.com\"),\r\n        patch(\"app.core.config.settings.SMTP_USER\", \"admin@example.com\"),\r\n    ):\r\n        username = random_email()\r\n        password = random_lower_string()\r\n        data = {\"email\": username, \"password\": password}\r\n        r = client.post(\r\n            f\"{settings.API_V1_STR}/users/\",\r\n            headers=superuser_token_headers,\r\n            json=data,\r\n        )\r\n        assert 200 <= r.status_code < 300\r\n        created_user = r.json()\r\n        user = crud.get_user_by_email(session=db, email=username)\r\n        assert user\r\n        assert user.email == created_user[\"email\"]",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_get_existing_user_current_user",
+            "start_line": 37,
+            "end_line": 57
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 117-129\n\nType: function\n\nName: test_get_non_existing_user_permissions_error\n\nCode:\n\ndef test_get_existing_user_permissions_error(\r\n    db: Session,\r\n    client: TestClient,\r\n    normal_user_token_headers: dict[str, str],\r\n) -> None:\r\n    user = create_random_user(db)\r\n\r\n    r = client.get(\r\n        f\"{settings.API_V1_STR}/users/{user.id}\",\r\n        headers=normal_user_token_headers,\r\n    )\r\n    assert r.status_code == 403\r\n    assert r.json() == {\"detail\": \"The user doesn't have enough privileges\"}",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_get_non_existing_user_permissions_error",
+            "start_line": 117,
+            "end_line": 129
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 146-162\n\nType: function\n\nName: test_update_user_me_email_exists\n\nCode:\n\ndef test_create_user_existing_username(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    username = random_email()\r\n    # username = email\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    crud.create_user(session=db, user_create=user_in)\r\n    data = {\"email\": username, \"password\": password}\r\n    r = client.post(\r\n        f\"{settings.API_V1_STR}/users/\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    created_user = r.json()\r\n    assert r.status_code == 400\r\n    assert \"_id\" not in created_user",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_update_user_me_email_exists",
+            "start_line": 146,
+            "end_line": 162
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 224-264\n\nType: function\n\nName: test_delete_user_me_as_superuser\n\nCode:\n\ndef test_update_password_me(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    new_password = random_lower_string()\r\n    data = {\r\n        \"current_password\": settings.FIRST_SUPERUSER_PASSWORD,\r\n        \"new_password\": new_password,\r\n    }\r\n    r = client.patch(\r\n        f\"{settings.API_V1_STR}/users/me/password\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert r.status_code == 200\r\n    updated_user = r.json()\r\n    assert updated_user[\"message\"] == \"Password updated successfully\"\r\n\r\n    user_query = select(User).where(User.email == settings.FIRST_SUPERUSER)\r\n    user_db = db.exec(user_query).first()\r\n    assert user_db\r\n    assert user_db.email == settings.FIRST_SUPERUSER\r\n    verified, _ = verify_password(new_password, user_db.hashed_password)\r\n    assert verified\r\n\r\n    # Revert to the old password to keep consistency in test\r\n    old_data = {\r\n        \"current_password\": new_password,\r\n        \"new_password\": settings.FIRST_SUPERUSER_PASSWORD,\r\n    }\r\n    r = client.patch(\r\n        f\"{settings.API_V1_STR}/users/me/password\",\r\n        headers=superuser_token_headers,\r\n        json=old_data,\r\n    )\r\n    db.refresh(user_db)\r\n\r\n    assert r.status_code == 200\r\n    verified, _ = verify_password(\r\n        settings.FIRST_SUPERUSER_PASSWORD, user_db.hashed_password\r\n    )\r\n    assert verified",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_delete_user_me_as_superuser",
+            "start_line": 224,
+            "end_line": 264
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 397-417\n\nType: function\n\nName: test_update_password_me_incorrect_password\n\nCode:\n\ndef test_update_user_email_exists(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n\r\n    username2 = random_email()\r\n    password2 = random_lower_string()\r\n    user_in2 = UserCreate(email=username2, password=password2)\r\n    user2 = crud.create_user(session=db, user_create=user_in2)\r\n\r\n    data = {\"email\": user2.email}\r\n    r = client.patch(\r\n        f\"{settings.API_V1_STR}/users/{user.id}\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert r.status_code == 409\r\n    assert r.json()[\"detail\"] == \"User with this email already exists\"",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_update_password_me_incorrect_password",
+            "start_line": 397,
+            "end_line": 417
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 451-460\n\nType: function\n\nName: test_get_existing_user_permissions_error\n\nCode:\n\ndef test_delete_user_me_as_superuser(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    r = client.delete(\r\n        f\"{settings.API_V1_STR}/users/me\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert r.status_code == 403\r\n    response = r.json()\r\n    assert response[\"detail\"] == \"Super users are not allowed to delete themselves\"",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_get_existing_user_permissions_error",
+            "start_line": 451,
+            "end_line": 460
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 60-76\n\nType: function\n\nName: test_update_user_not_exists\n\nCode:\n\ndef test_get_existing_user_as_superuser(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    user_id = user.id\r\n    r = client.get(\r\n        f\"{settings.API_V1_STR}/users/{user_id}\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert 200 <= r.status_code < 300\r\n    api_user = r.json()\r\n    existing_user = crud.get_user_by_email(session=db, email=username)\r\n    assert existing_user\r\n    assert existing_user.email == api_user[\"email\"]",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_update_user_not_exists",
+            "start_line": 60,
+            "end_line": 76
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 132-143\n\nType: function\n\nName: test_delete_user_me\n\nCode:\n\ndef test_get_non_existing_user_permissions_error(\r\n    client: TestClient,\r\n    normal_user_token_headers: dict[str, str],\r\n) -> None:\r\n    user_id = uuid.uuid4()\r\n\r\n    r = client.get(\r\n        f\"{settings.API_V1_STR}/users/{user_id}\",\r\n        headers=normal_user_token_headers,\r\n    )\r\n    assert r.status_code == 403\r\n    assert r.json() == {\"detail\": \"The user doesn't have enough privileges\"}",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_delete_user_me",
+            "start_line": 132,
+            "end_line": 143
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 165-176\n\nType: function\n\nName: test_update_user_me\n\nCode:\n\ndef test_create_user_by_normal_user(\r\n    client: TestClient, normal_user_token_headers: dict[str, str]\r\n) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    data = {\"email\": username, \"password\": password}\r\n    r = client.post(\r\n        f\"{settings.API_V1_STR}/users/\",\r\n        headers=normal_user_token_headers,\r\n        json=data,\r\n    )\r\n    assert r.status_code == 403",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_update_user_me",
+            "start_line": 165,
+            "end_line": 176
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 267-279\n\nType: function\n\nName: test_create_user_existing_username\n\nCode:\n\ndef test_update_password_me_incorrect_password(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    new_password = random_lower_string()\r\n    data = {\"current_password\": new_password, \"new_password\": new_password}\r\n    r = client.patch(\r\n        f\"{settings.API_V1_STR}/users/me/password\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert r.status_code == 400\r\n    updated_user = r.json()\r\n    assert updated_user[\"detail\"] == \"Incorrect password\"",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_create_user_existing_username",
+            "start_line": 267,
+            "end_line": 279
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 420-448\n\nType: function\n\nName: test_register_user\n\nCode:\n\ndef test_delete_user_me(client: TestClient, db: Session) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    user_id = user.id\r\n\r\n    login_data = {\r\n        \"username\": username,\r\n        \"password\": password,\r\n    }\r\n    r = client.post(f\"{settings.API_V1_STR}/login/access-token\", data=login_data)\r\n    tokens = r.json()\r\n    a_token = tokens[\"access_token\"]\r\n    headers = {\"Authorization\": f\"Bearer {a_token}\"}\r\n\r\n    r = client.delete(\r\n        f\"{settings.API_V1_STR}/users/me\",\r\n        headers=headers,\r\n    )\r\n    assert r.status_code == 200\r\n    deleted_user = r.json()\r\n    assert deleted_user[\"message\"] == \"User deleted successfully\"\r\n    result = db.exec(select(User).where(User.id == user_id)).first()\r\n    assert result is None\r\n\r\n    user_query = select(User).where(User.id == user_id)\r\n    user_db = db.execute(user_query).first()\r\n    assert user_db is None",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_register_user",
+            "start_line": 420,
+            "end_line": 448
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 463-479\n\nType: function\n\nName: test_delete_user_not_found\n\nCode:\n\ndef test_delete_user_super_user(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    user_id = user.id\r\n    r = client.delete(\r\n        f\"{settings.API_V1_STR}/users/{user_id}\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert r.status_code == 200\r\n    deleted_user = r.json()\r\n    assert deleted_user[\"message\"] == \"User deleted successfully\"\r\n    result = db.exec(select(User).where(User.id == user_id)).first()\r\n    assert result is None",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_delete_user_not_found",
+            "start_line": 463,
+            "end_line": 479
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 508-521\n\nType: function\n\nName: test_update_password_me_same_password_error\n\nCode:\n\ndef test_delete_user_without_privileges(\r\n    client: TestClient, normal_user_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n\r\n    r = client.delete(\r\n        f\"{settings.API_V1_STR}/users/{user.id}\",\r\n        headers=normal_user_token_headers,\r\n    )\r\n    assert r.status_code == 403\r\n    assert r.json()[\"detail\"] == \"The user doesn't have enough privileges\"",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_update_password_me_same_password_error",
+            "start_line": 508,
+            "end_line": 521
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 15-23\n\nType: function\n\nName: test_get_existing_user_as_superuser\n\nCode:\n\ndef test_get_users_superuser_me(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    r = client.get(f\"{settings.API_V1_STR}/users/me\", headers=superuser_token_headers)\r\n    current_user = r.json()\r\n    assert current_user\r\n    assert current_user[\"is_active\"] is True\r\n    assert current_user[\"is_superuser\"]\r\n    assert current_user[\"email\"] == settings.FIRST_SUPERUSER",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_get_existing_user_as_superuser",
+            "start_line": 15,
+            "end_line": 23
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 319-339\n\nType: function\n\nName: test_create_user_new_email\n\nCode:\n\ndef test_register_user(client: TestClient, db: Session) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    full_name = random_lower_string()\r\n    data = {\"email\": username, \"password\": password, \"full_name\": full_name}\r\n    r = client.post(\r\n        f\"{settings.API_V1_STR}/users/signup\",\r\n        json=data,\r\n    )\r\n    assert r.status_code == 200\r\n    created_user = r.json()\r\n    assert created_user[\"email\"] == username\r\n    assert created_user[\"full_name\"] == full_name\r\n\r\n    user_query = select(User).where(User.email == username)\r\n    user_db = db.exec(user_query).first()\r\n    assert user_db\r\n    assert user_db.email == username\r\n    assert user_db.full_name == full_name\r\n    verified, _ = verify_password(password, user_db.hashed_password)\r\n    assert verified",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_create_user_new_email",
+            "start_line": 319,
+            "end_line": 339
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 358-381\n\nType: function\n\nName: test_delete_user_super_user\n\nCode:\n\ndef test_update_user(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n\r\n    data = {\"full_name\": \"Updated_full_name\"}\r\n    r = client.patch(\r\n        f\"{settings.API_V1_STR}/users/{user.id}\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert r.status_code == 200\r\n    updated_user = r.json()\r\n\r\n    assert updated_user[\"full_name\"] == \"Updated_full_name\"\r\n\r\n    user_query = select(User).where(User.email == username)\r\n    user_db = db.exec(user_query).first()\r\n    db.refresh(user_db)\r\n    assert user_db\r\n    assert user_db.full_name == \"Updated_full_name\"",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_delete_user_super_user",
+            "start_line": 358,
+            "end_line": 381
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 482-490\n\nType: function\n\nName: test_get_users_normal_user_me\n\nCode:\n\ndef test_delete_user_not_found(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    r = client.delete(\r\n        f\"{settings.API_V1_STR}/users/{uuid.uuid4()}\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert r.status_code == 404\r\n    assert r.json()[\"detail\"] == \"User not found\"",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_get_users_normal_user_me",
+            "start_line": 482,
+            "end_line": 490
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 26-34\n\nType: function\n\nName: test_retrieve_users\n\nCode:\n\ndef test_get_users_normal_user_me(\r\n    client: TestClient, normal_user_token_headers: dict[str, str]\r\n) -> None:\r\n    r = client.get(f\"{settings.API_V1_STR}/users/me\", headers=normal_user_token_headers)\r\n    current_user = r.json()\r\n    assert current_user\r\n    assert current_user[\"is_active\"] is True\r\n    assert current_user[\"is_superuser\"] is False\r\n    assert current_user[\"email\"] == settings.EMAIL_TEST_USER",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_retrieve_users",
+            "start_line": 26,
+            "end_line": 34
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 342-355\n\nType: function\n\nName: test_update_user\n\nCode:\n\ndef test_register_user_already_exists_error(client: TestClient) -> None:\r\n    password = random_lower_string()\r\n    full_name = random_lower_string()\r\n    data = {\r\n        \"email\": settings.FIRST_SUPERUSER,\r\n        \"password\": password,\r\n        \"full_name\": full_name,\r\n    }\r\n    r = client.post(\r\n        f\"{settings.API_V1_STR}/users/signup\",\r\n        json=data,\r\n    )\r\n    assert r.status_code == 400\r\n    assert r.json()[\"detail\"] == \"The user with this email already exists in the system\"",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_update_user",
+            "start_line": 342,
+            "end_line": 355
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 384-394\n\nType: function\n\nName: test_delete_user_without_privileges\n\nCode:\n\ndef test_update_user_not_exists(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    data = {\"full_name\": \"Updated_full_name\"}\r\n    r = client.patch(\r\n        f\"{settings.API_V1_STR}/users/{uuid.uuid4()}\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert r.status_code == 404\r\n    assert r.json()[\"detail\"] == \"The user with this id does not exist in the system\"",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_delete_user_without_privileges",
+            "start_line": 384,
+            "end_line": 394
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 493-505\n\nType: function\n\nName: test_register_user_already_exists_error\n\nCode:\n\ndef test_delete_user_current_super_user_error(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    super_user = crud.get_user_by_email(session=db, email=settings.FIRST_SUPERUSER)\r\n    assert super_user\r\n    user_id = super_user.id\r\n\r\n    r = client.delete(\r\n        f\"{settings.API_V1_STR}/users/{user_id}\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert r.status_code == 403\r\n    assert r.json()[\"detail\"] == \"Super users are not allowed to delete themselves\"",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_register_user_already_exists_error",
+            "start_line": 493,
+            "end_line": 505
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 179-198\n\nType: function\n\nName: test_delete_user_current_super_user_error\n\nCode:\n\ndef test_retrieve_users(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    crud.create_user(session=db, user_create=user_in)\r\n\r\n    username2 = random_email()\r\n    password2 = random_lower_string()\r\n    user_in2 = UserCreate(email=username2, password=password2)\r\n    crud.create_user(session=db, user_create=user_in2)\r\n\r\n    r = client.get(f\"{settings.API_V1_STR}/users/\", headers=superuser_token_headers)\r\n    all_users = r.json()\r\n\r\n    assert len(all_users[\"data\"]) > 1\r\n    assert \"count\" in all_users\r\n    for item in all_users[\"data\"]:\r\n        assert \"email\" in item",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_delete_user_current_super_user_error",
+            "start_line": 179,
+            "end_line": 198
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 201-221\n\nType: function\n\nName: test_get_users_superuser_me\n\nCode:\n\ndef test_update_user_me(\r\n    client: TestClient, normal_user_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    full_name = \"Updated Name\"\r\n    email = random_email()\r\n    data = {\"full_name\": full_name, \"email\": email}\r\n    r = client.patch(\r\n        f\"{settings.API_V1_STR}/users/me\",\r\n        headers=normal_user_token_headers,\r\n        json=data,\r\n    )\r\n    assert r.status_code == 200\r\n    updated_user = r.json()\r\n    assert updated_user[\"email\"] == email\r\n    assert updated_user[\"full_name\"] == full_name\r\n\r\n    user_query = select(User).where(User.email == email)\r\n    user_db = db.exec(user_query).first()\r\n    assert user_db\r\n    assert user_db.email == email\r\n    assert user_db.full_name == full_name",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
+            "type": "function",
+            "name": "test_get_users_superuser_me",
+            "start_line": 201,
+            "end_line": 221
         }
     },
     {
@@ -4610,271 +4840,41 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 300-316\n\nType: function\n\nName: test_delete_user_me\n\nCode:\n\ndef test_update_password_me_same_password_error(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    data = {\r\n        \"current_password\": settings.FIRST_SUPERUSER_PASSWORD,\r\n        \"new_password\": settings.FIRST_SUPERUSER_PASSWORD,\r\n    }\r\n    r = client.patch(\r\n        f\"{settings.API_V1_STR}/users/me/password\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert r.status_code == 400\r\n    updated_user = r.json()\r\n    assert (\r\n        updated_user[\"detail\"] == \"New password cannot be the same as the current one\"\r\n    )",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 300-316\n\nType: function\n\nName: test_create_user_by_normal_user\n\nCode:\n\ndef test_update_password_me_same_password_error(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    data = {\r\n        \"current_password\": settings.FIRST_SUPERUSER_PASSWORD,\r\n        \"new_password\": settings.FIRST_SUPERUSER_PASSWORD,\r\n    }\r\n    r = client.patch(\r\n        f\"{settings.API_V1_STR}/users/me/password\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert r.status_code == 400\r\n    updated_user = r.json()\r\n    assert (\r\n        updated_user[\"detail\"] == \"New password cannot be the same as the current one\"\r\n    )",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
             "type": "function",
-            "name": "test_delete_user_me",
+            "name": "test_create_user_by_normal_user",
             "start_line": 300,
             "end_line": 316
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 179-198\n\nType: function\n\nName: test_update_user_me\n\nCode:\n\ndef test_retrieve_users(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    crud.create_user(session=db, user_create=user_in)\r\n\r\n    username2 = random_email()\r\n    password2 = random_lower_string()\r\n    user_in2 = UserCreate(email=username2, password=password2)\r\n    crud.create_user(session=db, user_create=user_in2)\r\n\r\n    r = client.get(f\"{settings.API_V1_STR}/users/\", headers=superuser_token_headers)\r\n    all_users = r.json()\r\n\r\n    assert len(all_users[\"data\"]) > 1\r\n    assert \"count\" in all_users\r\n    for item in all_users[\"data\"]:\r\n        assert \"email\" in item",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_update_user_me",
-            "start_line": 179,
-            "end_line": 198
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 201-221\n\nType: function\n\nName: test_create_user_by_normal_user\n\nCode:\n\ndef test_update_user_me(\r\n    client: TestClient, normal_user_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    full_name = \"Updated Name\"\r\n    email = random_email()\r\n    data = {\"full_name\": full_name, \"email\": email}\r\n    r = client.patch(\r\n        f\"{settings.API_V1_STR}/users/me\",\r\n        headers=normal_user_token_headers,\r\n        json=data,\r\n    )\r\n    assert r.status_code == 200\r\n    updated_user = r.json()\r\n    assert updated_user[\"email\"] == email\r\n    assert updated_user[\"full_name\"] == full_name\r\n\r\n    user_query = select(User).where(User.email == email)\r\n    user_db = db.exec(user_query).first()\r\n    assert user_db\r\n    assert user_db.email == email\r\n    assert user_db.full_name == full_name",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_create_user_by_normal_user",
-            "start_line": 201,
-            "end_line": 221
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 15-23\n\nType: function\n\nName: test_get_users_superuser_me\n\nCode:\n\ndef test_get_users_superuser_me(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    r = client.get(f\"{settings.API_V1_STR}/users/me\", headers=superuser_token_headers)\r\n    current_user = r.json()\r\n    assert current_user\r\n    assert current_user[\"is_active\"] is True\r\n    assert current_user[\"is_superuser\"]\r\n    assert current_user[\"email\"] == settings.FIRST_SUPERUSER",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_get_users_superuser_me",
-            "start_line": 15,
-            "end_line": 23
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 358-381\n\nType: function\n\nName: test_update_user_not_exists\n\nCode:\n\ndef test_update_user(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n\r\n    data = {\"full_name\": \"Updated_full_name\"}\r\n    r = client.patch(\r\n        f\"{settings.API_V1_STR}/users/{user.id}\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert r.status_code == 200\r\n    updated_user = r.json()\r\n\r\n    assert updated_user[\"full_name\"] == \"Updated_full_name\"\r\n\r\n    user_query = select(User).where(User.email == username)\r\n    user_db = db.exec(user_query).first()\r\n    db.refresh(user_db)\r\n    assert user_db\r\n    assert user_db.full_name == \"Updated_full_name\"",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_update_user_not_exists",
-            "start_line": 358,
-            "end_line": 381
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 319-339\n\nType: function\n\nName: test_update_password_me_incorrect_password\n\nCode:\n\ndef test_register_user(client: TestClient, db: Session) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    full_name = random_lower_string()\r\n    data = {\"email\": username, \"password\": password, \"full_name\": full_name}\r\n    r = client.post(\r\n        f\"{settings.API_V1_STR}/users/signup\",\r\n        json=data,\r\n    )\r\n    assert r.status_code == 200\r\n    created_user = r.json()\r\n    assert created_user[\"email\"] == username\r\n    assert created_user[\"full_name\"] == full_name\r\n\r\n    user_query = select(User).where(User.email == username)\r\n    user_db = db.exec(user_query).first()\r\n    assert user_db\r\n    assert user_db.email == username\r\n    assert user_db.full_name == full_name\r\n    verified, _ = verify_password(password, user_db.hashed_password)\r\n    assert verified",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_update_password_me_incorrect_password",
-            "start_line": 319,
-            "end_line": 339
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 482-490\n\nType: function\n\nName: test_update_user\n\nCode:\n\ndef test_delete_user_not_found(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    r = client.delete(\r\n        f\"{settings.API_V1_STR}/users/{uuid.uuid4()}\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert r.status_code == 404\r\n    assert r.json()[\"detail\"] == \"User not found\"",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_update_user",
-            "start_line": 482,
-            "end_line": 490
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 26-34\n\nType: function\n\nName: test_get_users_normal_user_me\n\nCode:\n\ndef test_get_users_normal_user_me(\r\n    client: TestClient, normal_user_token_headers: dict[str, str]\r\n) -> None:\r\n    r = client.get(f\"{settings.API_V1_STR}/users/me\", headers=normal_user_token_headers)\r\n    current_user = r.json()\r\n    assert current_user\r\n    assert current_user[\"is_active\"] is True\r\n    assert current_user[\"is_superuser\"] is False\r\n    assert current_user[\"email\"] == settings.EMAIL_TEST_USER",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_get_users_normal_user_me",
-            "start_line": 26,
-            "end_line": 34
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 342-355\n\nType: function\n\nName: test_retrieve_users\n\nCode:\n\ndef test_register_user_already_exists_error(client: TestClient) -> None:\r\n    password = random_lower_string()\r\n    full_name = random_lower_string()\r\n    data = {\r\n        \"email\": settings.FIRST_SUPERUSER,\r\n        \"password\": password,\r\n        \"full_name\": full_name,\r\n    }\r\n    r = client.post(\r\n        f\"{settings.API_V1_STR}/users/signup\",\r\n        json=data,\r\n    )\r\n    assert r.status_code == 400\r\n    assert r.json()[\"detail\"] == \"The user with this email already exists in the system\"",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_retrieve_users",
-            "start_line": 342,
-            "end_line": 355
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 384-394\n\nType: function\n\nName: test_delete_user_without_privileges\n\nCode:\n\ndef test_update_user_not_exists(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    data = {\"full_name\": \"Updated_full_name\"}\r\n    r = client.patch(\r\n        f\"{settings.API_V1_STR}/users/{uuid.uuid4()}\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert r.status_code == 404\r\n    assert r.json()[\"detail\"] == \"The user with this id does not exist in the system\"",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_delete_user_without_privileges",
-            "start_line": 384,
-            "end_line": 394
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 493-505\n\nType: function\n\nName: test_register_user_already_exists_error\n\nCode:\n\ndef test_delete_user_current_super_user_error(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    super_user = crud.get_user_by_email(session=db, email=settings.FIRST_SUPERUSER)\r\n    assert super_user\r\n    user_id = super_user.id\r\n\r\n    r = client.delete(\r\n        f\"{settings.API_V1_STR}/users/{user_id}\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert r.status_code == 403\r\n    assert r.json()[\"detail\"] == \"Super users are not allowed to delete themselves\"",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_register_user_already_exists_error",
-            "start_line": 493,
-            "end_line": 505
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 37-57\n\nType: function\n\nName: test_delete_user_current_super_user_error\n\nCode:\n\ndef test_create_user_new_email(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    with (\r\n        patch(\"app.utils.send_email\", return_value=None),\r\n        patch(\"app.core.config.settings.SMTP_HOST\", \"smtp.example.com\"),\r\n        patch(\"app.core.config.settings.SMTP_USER\", \"admin@example.com\"),\r\n    ):\r\n        username = random_email()\r\n        password = random_lower_string()\r\n        data = {\"email\": username, \"password\": password}\r\n        r = client.post(\r\n            f\"{settings.API_V1_STR}/users/\",\r\n            headers=superuser_token_headers,\r\n            json=data,\r\n        )\r\n        assert 200 <= r.status_code < 300\r\n        created_user = r.json()\r\n        user = crud.get_user_by_email(session=db, email=username)\r\n        assert user\r\n        assert user.email == created_user[\"email\"]",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_delete_user_current_super_user_error",
-            "start_line": 37,
-            "end_line": 57
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 117-129\n\nType: function\n\nName: test_create_user_existing_username\n\nCode:\n\ndef test_get_existing_user_permissions_error(\r\n    db: Session,\r\n    client: TestClient,\r\n    normal_user_token_headers: dict[str, str],\r\n) -> None:\r\n    user = create_random_user(db)\r\n\r\n    r = client.get(\r\n        f\"{settings.API_V1_STR}/users/{user.id}\",\r\n        headers=normal_user_token_headers,\r\n    )\r\n    assert r.status_code == 403\r\n    assert r.json() == {\"detail\": \"The user doesn't have enough privileges\"}",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_create_user_existing_username",
-            "start_line": 117,
-            "end_line": 129
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 146-162\n\nType: function\n\nName: test_register_user\n\nCode:\n\ndef test_create_user_existing_username(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    username = random_email()\r\n    # username = email\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    crud.create_user(session=db, user_create=user_in)\r\n    data = {\"email\": username, \"password\": password}\r\n    r = client.post(\r\n        f\"{settings.API_V1_STR}/users/\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    created_user = r.json()\r\n    assert r.status_code == 400\r\n    assert \"_id\" not in created_user",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_register_user",
-            "start_line": 146,
-            "end_line": 162
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 224-264\n\nType: function\n\nName: test_delete_user_not_found\n\nCode:\n\ndef test_update_password_me(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    new_password = random_lower_string()\r\n    data = {\r\n        \"current_password\": settings.FIRST_SUPERUSER_PASSWORD,\r\n        \"new_password\": new_password,\r\n    }\r\n    r = client.patch(\r\n        f\"{settings.API_V1_STR}/users/me/password\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert r.status_code == 200\r\n    updated_user = r.json()\r\n    assert updated_user[\"message\"] == \"Password updated successfully\"\r\n\r\n    user_query = select(User).where(User.email == settings.FIRST_SUPERUSER)\r\n    user_db = db.exec(user_query).first()\r\n    assert user_db\r\n    assert user_db.email == settings.FIRST_SUPERUSER\r\n    verified, _ = verify_password(new_password, user_db.hashed_password)\r\n    assert verified\r\n\r\n    # Revert to the old password to keep consistency in test\r\n    old_data = {\r\n        \"current_password\": new_password,\r\n        \"new_password\": settings.FIRST_SUPERUSER_PASSWORD,\r\n    }\r\n    r = client.patch(\r\n        f\"{settings.API_V1_STR}/users/me/password\",\r\n        headers=superuser_token_headers,\r\n        json=old_data,\r\n    )\r\n    db.refresh(user_db)\r\n\r\n    assert r.status_code == 200\r\n    verified, _ = verify_password(\r\n        settings.FIRST_SUPERUSER_PASSWORD, user_db.hashed_password\r\n    )\r\n    assert verified",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_delete_user_not_found",
-            "start_line": 224,
-            "end_line": 264
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 397-417\n\nType: function\n\nName: test_update_password_me_same_password_error\n\nCode:\n\ndef test_update_user_email_exists(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n\r\n    username2 = random_email()\r\n    password2 = random_lower_string()\r\n    user_in2 = UserCreate(email=username2, password=password2)\r\n    user2 = crud.create_user(session=db, user_create=user_in2)\r\n\r\n    data = {\"email\": user2.email}\r\n    r = client.patch(\r\n        f\"{settings.API_V1_STR}/users/{user.id}\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert r.status_code == 409\r\n    assert r.json()[\"detail\"] == \"User with this email already exists\"",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_update_password_me_same_password_error",
-            "start_line": 397,
-            "end_line": 417
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 451-460\n\nType: function\n\nName: test_get_existing_user_as_superuser\n\nCode:\n\ndef test_delete_user_me_as_superuser(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    r = client.delete(\r\n        f\"{settings.API_V1_STR}/users/me\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert r.status_code == 403\r\n    response = r.json()\r\n    assert response[\"detail\"] == \"Super users are not allowed to delete themselves\"",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_get_existing_user_as_superuser",
-            "start_line": 451,
-            "end_line": 460
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 60-76\n\nType: function\n\nName: test_create_user_new_email\n\nCode:\n\ndef test_get_existing_user_as_superuser(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    user_id = user.id\r\n    r = client.get(\r\n        f\"{settings.API_V1_STR}/users/{user_id}\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert 200 <= r.status_code < 300\r\n    api_user = r.json()\r\n    existing_user = crud.get_user_by_email(session=db, email=username)\r\n    assert existing_user\r\n    assert existing_user.email == api_user[\"email\"]",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_create_user_new_email",
-            "start_line": 60,
-            "end_line": 76
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 132-143\n\nType: function\n\nName: test_delete_user_super_user\n\nCode:\n\ndef test_get_non_existing_user_permissions_error(\r\n    client: TestClient,\r\n    normal_user_token_headers: dict[str, str],\r\n) -> None:\r\n    user_id = uuid.uuid4()\r\n\r\n    r = client.get(\r\n        f\"{settings.API_V1_STR}/users/{user_id}\",\r\n        headers=normal_user_token_headers,\r\n    )\r\n    assert r.status_code == 403\r\n    assert r.json() == {\"detail\": \"The user doesn't have enough privileges\"}",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_delete_user_super_user",
-            "start_line": 132,
-            "end_line": 143
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 165-176\n\nType: function\n\nName: test_get_existing_user_current_user\n\nCode:\n\ndef test_create_user_by_normal_user(\r\n    client: TestClient, normal_user_token_headers: dict[str, str]\r\n) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    data = {\"email\": username, \"password\": password}\r\n    r = client.post(\r\n        f\"{settings.API_V1_STR}/users/\",\r\n        headers=normal_user_token_headers,\r\n        json=data,\r\n    )\r\n    assert r.status_code == 403",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_get_existing_user_current_user",
-            "start_line": 165,
-            "end_line": 176
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 267-279\n\nType: function\n\nName: test_get_non_existing_user_permissions_error\n\nCode:\n\ndef test_update_password_me_incorrect_password(\r\n    client: TestClient, superuser_token_headers: dict[str, str]\r\n) -> None:\r\n    new_password = random_lower_string()\r\n    data = {\"current_password\": new_password, \"new_password\": new_password}\r\n    r = client.patch(\r\n        f\"{settings.API_V1_STR}/users/me/password\",\r\n        headers=superuser_token_headers,\r\n        json=data,\r\n    )\r\n    assert r.status_code == 400\r\n    updated_user = r.json()\r\n    assert updated_user[\"detail\"] == \"Incorrect password\"",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_get_non_existing_user_permissions_error",
-            "start_line": 267,
-            "end_line": 279
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 420-448\n\nType: function\n\nName: test_update_user_me_email_exists\n\nCode:\n\ndef test_delete_user_me(client: TestClient, db: Session) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    user_id = user.id\r\n\r\n    login_data = {\r\n        \"username\": username,\r\n        \"password\": password,\r\n    }\r\n    r = client.post(f\"{settings.API_V1_STR}/login/access-token\", data=login_data)\r\n    tokens = r.json()\r\n    a_token = tokens[\"access_token\"]\r\n    headers = {\"Authorization\": f\"Bearer {a_token}\"}\r\n\r\n    r = client.delete(\r\n        f\"{settings.API_V1_STR}/users/me\",\r\n        headers=headers,\r\n    )\r\n    assert r.status_code == 200\r\n    deleted_user = r.json()\r\n    assert deleted_user[\"message\"] == \"User deleted successfully\"\r\n    result = db.exec(select(User).where(User.id == user_id)).first()\r\n    assert result is None\r\n\r\n    user_query = select(User).where(User.id == user_id)\r\n    user_db = db.execute(user_query).first()\r\n    assert user_db is None",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_update_user_me_email_exists",
-            "start_line": 420,
-            "end_line": 448
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 463-479\n\nType: function\n\nName: test_delete_user_me_as_superuser\n\nCode:\n\ndef test_delete_user_super_user(\r\n    client: TestClient, superuser_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    user_id = user.id\r\n    r = client.delete(\r\n        f\"{settings.API_V1_STR}/users/{user_id}\",\r\n        headers=superuser_token_headers,\r\n    )\r\n    assert r.status_code == 200\r\n    deleted_user = r.json()\r\n    assert deleted_user[\"message\"] == \"User deleted successfully\"\r\n    result = db.exec(select(User).where(User.id == user_id)).first()\r\n    assert result is None",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_delete_user_me_as_superuser",
-            "start_line": 463,
-            "end_line": 479
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py\n\nLines: 508-521\n\nType: function\n\nName: test_get_existing_user_permissions_error\n\nCode:\n\ndef test_delete_user_without_privileges(\r\n    client: TestClient, normal_user_token_headers: dict[str, str], db: Session\r\n) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n\r\n    r = client.delete(\r\n        f\"{settings.API_V1_STR}/users/{user.id}\",\r\n        headers=normal_user_token_headers,\r\n    )\r\n    assert r.status_code == 403\r\n    assert r.json()[\"detail\"] == \"The user doesn't have enough privileges\"",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\api\\routes\\test_users.py",
-            "type": "function",
-            "name": "test_get_existing_user_permissions_error",
-            "start_line": 508,
-            "end_line": 521
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py\n\nLines: 20-27\n\nType: function\n\nName: test_check_if_user_is_superuser_normal_user\n\nCode:\n\ndef test_authenticate_user(db: Session) -> None:\r\n    email = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=email, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    authenticated_user = crud.authenticate(session=db, email=email, password=password)\r\n    assert authenticated_user\r\n    assert user.email == authenticated_user.email",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py\n\nLines: 37-42\n\nType: function\n\nName: test_authenticate_user_with_bcrypt_upgrades_to_argon2\n\nCode:\n\ndef test_check_if_user_is_active(db: Session) -> None:\r\n    email = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=email, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    assert user.is_active is True",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py",
             "type": "function",
-            "name": "test_check_if_user_is_superuser_normal_user",
-            "start_line": 20,
-            "end_line": 27
-        }
-    },
-    {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py\n\nLines: 37-42\n\nType: function\n\nName: test_authenticate_user\n\nCode:\n\ndef test_check_if_user_is_active(db: Session) -> None:\r\n    email = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=email, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    assert user.is_active is True",
-        "metadata": {
-            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py",
-            "type": "function",
-            "name": "test_authenticate_user",
+            "name": "test_authenticate_user_with_bcrypt_upgrades_to_argon2",
             "start_line": 37,
             "end_line": 42
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py\n\nLines: 53-58\n\nType: function\n\nName: test_check_if_user_is_active_inactive\n\nCode:\n\ndef test_check_if_user_is_superuser(db: Session) -> None:\r\n    email = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=email, password=password, is_superuser=True)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    assert user.is_superuser is True",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py\n\nLines: 20-27\n\nType: function\n\nName: test_check_if_user_is_active_inactive\n\nCode:\n\ndef test_authenticate_user(db: Session) -> None:\r\n    email = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=email, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    authenticated_user = crud.authenticate(session=db, email=email, password=password)\r\n    assert authenticated_user\r\n    assert user.email == authenticated_user.email",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py",
             "type": "function",
             "name": "test_check_if_user_is_active_inactive",
+            "start_line": 20,
+            "end_line": 27
+        }
+    },
+    {
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py\n\nLines: 53-58\n\nType: function\n\nName: test_authenticate_user\n\nCode:\n\ndef test_check_if_user_is_superuser(db: Session) -> None:\r\n    email = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=email, password=password, is_superuser=True)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    assert user.is_superuser is True",
+        "metadata": {
+            "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py",
+            "type": "function",
+            "name": "test_authenticate_user",
             "start_line": 53,
             "end_line": 58
         }
@@ -4910,41 +4910,41 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py\n\nLines: 30-34\n\nType: function\n\nName: test_authenticate_user_with_bcrypt_upgrades_to_argon2\n\nCode:\n\ndef test_not_authenticate_user(db: Session) -> None:\r\n    email = random_email()\r\n    password = random_lower_string()\r\n    user = crud.authenticate(session=db, email=email, password=password)\r\n    assert user is None",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py\n\nLines: 30-34\n\nType: function\n\nName: test_check_if_user_is_active\n\nCode:\n\ndef test_not_authenticate_user(db: Session) -> None:\r\n    email = random_email()\r\n    password = random_lower_string()\r\n    user = crud.authenticate(session=db, email=email, password=password)\r\n    assert user is None",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py",
             "type": "function",
-            "name": "test_authenticate_user_with_bcrypt_upgrades_to_argon2",
+            "name": "test_check_if_user_is_active",
             "start_line": 30,
             "end_line": 34
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py\n\nLines: 61-66\n\nType: function\n\nName: test_create_user\n\nCode:\n\ndef test_check_if_user_is_superuser_normal_user(db: Session) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    assert user.is_superuser is False",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py\n\nLines: 61-66\n\nType: function\n\nName: test_check_if_user_is_superuser_normal_user\n\nCode:\n\ndef test_check_if_user_is_superuser_normal_user(db: Session) -> None:\r\n    username = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=username, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    assert user.is_superuser is False",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py",
             "type": "function",
-            "name": "test_create_user",
+            "name": "test_check_if_user_is_superuser_normal_user",
             "start_line": 61,
             "end_line": 66
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py\n\nLines: 80-93\n\nType: function\n\nName: test_check_if_user_is_active\n\nCode:\n\ndef test_update_user(db: Session) -> None:\r\n    password = random_lower_string()\r\n    email = random_email()\r\n    user_in = UserCreate(email=email, password=password, is_superuser=True)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    new_password = random_lower_string()\r\n    user_in_update = UserUpdate(password=new_password, is_superuser=True)\r\n    if user.id is not None:\r\n        crud.update_user(session=db, db_user=user, user_in=user_in_update)\r\n    user_2 = db.get(User, user.id)\r\n    assert user_2\r\n    assert user.email == user_2.email\r\n    verified, _ = verify_password(new_password, user_2.hashed_password)\r\n    assert verified",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py\n\nLines: 80-93\n\nType: function\n\nName: test_not_authenticate_user\n\nCode:\n\ndef test_update_user(db: Session) -> None:\r\n    password = random_lower_string()\r\n    email = random_email()\r\n    user_in = UserCreate(email=email, password=password, is_superuser=True)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    new_password = random_lower_string()\r\n    user_in_update = UserUpdate(password=new_password, is_superuser=True)\r\n    if user.id is not None:\r\n        crud.update_user(session=db, db_user=user, user_in=user_in_update)\r\n    user_2 = db.get(User, user.id)\r\n    assert user_2\r\n    assert user.email == user_2.email\r\n    verified, _ = verify_password(new_password, user_2.hashed_password)\r\n    assert verified",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py",
             "type": "function",
-            "name": "test_check_if_user_is_active",
+            "name": "test_not_authenticate_user",
             "start_line": 80,
             "end_line": 93
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py\n\nLines: 96-130\n\nType: function\n\nName: test_not_authenticate_user\n\nCode:\n\ndef test_authenticate_user_with_bcrypt_upgrades_to_argon2(db: Session) -> None:\r\n    \"\"\"Test that a user with bcrypt password hash gets upgraded to argon2 on login.\"\"\"\r\n    email = random_email()\r\n    password = random_lower_string()\r\n\r\n    # Create a bcrypt hash directly (simulating legacy password)\r\n    bcrypt_hasher = BcryptHasher()\r\n    bcrypt_hash = bcrypt_hasher.hash(password)\r\n    assert bcrypt_hash.startswith(\"$2\")  # bcrypt hashes start with $2\r\n\r\n    # Create user with bcrypt hash directly in the database\r\n    user = User(email=email, hashed_password=bcrypt_hash)\r\n    db.add(user)\r\n    db.commit()\r\n    db.refresh(user)\r\n\r\n    # Verify the hash is bcrypt before authentication\r\n    assert user.hashed_password.startswith(\"$2\")\r\n\r\n    # Authenticate - this should upgrade the hash to argon2\r\n    authenticated_user = crud.authenticate(session=db, email=email, password=password)\r\n    assert authenticated_user\r\n    assert authenticated_user.email == email\r\n\r\n    db.refresh(authenticated_user)\r\n\r\n    # Verify the hash was upgraded to argon2\r\n    assert authenticated_user.hashed_password.startswith(\"$argon2\")\r\n\r\n    verified, updated_hash = verify_password(\r\n        password, authenticated_user.hashed_password\r\n    )\r\n    assert verified\r\n    # Should not need another update since it's already argon2\r\n    assert updated_hash is None",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py\n\nLines: 96-130\n\nType: function\n\nName: test_create_user\n\nCode:\n\ndef test_authenticate_user_with_bcrypt_upgrades_to_argon2(db: Session) -> None:\r\n    \"\"\"Test that a user with bcrypt password hash gets upgraded to argon2 on login.\"\"\"\r\n    email = random_email()\r\n    password = random_lower_string()\r\n\r\n    # Create a bcrypt hash directly (simulating legacy password)\r\n    bcrypt_hasher = BcryptHasher()\r\n    bcrypt_hash = bcrypt_hasher.hash(password)\r\n    assert bcrypt_hash.startswith(\"$2\")  # bcrypt hashes start with $2\r\n\r\n    # Create user with bcrypt hash directly in the database\r\n    user = User(email=email, hashed_password=bcrypt_hash)\r\n    db.add(user)\r\n    db.commit()\r\n    db.refresh(user)\r\n\r\n    # Verify the hash is bcrypt before authentication\r\n    assert user.hashed_password.startswith(\"$2\")\r\n\r\n    # Authenticate - this should upgrade the hash to argon2\r\n    authenticated_user = crud.authenticate(session=db, email=email, password=password)\r\n    assert authenticated_user\r\n    assert authenticated_user.email == email\r\n\r\n    db.refresh(authenticated_user)\r\n\r\n    # Verify the hash was upgraded to argon2\r\n    assert authenticated_user.hashed_password.startswith(\"$argon2\")\r\n\r\n    verified, updated_hash = verify_password(\r\n        password, authenticated_user.hashed_password\r\n    )\r\n    assert verified\r\n    # Should not need another update since it's already argon2\r\n    assert updated_hash is None",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\crud\\test_user.py",
             "type": "function",
-            "name": "test_not_authenticate_user",
+            "name": "test_create_user",
             "start_line": 96,
             "end_line": 130
         }
@@ -4990,21 +4990,21 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\utils\\user.py\n\nLines: 30-49\n\nType: function\n\nName: authentication_token_from_email\n\nCode:\n\ndef authentication_token_from_email(\r\n    *, client: TestClient, email: str, db: Session\r\n) -> dict[str, str]:\r\n    \"\"\"\r\n    Return a valid token for the user with given email.\r\n\r\n    If the user doesn't exist it is created first.\r\n    \"\"\"\r\n    password = random_lower_string()\r\n    user = crud.get_user_by_email(session=db, email=email)\r\n    if not user:\r\n        user_in_create = UserCreate(email=email, password=password)\r\n        user = crud.create_user(session=db, user_create=user_in_create)\r\n    else:\r\n        user_in_update = UserUpdate(password=password)\r\n        if not user.id:\r\n            raise Exception(\"User id not set\")\r\n        user = crud.update_user(session=db, db_user=user, user_in=user_in_update)\r\n\r\n    return user_authentication_headers(client=client, email=email, password=password)",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\utils\\user.py\n\nLines: 30-49\n\nType: function\n\nName: create_random_user\n\nCode:\n\ndef authentication_token_from_email(\r\n    *, client: TestClient, email: str, db: Session\r\n) -> dict[str, str]:\r\n    \"\"\"\r\n    Return a valid token for the user with given email.\r\n\r\n    If the user doesn't exist it is created first.\r\n    \"\"\"\r\n    password = random_lower_string()\r\n    user = crud.get_user_by_email(session=db, email=email)\r\n    if not user:\r\n        user_in_create = UserCreate(email=email, password=password)\r\n        user = crud.create_user(session=db, user_create=user_in_create)\r\n    else:\r\n        user_in_update = UserUpdate(password=password)\r\n        if not user.id:\r\n            raise Exception(\"User id not set\")\r\n        user = crud.update_user(session=db, db_user=user, user_in=user_in_update)\r\n\r\n    return user_authentication_headers(client=client, email=email, password=password)",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\utils\\user.py",
             "type": "function",
-            "name": "authentication_token_from_email",
+            "name": "create_random_user",
             "start_line": 30,
             "end_line": 49
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\utils\\user.py\n\nLines: 22-27\n\nType: function\n\nName: create_random_user\n\nCode:\n\ndef create_random_user(db: Session) -> User:\r\n    email = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=email, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    return user",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\utils\\user.py\n\nLines: 22-27\n\nType: function\n\nName: authentication_token_from_email\n\nCode:\n\ndef create_random_user(db: Session) -> User:\r\n    email = random_email()\r\n    password = random_lower_string()\r\n    user_in = UserCreate(email=email, password=password)\r\n    user = crud.create_user(session=db, user_create=user_in)\r\n    return user",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\utils\\user.py",
             "type": "function",
-            "name": "create_random_user",
+            "name": "authentication_token_from_email",
             "start_line": 22,
             "end_line": 27
         }
@@ -5020,23 +5020,23 @@
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\utils\\utils.py\n\nLines: 17-26\n\nType: function\n\nName: random_email\n\nCode:\n\ndef get_superuser_token_headers(client: TestClient) -> dict[str, str]:\r\n    login_data = {\r\n        \"username\": settings.FIRST_SUPERUSER,\r\n        \"password\": settings.FIRST_SUPERUSER_PASSWORD,\r\n    }\r\n    r = client.post(f\"{settings.API_V1_STR}/login/access-token\", data=login_data)\r\n    tokens = r.json()\r\n    a_token = tokens[\"access_token\"]\r\n    headers = {\"Authorization\": f\"Bearer {a_token}\"}\r\n    return headers",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\utils\\utils.py\n\nLines: 13-14\n\nType: function\n\nName: random_email\n\nCode:\n\ndef random_email() -> str:\r\n    return f\"{random_lower_string()}@{random_lower_string()}.com\"",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\utils\\utils.py",
             "type": "function",
             "name": "random_email",
-            "start_line": 17,
-            "end_line": 26
+            "start_line": 13,
+            "end_line": 14
         }
     },
     {
-        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\utils\\utils.py\n\nLines: 13-14\n\nType: function\n\nName: get_superuser_token_headers\n\nCode:\n\ndef random_email() -> str:\r\n    return f\"{random_lower_string()}@{random_lower_string()}.com\"",
+        "content": "File: sample_repos\\full-stack-fastapi-template\\backend\\tests\\utils\\utils.py\n\nLines: 17-26\n\nType: function\n\nName: get_superuser_token_headers\n\nCode:\n\ndef get_superuser_token_headers(client: TestClient) -> dict[str, str]:\r\n    login_data = {\r\n        \"username\": settings.FIRST_SUPERUSER,\r\n        \"password\": settings.FIRST_SUPERUSER_PASSWORD,\r\n    }\r\n    r = client.post(f\"{settings.API_V1_STR}/login/access-token\", data=login_data)\r\n    tokens = r.json()\r\n    a_token = tokens[\"access_token\"]\r\n    headers = {\"Authorization\": f\"Bearer {a_token}\"}\r\n    return headers",
         "metadata": {
             "file": "sample_repos\\full-stack-fastapi-template\\backend\\tests\\utils\\utils.py",
             "type": "function",
             "name": "get_superuser_token_headers",
-            "start_line": 13,
-            "end_line": 14
+            "start_line": 17,
+            "end_line": 26
         }
     },
     {

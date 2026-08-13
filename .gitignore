@@ -63,3 +63,5 @@ coverage/
 
 # Chroma vector database
 chroma_db/
+
+active_repo/

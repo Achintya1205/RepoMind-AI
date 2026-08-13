@@ -1008,12 +1008,12 @@
                 "start_line": 3
             },
             {
-                "statement": "import cors from 'cors';",
-                "start_line": 2
-            },
-            {
                 "statement": "import { initializeDb } from './src/testing/mocks/db';",
                 "start_line": 6
+            },
+            {
+                "statement": "import cors from 'cors';",
+                "start_line": 2
             },
             {
                 "statement": "import { handlers } from './src/testing/mocks/handlers';",
@@ -1494,14 +1494,14 @@
                 "start_line": 3
             },
             {
-                "name": "page.getByRole",
-                "caller": null,
-                "start_line": 11
-            },
-            {
                 "name": "expect",
                 "caller": null,
                 "start_line": 16
+            },
+            {
+                "name": "page.getByRole",
+                "caller": null,
+                "start_line": 11
             },
             {
                 "name": "expect(page.getByText('My bio')).toBeVisible",
@@ -1534,14 +1534,14 @@
                 "start_line": 10
             },
             {
-                "name": "page.getByRole",
-                "caller": null,
-                "start_line": 6
-            },
-            {
                 "name": "page.getByRole('menuitem', { name: 'Your Profile' }).click",
                 "caller": null,
                 "start_line": 7
+            },
+            {
+                "name": "page.getByRole",
+                "caller": null,
+                "start_line": 6
             },
             {
                 "name": "page.getByRole",
@@ -2311,12 +2311,12 @@
                 "start_line": 6
             },
             {
-                "name": "expect",
+                "name": "expect(result.current.notifications.length).toBe",
                 "caller": null,
                 "start_line": 8
             },
             {
-                "name": "expect(result.current.notifications.length).toBe",
+                "name": "expect",
                 "caller": null,
                 "start_line": 8
             },
@@ -2571,12 +2571,12 @@
                 "start_line": 6
             },
             {
-                "statement": "import { MutationConfig } from '@/lib/react-query';",
-                "start_line": 5
-            },
-            {
                 "statement": "import { z } from 'zod';",
                 "start_line": 2
+            },
+            {
+                "statement": "import { MutationConfig } from '@/lib/react-query';",
+                "start_line": 5
             },
             {
                 "statement": "import { getInfiniteCommentsQueryOptions } from './get-comments';",
@@ -2614,12 +2614,12 @@
                 "start_line": 11
             },
             {
-                "name": "z.string",
+                "name": "z.string().min",
                 "caller": null,
                 "start_line": 12
             },
             {
-                "name": "z.string().min",
+                "name": "z.string",
                 "caller": null,
                 "start_line": 12
             },
@@ -2684,16 +2684,16 @@
                 "start_line": 1
             },
             {
+                "statement": "import { getInfiniteCommentsQueryOptions } from './get-comments';",
+                "start_line": 6
+            },
+            {
                 "statement": "import { api } from '@/lib/api-client';",
                 "start_line": 3
             },
             {
                 "statement": "import { MutationConfig } from '@/lib/react-query';",
                 "start_line": 4
-            },
-            {
-                "statement": "import { getInfiniteCommentsQueryOptions } from './get-comments';",
-                "start_line": 6
             }
         ],
         "exports": [
@@ -2813,20 +2813,20 @@
                 "start_line": 1
             },
             {
-                "statement": "import { z } from 'zod';",
-                "start_line": 2
+                "statement": "import { MutationConfig } from '@/lib/react-query';",
+                "start_line": 5
             },
             {
-                "statement": "import { Discussion } from '@/types/api';",
-                "start_line": 6
+                "statement": "import { z } from 'zod';",
+                "start_line": 2
             },
             {
                 "statement": "import { api } from '@/lib/api-client';",
                 "start_line": 4
             },
             {
-                "statement": "import { MutationConfig } from '@/lib/react-query';",
-                "start_line": 5
+                "statement": "import { Discussion } from '@/types/api';",
+                "start_line": 6
             },
             {
                 "statement": "import { getDiscussionsQueryOptions } from './get-discussions';",
@@ -2939,16 +2939,16 @@
                 "start_line": 1
             },
             {
+                "statement": "import { getDiscussionsQueryOptions } from './get-discussions';",
+                "start_line": 6
+            },
+            {
                 "statement": "import { api } from '@/lib/api-client';",
                 "start_line": 3
             },
             {
                 "statement": "import { MutationConfig } from '@/lib/react-query';",
                 "start_line": 4
-            },
-            {
-                "statement": "import { getDiscussionsQueryOptions } from './get-discussions';",
-                "start_line": 6
             }
         ],
         "exports": [
@@ -3023,16 +3023,16 @@
                 "start_line": 1
             },
             {
+                "statement": "import { Discussion } from '@/types/api';",
+                "start_line": 5
+            },
+            {
                 "statement": "import { api } from '@/lib/api-client';",
                 "start_line": 3
             },
             {
                 "statement": "import { QueryConfig } from '@/lib/react-query';",
                 "start_line": 4
-            },
-            {
-                "statement": "import { Discussion } from '@/types/api';",
-                "start_line": 5
             }
         ],
         "exports": [
@@ -3061,14 +3061,14 @@
                 "start_line": 18
             },
             {
-                "name": "getDiscussionQueryOptions",
-                "caller": "useDiscussion",
-                "start_line": 32
-            },
-            {
                 "name": "useQuery",
                 "caller": "useDiscussion",
                 "start_line": 31
+            },
+            {
+                "name": "getDiscussionQueryOptions",
+                "caller": "useDiscussion",
+                "start_line": 32
             }
         ],
         "jsx": []
@@ -3141,6 +3141,10 @@
                 "start_line": 1
             },
             {
+                "statement": "import { MutationConfig } from '@/lib/react-query';",
+                "start_line": 5
+            },
+            {
                 "statement": "import { z } from 'zod';",
                 "start_line": 2
             },
@@ -3151,10 +3155,6 @@
             {
                 "statement": "import { api } from '@/lib/api-client';",
                 "start_line": 4
-            },
-            {
-                "statement": "import { MutationConfig } from '@/lib/react-query';",
-                "start_line": 5
             },
             {
                 "statement": "import { getDiscussionQueryOptions } from './get-discussion';",
@@ -3262,16 +3262,16 @@
                 "start_line": 1
             },
             {
+                "statement": "import { Team } from '@/types/api';",
+                "start_line": 5
+            },
+            {
                 "statement": "import { api } from '@/lib/api-client';",
                 "start_line": 3
             },
             {
                 "statement": "import { QueryConfig } from '@/lib/react-query';",
                 "start_line": 4
-            },
-            {
-                "statement": "import { Team } from '@/types/api';",
-                "start_line": 5
             }
         ],
         "exports": [
@@ -3345,16 +3345,16 @@
                 "start_line": 1
             },
             {
+                "statement": "import { getUsersQueryOptions } from './get-users';",
+                "start_line": 6
+            },
+            {
                 "statement": "import { api } from '@/lib/api-client';",
                 "start_line": 3
             },
             {
                 "statement": "import { MutationConfig } from '@/lib/react-query';",
                 "start_line": 4
-            },
-            {
-                "statement": "import { getUsersQueryOptions } from './get-users';",
-                "start_line": 6
             }
         ],
         "exports": [
@@ -3374,14 +3374,14 @@
                 "start_line": 13
             },
             {
+                "name": "getUsersQueryOptions",
+                "caller": "useDeleteUser",
+                "start_line": 30
+            },
+            {
                 "name": "useMutation",
                 "caller": "useDeleteUser",
                 "start_line": 27
-            },
-            {
-                "name": "useQueryClient",
-                "caller": "useDeleteUser",
-                "start_line": 23
             },
             {
                 "name": "queryClient.invalidateQueries",
@@ -3389,9 +3389,9 @@
                 "start_line": 29
             },
             {
-                "name": "getUsersQueryOptions",
+                "name": "useQueryClient",
                 "caller": "useDeleteUser",
-                "start_line": 30
+                "start_line": 23
             },
             {
                 "name": "onSuccess",
@@ -3429,16 +3429,16 @@
                 "start_line": 1
             },
             {
+                "statement": "import { User } from '@/types/api';",
+                "start_line": 5
+            },
+            {
                 "statement": "import { api } from '@/lib/api-client';",
                 "start_line": 3
             },
             {
                 "statement": "import { QueryConfig } from '@/lib/react-query';",
                 "start_line": 4
-            },
-            {
-                "statement": "import { User } from '@/types/api';",
-                "start_line": 5
             }
         ],
         "exports": [
@@ -4262,14 +4262,14 @@
                 "start_line": 43
             },
             {
-                "name": "vi.mock",
-                "caller": null,
-                "start_line": 10
-            },
-            {
                 "name": "server.listen",
                 "caller": null,
                 "start_line": 9
+            },
+            {
+                "name": "vi.mock",
+                "caller": null,
+                "start_line": 10
             },
             {
                 "name": "vi.fn",
@@ -4873,12 +4873,12 @@
                 "start_line": 4
             },
             {
-                "statement": "import { db, persistDb } from '../db';",
-                "start_line": 6
-            },
-            {
                 "statement": "import { HttpResponse, http } from 'msw';",
                 "start_line": 2
+            },
+            {
+                "statement": "import { db, persistDb } from '../db';",
+                "start_line": 6
             }
         ],
         "exports": [
@@ -5704,12 +5704,12 @@
                 "start_line": 3
             },
             {
-                "statement": "import { db, persistDb } from '../db';",
-                "start_line": 5
-            },
-            {
                 "statement": "import {\r\n  requireAuth,\r\n  requireAdmin,\r\n  sanitizeUser,\r\n  networkDelay,\r\n} from '../utils';",
                 "start_line": 6
+            },
+            {
+                "statement": "import { db, persistDb } from '../db';",
+                "start_line": 5
             }
         ],
         "exports": [
@@ -6706,12 +6706,12 @@
         "exports": [],
         "calls": [
             {
-                "name": "page.getByLabel('Title').fill",
+                "name": "page.getByLabel",
                 "caller": null,
                 "start_line": 21
             },
             {
-                "name": "page.getByLabel",
+                "name": "page.getByLabel('Title').fill",
                 "caller": null,
                 "start_line": 21
             },
@@ -7936,11 +7936,6 @@
                 "start_line": 15
             },
             {
-                "name": "getInfiniteCommentsQueryOptions",
-                "caller": null,
-                "start_line": 51
-            },
-            {
                 "name": "useInfiniteQuery",
                 "caller": null,
                 "start_line": 50
@@ -7949,6 +7944,11 @@
                 "name": "attachCookie",
                 "caller": null,
                 "start_line": 21
+            },
+            {
+                "name": "getInfiniteCommentsQueryOptions",
+                "caller": null,
+                "start_line": 51
             },
             {
                 "name": "getComments",
@@ -8024,7 +8024,7 @@
                 "start_line": 11
             },
             {
-                "name": "z.string().min",
+                "name": "z.string",
                 "caller": null,
                 "start_line": 12
             },
@@ -8034,7 +8034,7 @@
                 "start_line": 11
             },
             {
-                "name": "z.string",
+                "name": "z.string().min",
                 "caller": null,
                 "start_line": 12
             },
@@ -8138,14 +8138,14 @@
                 "start_line": 27
             },
             {
-                "name": "queryClient.invalidateQueries",
-                "caller": "useDeleteDiscussion",
-                "start_line": 29
-            },
-            {
                 "name": "useQueryClient",
                 "caller": "useDeleteDiscussion",
                 "start_line": 23
+            },
+            {
+                "name": "queryClient.invalidateQueries",
+                "caller": "useDeleteDiscussion",
+                "start_line": 29
             },
             {
                 "name": "getDiscussionsQueryOptions",
@@ -8332,6 +8332,11 @@
                 "start_line": 10
             },
             {
+                "name": "z.string",
+                "caller": null,
+                "start_line": 12
+            },
+            {
                 "name": "z.string().min",
                 "caller": null,
                 "start_line": 12
@@ -8345,11 +8350,6 @@
                 "name": "z.string().min",
                 "caller": null,
                 "start_line": 11
-            },
-            {
-                "name": "z.string",
-                "caller": null,
-                "start_line": 12
             },
             {
                 "name": "z.boolean",
@@ -8450,6 +8450,11 @@
                 "start_line": 23
             },
             {
+                "name": "getTeamsQueryOptions",
+                "caller": "useTeams",
+                "start_line": 24
+            },
+            {
                 "name": "queryOptions",
                 "caller": "getTeamsQueryOptions",
                 "start_line": 12
@@ -8458,11 +8463,6 @@
                 "name": "getTeams",
                 "caller": "getTeamsQueryOptions",
                 "start_line": 14
-            },
-            {
-                "name": "getTeamsQueryOptions",
-                "caller": "useTeams",
-                "start_line": 24
             }
         ],
         "jsx": []
@@ -8534,14 +8534,14 @@
                 "start_line": 29
             },
             {
-                "name": "getUsersQueryOptions",
-                "caller": "useDeleteUser",
-                "start_line": 30
-            },
-            {
                 "name": "useMutation",
                 "caller": "useDeleteUser",
                 "start_line": 27
+            },
+            {
+                "name": "getUsersQueryOptions",
+                "caller": "useDeleteUser",
+                "start_line": 30
             },
             {
                 "name": "onSuccess",
@@ -10107,14 +10107,14 @@
                 "start_line": 142
             },
             {
-                "name": "HttpResponse.json",
-                "caller": null,
-                "start_line": 44
-            },
-            {
                 "name": "db.user.findFirst",
                 "caller": null,
                 "start_line": 35
+            },
+            {
+                "name": "HttpResponse.json",
+                "caller": null,
+                "start_line": 44
             },
             {
                 "name": "db.team.create",
@@ -10372,12 +10372,12 @@
                 "start_line": 3
             },
             {
-                "statement": "import { db, persistDb } from '../db';",
-                "start_line": 5
-            },
-            {
                 "statement": "import {\r\n  requireAuth,\r\n  requireAdmin,\r\n  sanitizeUser,\r\n  networkDelay,\r\n} from '../utils';",
                 "start_line": 6
+            },
+            {
+                "statement": "import { db, persistDb } from '../db';",
+                "start_line": 5
             }
         ],
         "exports": [
@@ -11164,20 +11164,20 @@
                 "start_line": 1
             },
             {
-                "statement": "import logger from 'pino-http';",
-                "start_line": 4
-            },
-            {
                 "statement": "import cors from 'cors';",
                 "start_line": 2
             },
             {
-                "statement": "import { env } from './src/config/env';",
-                "start_line": 6
+                "statement": "import logger from 'pino-http';",
+                "start_line": 4
             },
             {
                 "statement": "import express from 'express';",
                 "start_line": 3
+            },
+            {
+                "statement": "import { env } from './src/config/env';",
+                "start_line": 6
             },
             {
                 "statement": "import { initializeDb } from './src/testing/mocks/db';",
@@ -12378,12 +12378,12 @@
                 "start_line": 5
             },
             {
-                "statement": "export * from './textarea';",
-                "start_line": 4
-            },
-            {
                 "statement": "export * from './select';",
                 "start_line": 3
+            },
+            {
+                "statement": "export * from './textarea';",
+                "start_line": 4
             },
             {
                 "statement": "export * from './input';",
@@ -12478,14 +12478,14 @@
                 "start_line": 27
             },
             {
-                "name": "state.notifications.filter",
-                "caller": null,
-                "start_line": 28
-            },
-            {
                 "name": "nanoid",
                 "caller": null,
                 "start_line": 23
+            },
+            {
+                "name": "state.notifications.filter",
+                "caller": null,
+                "start_line": 28
             }
         ],
         "jsx": []
@@ -12790,16 +12790,16 @@
                 "start_line": 2
             },
             {
-                "statement": "import { Comment } from '@/types/api';",
-                "start_line": 6
-            },
-            {
                 "statement": "import { MutationConfig } from '@/lib/react-query';",
                 "start_line": 5
             },
             {
                 "statement": "import { api } from '@/lib/api-client';",
                 "start_line": 4
+            },
+            {
+                "statement": "import { Comment } from '@/types/api';",
+                "start_line": 6
             },
             {
                 "statement": "import { getInfiniteCommentsQueryOptions } from './get-comments';",
@@ -14866,19 +14866,19 @@
             },
             {
                 "name": "decode",
-                "start_line": 32,
-                "end_line": 37,
-                "start_byte": 763,
-                "end_byte": 900,
-                "code": "() => {\r\n  const delayTime = import.meta.env.TEST\r\n    ? 200\r\n    : Math.floor(Math.random() * 700) + 300;\r\n  return delay(delayTime);\r\n}"
-            },
-            {
-                "name": "hash",
                 "start_line": 22,
                 "end_line": 30,
                 "start_byte": 569,
                 "end_byte": 730,
                 "code": "(str: string) => {\r\n  let hash = 5381,\r\n    i = str.length;\r\n\r\n  while (i) {\r\n    hash = (hash * 33) ^ str.charCodeAt(--i);\r\n  }\r\n  return String(hash >>> 0);\r\n}"
+            },
+            {
+                "name": "hash",
+                "start_line": 32,
+                "end_line": 37,
+                "start_byte": 763,
+                "end_byte": 900,
+                "code": "() => {\r\n  const delayTime = import.meta.env.TEST\r\n    ? 200\r\n    : Math.floor(Math.random() * 700) + 300;\r\n  return delay(delayTime);\r\n}"
             }
         ],
         "arrow_functions": [],
@@ -14933,7 +14933,7 @@
             },
             {
                 "name": "Math.floor",
-                "caller": "decode",
+                "caller": "hash",
                 "start_line": 35
             },
             {
@@ -14943,7 +14943,7 @@
             },
             {
                 "name": "Math.random",
-                "caller": "decode",
+                "caller": "hash",
                 "start_line": 35
             },
             {
@@ -14963,7 +14963,7 @@
             },
             {
                 "name": "delay",
-                "caller": "decode",
+                "caller": "hash",
                 "start_line": 36
             },
             {
@@ -14998,12 +14998,12 @@
             },
             {
                 "name": "str.charCodeAt",
-                "caller": "hash",
+                "caller": "decode",
                 "start_line": 27
             },
             {
                 "name": "String",
-                "caller": "hash",
+                "caller": "decode",
                 "start_line": 29
             },
             {
@@ -17030,6 +17030,11 @@
                 "start_line": 101
             },
             {
+                "name": "userEvent.click",
+                "caller": null,
+                "start_line": 124
+            },
+            {
                 "name": "waitFor",
                 "caller": null,
                 "start_line": 126
@@ -17116,6 +17121,11 @@
             },
             {
                 "name": "within(\r\n      confirmationDialog,\r\n    ).findByRole",
+                "caller": null,
+                "start_line": 152
+            },
+            {
+                "name": "within",
                 "caller": null,
                 "start_line": 152
             },
@@ -17215,11 +17225,6 @@
                 "start_line": 141
             },
             {
-                "name": "within",
-                "caller": null,
-                "start_line": 152
-            },
-            {
                 "name": "within(drawer).findByRole",
                 "caller": null,
                 "start_line": 120
@@ -17293,11 +17298,6 @@
                 "name": "screen.findByRole",
                 "caller": null,
                 "start_line": 112
-            },
-            {
-                "name": "userEvent.click",
-                "caller": null,
-                "start_line": 124
             },
             {
                 "name": "expect(commentElement).toBeInTheDocument",
@@ -18602,16 +18602,16 @@
                 "start_line": 3
             },
             {
+                "statement": "import { useTeams } from '@/features/teams/api/get-teams';",
+                "start_line": 8
+            },
+            {
                 "statement": "import { RegisterForm } from '@/features/auth/components/register-form';",
                 "start_line": 7
             },
             {
                 "statement": "import { useState } from 'react';",
                 "start_line": 4
-            },
-            {
-                "statement": "import { useTeams } from '@/features/teams/api/get-teams';",
-                "start_line": 8
             },
             {
                 "statement": "import { paths } from '@/config/paths';",
@@ -18702,12 +18702,12 @@
                 "start_line": 6
             },
             {
-                "statement": "import { useUser } from '@/lib/auth';",
-                "start_line": 8
-            },
-            {
                 "statement": "import { paths } from '@/config/paths';",
                 "start_line": 7
+            },
+            {
+                "statement": "import { useUser } from '@/lib/auth';",
+                "start_line": 8
             },
             {
                 "statement": "import { ReactNode, useEffect } from 'react';",
@@ -18877,14 +18877,14 @@
                 "start_line": 21
             },
             {
-                "name": "queryClient.prefetchInfiniteQuery",
-                "caller": "preloadData",
-                "start_line": 34
-            },
-            {
                 "name": "getDiscussionQueryOptions",
                 "caller": "preloadData",
                 "start_line": 33
+            },
+            {
+                "name": "queryClient.prefetchInfiniteQuery",
+                "caller": "preloadData",
+                "start_line": 34
             },
             {
                 "name": "Promise.all",
@@ -19134,12 +19134,12 @@
                 "start_line": 1
             },
             {
-                "statement": "import {\r\n  Dialog,\r\n  DialogContent,\r\n  DialogDescription,\r\n  DialogFooter,\r\n  DialogHeader,\r\n  DialogTitle,\r\n  DialogTrigger,\r\n} from './dialog';",
-                "start_line": 7
-            },
-            {
                 "statement": "import { Button } from '@/components/ui/button';",
                 "start_line": 4
+            },
+            {
+                "statement": "import {\r\n  Dialog,\r\n  DialogContent,\r\n  DialogDescription,\r\n  DialogFooter,\r\n  DialogHeader,\r\n  DialogTitle,\r\n  DialogTrigger,\r\n} from './dialog';",
+                "start_line": 7
             },
             {
                 "statement": "import { useDisclosure } from '@/hooks/use-disclosure';",
@@ -19196,12 +19196,12 @@
                 "start_line": 33
             },
             {
-                "text": "<DialogHeader>\r\n          <DialogTitle>Edit profile</DialogTitle>\r\n          <DialogDescription>Lorem ipsum</DialogDescription>\r\n        </DialogHeader>",
-                "start_line": 36
-            },
-            {
                 "text": "<DialogContent className=\"sm:max-w-[425px]\">\r\n        <DialogHeader>\r\n          <DialogTitle>Edit profile</DialogTitle>\r\n          <DialogDescription>Lorem ipsum</DialogDescription>\r\n        </DialogHeader>\r\n        <div className=\"grid gap-4 py-4\">Lorem ipsum</div>\r\n\r\n        <DialogFooter>\r\n          <Button type=\"submit\">Save changes</Button>\r\n          <Button ref={cancelButtonRef} variant=\"outline\" onClick={close}>\r\n            Cancel\r\n          </Button>\r\n        </DialogFooter>\r\n      </DialogContent>",
                 "start_line": 35
+            },
+            {
+                "text": "<DialogHeader>\r\n          <DialogTitle>Edit profile</DialogTitle>\r\n          <DialogDescription>Lorem ipsum</DialogDescription>\r\n        </DialogHeader>",
+                "start_line": 36
             },
             {
                 "text": "<DialogTrigger asChild>\r\n        <Button variant=\"outline\">Open Dialog</Button>\r\n      </DialogTrigger>",
@@ -19816,14 +19816,14 @@
                 "start_line": 21
             },
             {
-                "name": "open",
-                "caller": "TestDialog",
-                "start_line": 31
-            },
-            {
                 "name": "test",
                 "caller": null,
                 "start_line": 54
+            },
+            {
+                "name": "open",
+                "caller": "TestDialog",
+                "start_line": 31
             }
         ],
         "jsx": [
@@ -20158,11 +20158,6 @@
                 "start_line": 44
             },
             {
-                "name": "screen.queryByText",
-                "caller": null,
-                "start_line": 47
-            },
-            {
                 "name": "expect(screen.queryByText(titleText)).not.toBeInTheDocument",
                 "caller": null,
                 "start_line": 47
@@ -20174,6 +20169,11 @@
             },
             {
                 "name": "expect",
+                "caller": null,
+                "start_line": 47
+            },
+            {
+                "name": "screen.queryByText",
                 "caller": null,
                 "start_line": 47
             },
@@ -20756,12 +20756,12 @@
                 "start_line": 25
             },
             {
-                "text": "<Error errorMessage={error?.message} />",
-                "start_line": 27
-            },
-            {
                 "text": "<Label>\r\n        {label}\r\n        <div className=\"mt-1\">{children}</div>\r\n      </Label>",
                 "start_line": 23
+            },
+            {
+                "text": "<Error errorMessage={error?.message} />",
+                "start_line": 27
             }
         ]
     },
@@ -20884,16 +20884,16 @@
                 "start_line": 1
             },
             {
+                "statement": "import { FormDrawer } from './form-drawer';",
+                "start_line": 7
+            },
+            {
                 "statement": "import { Button } from '../button';",
                 "start_line": 4
             },
             {
                 "statement": "import { Form } from './form';",
                 "start_line": 6
-            },
-            {
-                "statement": "import { FormDrawer } from './form-drawer';",
-                "start_line": 7
             },
             {
                 "statement": "import { z } from 'zod';",
@@ -21340,16 +21340,16 @@
                 "start_line": 3
             },
             {
+                "statement": "import { UseFormRegisterReturn } from 'react-hook-form';",
+                "start_line": 4
+            },
+            {
                 "statement": "import { cn } from '@/utils/cn';",
                 "start_line": 6
             },
             {
                 "statement": "import { FieldWrapper, FieldWrapperPassThroughProps } from './field-wrapper';",
                 "start_line": 8
-            },
-            {
-                "statement": "import { UseFormRegisterReturn } from 'react-hook-form';",
-                "start_line": 4
             }
         ],
         "exports": [
@@ -21641,12 +21641,12 @@
                 "start_line": 22
             },
             {
-                "text": "<>\r\n          <Input\r\n            label=\"Title\"\r\n            error={formState.errors['title']}\r\n            registration={register('title')}\r\n          />\r\n\r\n          <Button name=\"submit\" type=\"submit\" className=\"w-full\">\r\n            Submit\r\n          </Button>\r\n        </>",
-                "start_line": 24
-            },
-            {
                 "text": "<Form onSubmit={handleSubmit} schema={schema} id=\"my-form\">\r\n      {({ register, formState }) => (\r\n        <>\r\n          <Input\r\n            label=\"Title\"\r\n            error={formState.errors['title']}\r\n            registration={register('title')}\r\n          />\r\n\r\n          <Button name=\"submit\" type=\"submit\" className=\"w-full\">\r\n            Submit\r\n          </Button>\r\n        </>\r\n      )}\r\n    </Form>",
                 "start_line": 52
+            },
+            {
+                "text": "<>\r\n          <Input\r\n            label=\"Title\"\r\n            error={formState.errors['title']}\r\n            registration={register('title')}\r\n          />\r\n\r\n          <Button name=\"submit\" type=\"submit\" className=\"w-full\">\r\n            Submit\r\n          </Button>\r\n        </>",
+                "start_line": 24
             },
             {
                 "text": "<>\r\n          <Input\r\n            label=\"Title\"\r\n            error={formState.errors['title']}\r\n            registration={register('title')}\r\n          />\r\n\r\n          <Button name=\"submit\" type=\"submit\" className=\"w-full\">\r\n            Submit\r\n          </Button>\r\n        </>",
@@ -22859,10 +22859,6 @@
                 "start_line": 91
             },
             {
-                "text": "<NextLink\r\n            href={paths.auth.login.getHref(redirectTo)}\r\n            className=\"font-medium text-blue-600 hover:text-blue-500\"\r\n          >\r\n            Log In\r\n          </NextLink>",
-                "start_line": 112
-            },
-            {
                 "text": "<Input\r\n              type=\"text\"\r\n              label=\"First Name\"\r\n              error={formState.errors['firstName']}\r\n              registration={register('firstName')}\r\n            />",
                 "start_line": 43
             },
@@ -22909,6 +22905,10 @@
             {
                 "text": "<div className=\"mt-2 flex items-center justify-end\">\r\n        <div className=\"text-sm\">\r\n          <NextLink\r\n            href={paths.auth.login.getHref(redirectTo)}\r\n            className=\"font-medium text-blue-600 hover:text-blue-500\"\r\n          >\r\n            Log In\r\n          </NextLink>\r\n        </div>\r\n      </div>",
                 "start_line": 110
+            },
+            {
+                "text": "<NextLink\r\n            href={paths.auth.login.getHref(redirectTo)}\r\n            className=\"font-medium text-blue-600 hover:text-blue-500\"\r\n          >\r\n            Log In\r\n          </NextLink>",
+                "start_line": 112
             }
         ]
     },
@@ -23366,12 +23366,12 @@
                 "start_line": 17
             },
             {
-                "text": "<CommentsList discussionId={discussionId} />",
-                "start_line": 21
-            },
-            {
                 "text": "<h3 className=\"text-xl font-bold\">Comments:</h3>",
                 "start_line": 18
+            },
+            {
+                "text": "<CommentsList discussionId={discussionId} />",
+                "start_line": 21
             }
         ]
     },
@@ -23429,6 +23429,11 @@
                 "start_line": 20
             },
             {
+                "name": "addNotification",
+                "caller": "CreateComment",
+                "start_line": 24
+            },
+            {
                 "name": "register",
                 "caller": "CreateComment",
                 "start_line": 72
@@ -23437,11 +23442,6 @@
                 "name": "createCommentMutation.mutate",
                 "caller": "CreateComment",
                 "start_line": 56
-            },
-            {
-                "name": "addNotification",
-                "caller": "CreateComment",
-                "start_line": 24
             }
         ],
         "jsx": [
@@ -24153,24 +24153,24 @@
                 "start_line": 29
             },
             {
-                "name": "useDiscussion",
-                "caller": "UpdateDiscussion",
-                "start_line": 30
-            },
-            {
                 "name": "useUser",
                 "caller": "UpdateDiscussion",
                 "start_line": 42
             },
             {
-                "name": "useUpdateDiscussion",
+                "name": "useDiscussion",
                 "caller": "UpdateDiscussion",
-                "start_line": 31
+                "start_line": 30
             },
             {
                 "name": "addNotification",
                 "caller": "UpdateDiscussion",
                 "start_line": 34
+            },
+            {
+                "name": "useUpdateDiscussion",
+                "caller": "UpdateDiscussion",
+                "start_line": 31
             },
             {
                 "name": "canUpdateDiscussion",
@@ -24494,12 +24494,12 @@
                 "start_line": 4
             },
             {
-                "statement": "import { formatDate } from '@/utils/format';",
-                "start_line": 5
-            },
-            {
                 "statement": "import { DeleteUser } from './delete-user';",
                 "start_line": 9
+            },
+            {
+                "statement": "import { formatDate } from '@/utils/format';",
+                "start_line": 5
             },
             {
                 "statement": "import { useUsers } from '../api/get-users';",
@@ -25239,10 +25239,6 @@
                 "start_line": 1
             },
             {
-                "statement": "import {\r\n  createDiscussion as generateDiscussion,\r\n  createUser as generateUser,\r\n} from './data-generators';",
-                "start_line": 11
-            },
-            {
                 "statement": "import Cookies from 'js-cookie';",
                 "start_line": 7
             },
@@ -25253,6 +25249,10 @@
             {
                 "statement": "import userEvent from '@testing-library/user-event';",
                 "start_line": 6
+            },
+            {
+                "statement": "import {\r\n  createDiscussion as generateDiscussion,\r\n  createUser as generateUser,\r\n} from './data-generators';",
+                "start_line": 11
             },
             {
                 "statement": "import { db } from './mocks/db';",
@@ -25815,12 +25815,12 @@
                 "start_line": 1
             },
             {
-                "statement": "import { GetServerSideProps, InferGetServerSidePropsType } from 'next';",
-                "start_line": 6
-            },
-            {
                 "statement": "import { ReactElement } from 'react';",
                 "start_line": 8
+            },
+            {
+                "statement": "import { GetServerSideProps, InferGetServerSidePropsType } from 'next';",
+                "start_line": 6
             },
             {
                 "statement": "import { ErrorBoundary } from 'react-error-boundary';",
@@ -26810,14 +26810,14 @@
                 "start_line": 26
             },
             {
-                "name": "router.replace",
-                "caller": "RegisterPage",
-                "start_line": 25
-            },
-            {
                 "name": "useTeams",
                 "caller": "RegisterPage",
                 "start_line": 16
+            },
+            {
+                "name": "router.replace",
+                "caller": "RegisterPage",
+                "start_line": 25
             },
             {
                 "name": "setChooseTeam",
@@ -28417,16 +28417,16 @@
                 "start_line": 55
             },
             {
-                "text": "<DialogContent className=\"sm:max-w-[425px]\">\r\n        <DialogHeader>\r\n          <DialogTitle>{titleText}</DialogTitle>\r\n        </DialogHeader>\r\n\r\n        <DialogFooter>\r\n          <Button type=\"submit\">Submit</Button>\r\n          <Button ref={cancelButtonRef} variant=\"outline\" onClick={close}>\r\n            {cancelButtonText}\r\n          </Button>\r\n        </DialogFooter>\r\n      </DialogContent>",
-                "start_line": 38
-            },
-            {
                 "text": "<DialogHeader>\r\n          <DialogTitle>{titleText}</DialogTitle>\r\n        </DialogHeader>",
                 "start_line": 39
             },
             {
                 "text": "<Button variant=\"outline\">{openButtonText}</Button>",
                 "start_line": 36
+            },
+            {
+                "text": "<DialogContent className=\"sm:max-w-[425px]\">\r\n        <DialogHeader>\r\n          <DialogTitle>{titleText}</DialogTitle>\r\n        </DialogHeader>\r\n\r\n        <DialogFooter>\r\n          <Button type=\"submit\">Submit</Button>\r\n          <Button ref={cancelButtonRef} variant=\"outline\" onClick={close}>\r\n            {cancelButtonText}\r\n          </Button>\r\n        </DialogFooter>\r\n      </DialogContent>",
+                "start_line": 38
             },
             {
                 "text": "<DialogTrigger asChild>\r\n        <Button variant=\"outline\">{openButtonText}</Button>\r\n      </DialogTrigger>",
@@ -29946,14 +29946,14 @@
                 "start_line": 26
             },
             {
-                "name": "label?.toString",
-                "caller": "Select",
-                "start_line": 34
-            },
-            {
                 "name": "options.map",
                 "caller": "Select",
                 "start_line": 33
+            },
+            {
+                "name": "label?.toString",
+                "caller": "Select",
+                "start_line": 34
             }
         ],
         "jsx": [
@@ -31247,11 +31247,6 @@
                 "start_line": 14
             },
             {
-                "name": "register",
-                "caller": "LoginForm",
-                "start_line": 40
-            },
-            {
                 "name": "login.mutate",
                 "caller": "LoginForm",
                 "start_line": 24
@@ -31260,6 +31255,11 @@
                 "name": "register",
                 "caller": "LoginForm",
                 "start_line": 34
+            },
+            {
+                "name": "register",
+                "caller": "LoginForm",
+                "start_line": 40
             },
             {
                 "name": "useRouter",
@@ -31843,12 +31843,12 @@
                 "start_line": 44
             },
             {
-                "text": "<ArchiveX className=\"size-10\" />",
-                "start_line": 43
-            },
-            {
                 "text": "<Spinner size=\"lg\" />",
                 "start_line": 29
+            },
+            {
+                "text": "<ArchiveX className=\"size-10\" />",
+                "start_line": 43
             },
             {
                 "text": "<ul aria-label=\"comments\" className=\"flex flex-col space-y-3\">\r\n        {comments.map((comment, index) => (\r\n          <li\r\n            aria-label={`comment-${comment.body}-${index}`}\r\n            key={comment.id || index}\r\n            className=\"w-full bg-white p-4 shadow-sm\"\r\n          >\r\n            <div className=\"flex justify-between\">\r\n              <div>\r\n                <span className=\"text-xs font-semibold\">\r\n                  {formatDate(comment.createdAt)}\r\n                </span>\r\n                {comment.author && (\r\n                  <span className=\"text-xs font-bold\">\r\n                    {' '}\r\n                    by {comment.author.firstName} {comment.author.lastName}\r\n                  </span>\r\n                )}\r\n              </div>\r\n              {!isPublicView && (\r\n                <Authorization\r\n                  policyCheck={POLICIES['comment:delete'](\r\n                    user.data as User,\r\n                    comment,\r\n                  )}\r\n                >\r\n                  <DeleteComment discussionId={discussionId} id={comment.id} />\r\n                </Authorization>\r\n              )}\r\n            </div>\r\n            <MDPreview value={comment.body} />\r\n          </li>\r\n        ))}\r\n      </ul>",
@@ -31936,12 +31936,12 @@
                 "start_line": 17
             },
             {
-                "text": "<div className=\"mb-4 flex items-center justify-between\">\r\n        <h3 className=\"text-xl font-bold\">Comments:</h3>\r\n        {!isPublicView && <CreateComment discussionId={discussionId} />}\r\n      </div>",
-                "start_line": 15
-            },
-            {
                 "text": "<CommentsList discussionId={discussionId} />",
                 "start_line": 19
+            },
+            {
+                "text": "<div className=\"mb-4 flex items-center justify-between\">\r\n        <h3 className=\"text-xl font-bold\">Comments:</h3>\r\n        {!isPublicView && <CreateComment discussionId={discussionId} />}\r\n      </div>",
+                "start_line": 15
             },
             {
                 "text": "<h3 className=\"text-xl font-bold\">Comments:</h3>",
@@ -32152,12 +32152,12 @@
                 "start_line": 3
             },
             {
-                "statement": "import {\r\n  Form,\r\n  FormDrawer,\r\n  Input,\r\n  Label,\r\n  Switch,\r\n  Textarea,\r\n} from '@/components/ui/form';",
-                "start_line": 4
-            },
-            {
                 "statement": "import { Authorization, ROLES } from '@/lib/authorization';",
                 "start_line": 13
+            },
+            {
+                "statement": "import {\r\n  Form,\r\n  FormDrawer,\r\n  Input,\r\n  Label,\r\n  Switch,\r\n  Textarea,\r\n} from '@/components/ui/form';",
+                "start_line": 4
             },
             {
                 "statement": "import { useNotifications } from '@/components/ui/notifications';",
@@ -32191,14 +32191,14 @@
                 "start_line": 22
             },
             {
-                "name": "register",
-                "caller": "CreateDiscussion",
-                "start_line": 73
-            },
-            {
                 "name": "addNotification",
                 "caller": "CreateDiscussion",
                 "start_line": 25
+            },
+            {
+                "name": "register",
+                "caller": "CreateDiscussion",
+                "start_line": 73
             },
             {
                 "name": "register",
@@ -32926,9 +32926,9 @@
                 "start_line": 15
             },
             {
-                "name": "updateProfileMutation.mutate",
+                "name": "addNotification",
                 "caller": "UpdateProfile",
-                "start_line": 50
+                "start_line": 19
             },
             {
                 "name": "useUpdateProfile",
@@ -32936,9 +32936,9 @@
                 "start_line": 16
             },
             {
-                "name": "addNotification",
+                "name": "updateProfileMutation.mutate",
                 "caller": "UpdateProfile",
-                "start_line": 19
+                "start_line": 50
             },
             {
                 "name": "register",
@@ -33068,12 +33068,12 @@
                 "start_line": 25
             },
             {
-                "text": "<DeleteUser id={id} />",
-                "start_line": 55
-            },
-            {
                 "text": "<span>{formatDate(createdAt)}</span>",
                 "start_line": 48
+            },
+            {
+                "text": "<DeleteUser id={id} />",
+                "start_line": 55
             },
             {
                 "text": "<Spinner size=\"lg\" />",
@@ -34183,10 +34183,6 @@
                 "start_line": 1
             },
             {
-                "statement": "import { enableMocking } from './testing/mocks';",
-                "start_line": 6
-            },
-            {
                 "statement": "import { App } from './app';",
                 "start_line": 5
             },
@@ -34197,6 +34193,10 @@
             {
                 "statement": "import './index.css';",
                 "start_line": 4
+            },
+            {
+                "statement": "import { enableMocking } from './testing/mocks';",
+                "start_line": 6
             }
         ],
         "exports": [],
@@ -38731,12 +38731,12 @@
                 "start_line": 25
             },
             {
-                "text": "<Error errorMessage={error?.message} />",
-                "start_line": 27
-            },
-            {
                 "text": "<Label>\r\n        {label}\r\n        <div className=\"mt-1\">{children}</div>\r\n      </Label>",
                 "start_line": 23
+            },
+            {
+                "text": "<Error errorMessage={error?.message} />",
+                "start_line": 27
             }
         ]
     },
@@ -39253,12 +39253,12 @@
                 "start_line": 1
             },
             {
-                "statement": "import { cn } from '@/utils/cn';",
-                "start_line": 5
-            },
-            {
                 "statement": "import * as React from 'react';",
                 "start_line": 3
+            },
+            {
+                "statement": "import { cn } from '@/utils/cn';",
+                "start_line": 5
             },
             {
                 "statement": "import { cva, type VariantProps } from 'class-variance-authority';",
@@ -39376,12 +39376,12 @@
                 "start_line": 1
             },
             {
-                "statement": "import { cn } from '@/utils/cn';",
-                "start_line": 4
-            },
-            {
                 "statement": "import * as React from 'react';",
                 "start_line": 2
+            },
+            {
+                "statement": "import { cn } from '@/utils/cn';",
+                "start_line": 4
             }
         ],
         "exports": [
@@ -39824,16 +39824,16 @@
                 "start_line": 29
             },
             {
-                "statement": "export const Error: Story = {\r\n  args: {\r\n    notification: {\r\n      id: '1',\r\n      type: 'error',\r\n      title: 'Hello Error',\r\n      message: 'This is error notification',\r\n    },\r\n    onDismiss: (id) => alert(`Dismissing Notification with id: ${id}`),\r\n  },\r\n};",
-                "start_line": 53
-            },
-            {
                 "statement": "export const Warning: Story = {\r\n  args: {\r\n    notification: {\r\n      id: '1',\r\n      type: 'warning',\r\n      title: 'Hello Warning',\r\n      message: 'This is warning notification',\r\n    },\r\n    onDismiss: (id) => alert(`Dismissing Notification with id: ${id}`),\r\n  },\r\n};",
                 "start_line": 41
             },
             {
                 "statement": "export const Info: Story = {\r\n  args: {\r\n    notification: {\r\n      id: '1',\r\n      type: 'info',\r\n      title: 'Hello Info',\r\n      message: 'This is info notification',\r\n    },\r\n    onDismiss: (id) => alert(`Dismissing Notification with id: ${id}`),\r\n  },\r\n};",
                 "start_line": 17
+            },
+            {
+                "statement": "export const Error: Story = {\r\n  args: {\r\n    notification: {\r\n      id: '1',\r\n      type: 'error',\r\n      title: 'Hello Error',\r\n      message: 'This is error notification',\r\n    },\r\n    onDismiss: (id) => alert(`Dismissing Notification with id: ${id}`),\r\n  },\r\n};",
+                "start_line": 53
             }
         ],
         "calls": [
@@ -40114,6 +40114,14 @@
             },
             {
                 "name": "PaginationNext",
+                "start_line": 73,
+                "end_line": 86,
+                "start_byte": 1726,
+                "end_byte": 2048,
+                "code": "({\r\n  className,\r\n  ...props\r\n}: React.ComponentProps<typeof PaginationLink>) => (\r\n  <PaginationLink\r\n    aria-label=\"Go to previous page\"\r\n    size=\"default\"\r\n    className={cn('gap-1 pl-2.5', className)}\r\n    {...props}\r\n  >\r\n    <ChevronLeftIcon className=\"size-4\" />\r\n    <span>Previous</span>\r\n  </PaginationLink>\r\n)"
+            },
+            {
+                "name": "PaginationEllipsis",
                 "start_line": 48,
                 "end_line": 70,
                 "start_byte": 1254,
@@ -40121,20 +40129,12 @@
                 "code": "({\r\n  className,\r\n  isActive,\r\n  size = 'icon',\r\n  children,\r\n  href,\r\n  ...props\r\n}: PaginationLinkProps) => (\r\n  <Link\r\n    to={href as string}\r\n    aria-current={isActive ? 'page' : undefined}\r\n    className={cn(\r\n      buttonVariants({\r\n        variant: isActive ? 'outline' : 'ghost',\r\n        size,\r\n      }),\r\n      className,\r\n    )}\r\n    {...props}\r\n  >\r\n    {children}\r\n  </Link>\r\n)"
             },
             {
-                "name": "PaginationEllipsis",
+                "name": "PaginationPrevious",
                 "start_line": 89,
                 "end_line": 102,
                 "start_byte": 2132,
                 "end_byte": 2447,
                 "code": "({\r\n  className,\r\n  ...props\r\n}: React.ComponentProps<typeof PaginationLink>) => (\r\n  <PaginationLink\r\n    aria-label=\"Go to next page\"\r\n    size=\"default\"\r\n    className={cn('gap-1 pr-2.5', className)}\r\n    {...props}\r\n  >\r\n    <span>Next</span>\r\n    <ChevronRightIcon className=\"size-4\" />\r\n  </PaginationLink>\r\n)"
-            },
-            {
-                "name": "PaginationPrevious",
-                "start_line": 73,
-                "end_line": 86,
-                "start_byte": 1726,
-                "end_byte": 2048,
-                "code": "({\r\n  className,\r\n  ...props\r\n}: React.ComponentProps<typeof PaginationLink>) => (\r\n  <PaginationLink\r\n    aria-label=\"Go to previous page\"\r\n    size=\"default\"\r\n    className={cn('gap-1 pl-2.5', className)}\r\n    {...props}\r\n  >\r\n    <ChevronLeftIcon className=\"size-4\" />\r\n    <span>Previous</span>\r\n  </PaginationLink>\r\n)"
             },
             {
                 "name": "TablePagination",
@@ -40200,7 +40200,7 @@
             },
             {
                 "name": "cn",
-                "caller": "PaginationNext",
+                "caller": "PaginationEllipsis",
                 "start_line": 59
             },
             {
@@ -40210,17 +40210,17 @@
             },
             {
                 "name": "buttonVariants",
-                "caller": "PaginationNext",
+                "caller": "PaginationEllipsis",
                 "start_line": 60
             },
             {
                 "name": "cn",
-                "caller": "PaginationPrevious",
+                "caller": "PaginationNext",
                 "start_line": 80
             },
             {
                 "name": "cn",
-                "caller": "PaginationEllipsis",
+                "caller": "PaginationPrevious",
                 "start_line": 96
             },
             {
@@ -40907,6 +40907,11 @@
                 "start_line": 11
             },
             {
+                "name": "renderApp",
+                "caller": null,
+                "start_line": 16
+            },
+            {
                 "name": "vi.fn",
                 "caller": null,
                 "start_line": 14
@@ -40920,11 +40925,6 @@
                 "name": "createUser",
                 "caller": null,
                 "start_line": 12
-            },
-            {
-                "name": "renderApp",
-                "caller": null,
-                "start_line": 16
             },
             {
                 "name": "screen.getByLabelText",
@@ -41122,16 +41122,16 @@
                 "start_line": 3
             },
             {
+                "statement": "import { Spinner } from '@/components/ui/spinner';",
+                "start_line": 5
+            },
+            {
                 "statement": "import { useUser } from '@/lib/auth';",
                 "start_line": 6
             },
             {
                 "statement": "import { MDPreview } from '@/components/ui/md-preview';",
                 "start_line": 4
-            },
-            {
-                "statement": "import { Spinner } from '@/components/ui/spinner';",
-                "start_line": 5
             },
             {
                 "statement": "import { POLICIES, Authorization } from '@/lib/authorization';",
@@ -41872,14 +41872,9 @@
                 "start_line": 22
             },
             {
-                "name": "searchParams.get",
+                "name": "useDiscussions",
                 "caller": null,
-                "start_line": 25
-            },
-            {
-                "name": "useQueryClient",
-                "caller": null,
-                "start_line": 27
+                "start_line": 24
             },
             {
                 "name": "formatDate",
@@ -41887,9 +41882,14 @@
                 "start_line": 54
             },
             {
-                "name": "useDiscussions",
+                "name": "useQueryClient",
                 "caller": null,
-                "start_line": 24
+                "start_line": 27
+            },
+            {
+                "name": "searchParams.get",
+                "caller": null,
+                "start_line": 25
             },
             {
                 "name": "queryClient.prefetchQuery",
@@ -42173,16 +42173,16 @@
                 "start_line": 3
             },
             {
+                "statement": "import { useNotifications } from '@/components/ui/notifications';",
+                "start_line": 5
+            },
+            {
                 "statement": "import { useUser } from '@/lib/auth';",
                 "start_line": 6
             },
             {
                 "statement": "import { Form, FormDrawer, Input, Textarea } from '@/components/ui/form';",
                 "start_line": 4
-            },
-            {
-                "statement": "import { useNotifications } from '@/components/ui/notifications';",
-                "start_line": 5
             },
             {
                 "statement": "import {\r\n  updateProfileInputSchema,\r\n  useUpdateProfile,\r\n} from '../api/update-profile';",
@@ -42377,16 +42377,16 @@
                 "start_line": 3
             },
             {
-                "statement": "import { paths } from '@/config/paths';",
-                "start_line": 5
-            },
-            {
                 "statement": "import { Navigate, useLocation } from 'react-router';",
                 "start_line": 2
             },
             {
                 "statement": "import { AuthResponse, User } from '@/types/api';",
                 "start_line": 6
+            },
+            {
+                "statement": "import { paths } from '@/config/paths';",
+                "start_line": 5
             },
             {
                 "statement": "import { api } from './api-client';",
@@ -42530,6 +42530,11 @@
                 "start_line": 35
             },
             {
+                "name": "z.string().min",
+                "caller": null,
+                "start_line": 24
+            },
+            {
                 "name": "z.string",
                 "caller": null,
                 "start_line": 24
@@ -42538,11 +42543,6 @@
                 "name": "z.object",
                 "caller": null,
                 "start_line": 23
-            },
-            {
-                "name": "z.string().min",
-                "caller": null,
-                "start_line": 24
             },
             {
                 "name": "(data: LoginInput): Promise<AuthResponse> => {\r\n  return api.post",
@@ -42971,11 +42971,6 @@
                 "start_line": 51
             },
             {
-                "name": "rtlRender",
-                "caller": null,
-                "start_line": 78
-            },
-            {
                 "name": "waitForLoadingToFinish",
                 "caller": null,
                 "start_line": 91
@@ -42984,6 +42979,11 @@
                 "name": "initializeUser",
                 "caller": null,
                 "start_line": 62
+            },
+            {
+                "name": "rtlRender",
+                "caller": null,
+                "start_line": 78
             },
             {
                 "name": "createMemoryRouter",

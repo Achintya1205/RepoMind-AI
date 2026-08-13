@@ -10,6 +10,7 @@ from agents.debug.debug_agent import DebugAgent
 from agents.refactor.refactor_agent import RefactorAgent
 from agents.documentation import DocumentationGenerator
 from agents.utils.symbol_extractor import extract_symbol
+from agents.utils.greeting import is_greeting
 from agents.verifier.verifier import Verifier
 
 MAX_RETRIES = 2
@@ -26,6 +27,17 @@ synthesizer = Synthesizer()
 def qa_node(state: AgentState):
 
     print("QA Agent")
+
+    if is_greeting(state["query"]):
+
+        return {
+            "answer": (
+                "Hi! I can answer questions about the currently indexed "
+                "repository. Try asking something like \"How does "
+                "authentication work?\" or \"What does the Signer class do?\""
+            ),
+            "metadata": []
+        }
 
     result = qa_agent.answer(
         state["query"]
@@ -297,3 +309,42 @@ workflow.add_edge(
 
 app = workflow.compile()
 dependency_graph = code_graph
+
+
+def reload_state():
+    """
+    Reconstructs every agent/tool object so a completed re-index actually
+    takes effect on a running server, instead of requiring a restart.
+
+    Each of these loads its data at construction time - GraphTool reads
+    dependency_graph.pkl, KeywordSearch reads chunks.json, VectorStore
+    opens chroma_db - so recreating them is what "picks up" a freshly
+    built index. The compiled LangGraph `app` does NOT need rebuilding:
+    its node functions look up these names in this module's global scope
+    at call time, not at compile time, so reassigning the globals here is
+    enough for every subsequent app.invoke()/app.stream() to use fresh data.
+    """
+
+    global code_graph, qa_agent, doc_generator, refactor_agent
+    global impact_agent, debug_agent, architecture_agent, dependency_graph
+
+    code_graph = GraphTool()
+    qa_agent = QAAgent()
+    doc_generator = DocumentationGenerator()
+    refactor_agent = RefactorAgent(code_graph)
+    impact_agent = ImpactAnalyzer(code_graph)
+    debug_agent = DebugAgent()
+    architecture_agent = ArchitectureAgent()
+
+    dependency_graph = code_graph
+
+
+def get_dependency_graph():
+    """
+    Accessor for other modules (e.g. api/main.py) to always read the
+    CURRENT graph. A plain `from agents.graph import dependency_graph`
+    elsewhere would copy a reference at import time and go stale the
+    moment reload_state() reassigns it here - this function always
+    returns whatever the module global currently points to.
+    """
+    return dependency_graph

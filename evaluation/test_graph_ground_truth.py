@@ -19,51 +19,74 @@ def precision_recall(predicted, actual):
     return precision, recall
 
 
+def ground_truth_callers(graph, nodes):
+    """
+    Independently recomputes the real upstream caller set via BFS over
+    CALLS edges, without using GraphTool.impact() at all - this is what
+    makes the comparison a genuine ground-truth check rather than the
+    function testing itself.
+    """
+
+    actual = []
+    visited = set()
+    queue = list(nodes)
+
+    while queue:
+        current = queue.pop(0)
+
+        if current in visited:
+            continue
+
+        visited.add(current)
+
+        for caller in graph.predecessors(current):
+            edge = graph.get_edge_data(caller, current)
+
+            if edge.get("edge_type") == "CALLS":
+                actual.append(caller)
+                queue.append(caller)
+
+    return actual
+
+
 def main():
     graph = GraphTool()
 
-    # Ground truth is obtained directly from the dependency graph.
-    # The evaluation checks whether GraphTool's impact traversal
-    # correctly returns the CALLS-based upstream dependency set.
+    # Sample drawn from both test repos, reusing the same unambiguous
+    # symbols already used in the debug/refactor/impact golden questions -
+    # this ties the graph eval directly to what the agents are actually
+    # exercised against elsewhere, rather than an arbitrary pick.
     symbols = [
+        # bulletproof-react (JS/TS)
         "useAuthorization",
         "useUser",
         "Layout",
+        # full-stack-fastapi-template (Python)
+        "authenticate",
+        "get_current_user",
+        "verify_password",
+        "get_password_hash",
+        "get_current_active_superuser",
+        "read_item",
     ]
 
     print("=" * 70)
     print("RepoMind AI - Graph Ground-Truth Evaluation")
     print("=" * 70)
 
+    precisions = []
+    recalls = []
+    not_found = []
+
     for symbol in symbols:
         nodes = graph.get_nodes(symbol)
 
         if not nodes:
             print(f"\n{symbol}: symbol not found")
+            not_found.append(symbol)
             continue
 
-        actual = []
-
-        visited = set()
-        queue = list(nodes)
-
-        while queue:
-            current = queue.pop(0)
-
-            if current in visited:
-                continue
-
-            visited.add(current)
-
-            for caller in graph.graph.predecessors(current):
-                edge = graph.graph.get_edge_data(
-                    caller,
-                    current
-                )
-
-                if edge.get("edge_type") == "CALLS":
-                    actual.append(caller)
-                    queue.append(caller)
+        actual = ground_truth_callers(graph.graph, nodes)
 
         predicted = graph.impact(symbol)
 
@@ -71,6 +94,9 @@ def main():
             predicted,
             actual
         )
+
+        precisions.append(precision)
+        recalls.append(recall)
 
         print(f"\nSYMBOL: {symbol}")
         print(f"Ground truth nodes: {len(actual)}")
@@ -88,6 +114,18 @@ def main():
             print("\nExtra:")
             for item in sorted(set(predicted) - set(actual)):
                 print(f"  {item}")
+
+    print("\n" + "=" * 70)
+    print("SUMMARY")
+    print("=" * 70)
+    print(f"Symbols sampled:     {len(symbols)}")
+    print(f"Symbols not found:   {len(not_found)}")
+
+    if precisions:
+        avg_precision = sum(precisions) / len(precisions)
+        avg_recall = sum(recalls) / len(recalls)
+        print(f"Average precision:   {avg_precision:.2f}")
+        print(f"Average recall:      {avg_recall:.2f}")
 
 
 if __name__ == "__main__":

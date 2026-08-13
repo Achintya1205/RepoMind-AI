@@ -1,23 +1,19 @@
 import { useState } from "react";
 import { streamMessage } from "../api/stream";
-import { getGraph } from "../api/graph";
-import GraphView from "./GraphViewer";
 
 export default function ChatBox() {
 
     const [query, setQuery] = useState("");
     const [messages, setMessages] = useState<any[]>([]);
     const [citations, setCitations] = useState<any[]>([]);
-    const [graphData, setGraphData] = useState({
-        nodes: [],
-        edges: []
-    });
-
+    const [isSending, setIsSending] = useState(false);
 
     function handleSend() {
 
-        if (!query.trim()) return;
+        if (!query.trim() || isSending) return;
 
+        setIsSending(true);
+        setCitations([]);
 
         setMessages(prev => [
             ...prev,
@@ -31,9 +27,7 @@ export default function ChatBox() {
             }
         ]);
 
-
         streamMessage(query, (data: any) => {
-
 
             if (data.type === "answer") {
 
@@ -48,87 +42,61 @@ export default function ChatBox() {
 
             }
 
-
             if (data.type === "citations") {
 
                 setCitations(data.data);
 
-                console.log("Citations:", data.data);
-
             }
 
+            if (data.type === "done") {
 
-            if (data.type === "status" || data.type === "agent") {
-
-                console.log(data.message);
+                setIsSending(false);
 
             }
-
 
         });
-
 
         setQuery("");
 
     }
-
-
-    async function showGraph() {
-
-        const data = await getGraph("sendToClient");
-
-        setGraphData(data);
-
-    }
-
 
     return (
         <div>
 
             {
                 messages.map((msg, index) => (
-                    <div key={index}>
+                    <div key={index} style={{ marginBottom: 8 }}>
                         <b>{msg.role}</b>
-                        <p>{msg.text}</p>
+                        <p style={{ margin: "2px 0" }}>{msg.text || (msg.role === "assistant" ? "..." : "")}</p>
                     </div>
                 ))
             }
 
-
             {
-                citations.map((c, index) => (
-                    <p key={index}>
-                        📄 {c.file}:{c.start_line}-{c.end_line}
-                    </p>
-                ))
+                citations.length > 0 &&
+                <div style={{ marginBottom: 8, fontSize: 13, color: "#555" }}>
+                    {citations.map((c, index) => (
+                        <p key={index} style={{ margin: "2px 0" }}>
+                            📄 {c.file}:{c.start_line}-{c.end_line}
+                        </p>
+                    ))}
+                </div>
             }
 
-
-            <button onClick={showGraph}>
-                Show Graph
-            </button>
-
-
-            {
-                graphData.nodes.length > 0 &&
-                <GraphView
-                    nodes={graphData.nodes}
-                    edges={graphData.edges}
+            <div style={{ display: "flex", gap: 8 }}>
+                <input
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                    placeholder="Ask about repository..."
+                    disabled={isSending}
+                    style={{ flex: 1, padding: 6 }}
                 />
-            }
 
-
-            <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Ask about repository..."
-            />
-
-
-            <button onClick={handleSend}>
-                Send
-            </button>
-
+                <button onClick={handleSend} disabled={isSending}>
+                    {isSending ? "..." : "Send"}
+                </button>
+            </div>
 
         </div>
     );

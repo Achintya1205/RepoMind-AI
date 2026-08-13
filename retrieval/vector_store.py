@@ -26,6 +26,21 @@ class VectorStore:
         self.embedder = Embedder()
 
 
+    def reset_collection(self):
+        """
+        Deletes and recreates the collection. Must be called before
+        re-indexing a new repository - otherwise old embeddings from
+        whatever was indexed previously stay in the store and get mixed
+        into search results for the new repo.
+        """
+
+        self.client.delete_collection(name="repomind")
+
+        self.collection = self.client.get_or_create_collection(
+            name="repomind"
+        )
+
+
     def index_chunks(self):
 
         with open(
@@ -35,6 +50,10 @@ class VectorStore:
         ) as f:
 
             chunks = json.load(f)
+
+            if not chunks:
+                print("No chunks to index.")
+                return
 
             print(
                 "Sample metadata:",
