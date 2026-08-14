@@ -2,9 +2,6 @@ import { useState } from "react";
 import GraphViewer from "./components/GraphViewer";
 import ChatBox from "./components/ChatBox";
 
-// Rough progress mapping for known backend stage messages - the backend
-// sends real status text, not a percentage, so this just gives the bar
-// something sensible to show at each real stage rather than faking time.
 const STAGE_PROGRESS: Record<string, number> = {
     "Cloning repository...": 15,
     "Parsing source files...": 35,
@@ -158,7 +155,7 @@ function App() {
                     position: "absolute",
                     zIndex: 20,
                     bottom: 20,
-                    right: 20,
+                    left: 20,
                     width: 380,
                     maxHeight: "70vh",
                     overflowY: "auto",

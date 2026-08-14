@@ -197,9 +197,10 @@ export default function GraphViewer({ suggestedSymbol }: Props) {
                 edges={edges}
                 fitView
                 onNodeClick={(_, node) => selectNode(node)}
+                onPaneClick={() => setSelectedNode(null)}
             >
                 <Background />
-                <Controls />
+                <Controls position="bottom-right" />
             </ReactFlow>
 
             {selectedNode && (
@@ -209,7 +210,7 @@ export default function GraphViewer({ suggestedSymbol }: Props) {
                         right: 20,
                         top: 20,
                         width: 350,
-                        maxHeight: "90vh",
+                        maxHeight: "75vh",
                         overflowY: "auto",
                         background: "white",
                         padding: 20,
@@ -217,6 +218,22 @@ export default function GraphViewer({ suggestedSymbol }: Props) {
                         zIndex: 10
                     }}
                 >
+                    <button
+                        onClick={() => setSelectedNode(null)}
+                        style={{
+                            position: "absolute",
+                            top: 10,
+                            right: 10,
+                            border: "none",
+                            background: "none",
+                            fontSize: 18,
+                            cursor: "pointer"
+                        }}
+                        aria-label="Close"
+                    >
+                        ✕
+                    </button>
+
                     <h3>
                         {selectedNode.data.label}
                     </h3>

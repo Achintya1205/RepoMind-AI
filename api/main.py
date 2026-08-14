@@ -146,6 +146,33 @@ def get_graph(symbol: str):
                     visited_edges.add(edge_id)
 
 
+    # Disambiguate colliding labels (e.g. two different classes each
+    # defining __init__) - only when a collision actually exists in
+    # THIS result set, so the common case stays short and clean.
+    from collections import Counter
+
+    label_counts = Counter(
+        n["data"]["label"] for n in nodes.values()
+    )
+
+    for node_id, node_data in nodes.items():
+
+        label = node_data["data"]["label"]
+
+        if label_counts[label] > 1:
+
+            node_str = str(node_id)
+
+            if "::" in node_str:
+
+                filename = (
+                    node_str.split("::")[0]
+                    .replace("\\", "/")
+                    .split("/")[-1]
+                )
+
+                node_data["data"]["label"] = f"{filename}::{label}"
+
     return {
         "nodes": list(nodes.values()),
         "edges": edges
