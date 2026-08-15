@@ -100,6 +100,11 @@ def get_graph(symbol: str):
             # outgoing
             for neighbor in dependency_graph.graph.successors(node):
 
+                edge_data = dependency_graph.graph.get_edge_data(node, neighbor)
+
+                if edge_data.get("edge_type") != "CALLS":
+                    continue
+
                 nodes[str(neighbor)] = {
                     "id": str(neighbor),
                     "data": {
@@ -115,7 +120,8 @@ def get_graph(symbol: str):
                     edges.append({
                         "id": edge_id,
                         "source": str(node),
-                        "target": str(neighbor)
+                        "target": str(neighbor),
+                        "type": "CALLS"
                     })
 
                     visited_edges.add(edge_id)
@@ -124,6 +130,11 @@ def get_graph(symbol: str):
 
             # incoming
             for caller in dependency_graph.graph.predecessors(node):
+
+                edge_data = dependency_graph.graph.get_edge_data(caller, node)
+
+                if edge_data.get("edge_type") != "CALLS":
+                    continue
 
                 nodes[str(caller)] = {
                     "id": str(caller),
@@ -140,7 +151,8 @@ def get_graph(symbol: str):
                     edges.append({
                         "id": edge_id,
                         "source": str(caller),
-                        "target": str(node)
+                        "target": str(node),
+                        "type": "CALLS"
                     })
 
                     visited_edges.add(edge_id)

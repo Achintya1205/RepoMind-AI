@@ -34,64 +34,82 @@ class PythonParser:
 
         cursor = QueryCursor(self.function_query)
 
-        captures = cursor.captures(tree.root_node)
+        # IMPORTANT: use matches(), not captures(). captures() returns each @capture-name as a SEPARATE flat list with no guaranteed
+        # correspondence in order across lists - zipping @function.name against @function.definition positionally silently pairs
+        # unrelated functions together. matches() groups captures BY MATCH, so name/definition pairs from the same real function stay correctly associated.
+        matches = cursor.matches(tree.root_node)
 
         functions = []
         classes = []
         imports = []
         decorators = []
+        call_nodes = []
         calls = []
 
-        for name_node, def_node in zip(
-            captures.get("function.name", []),
-            captures.get("function.definition", [])
-        ):
+        # Pass 1: collect all functions/classes/imports/decorators, and stash raw call nodes for pass 2 - caller attribution needs the COMPLETE functions list first, and matches() order is not
+        # guaranteed to be sequential by document position, so a call can't safely be attributed inline in a single pass.
+        for pattern_index, captures_dict in matches:
 
-            functions.append(
-                {
-                    "name": source[name_node.start_byte:name_node.end_byte].decode(),
-                    "start_line": def_node.start_point[0] + 1,
-                    "end_line": def_node.end_point[0] + 1,
-                    "start_byte": def_node.start_byte,
-                    "end_byte": def_node.end_byte,
-                    "code": source[def_node.start_byte:def_node.end_byte].decode()
-                }
-            )
+            if "function.name" in captures_dict:
 
-        for name_node, def_node in zip(
-            captures.get("class.name", []),
-            captures.get("class.definition", [])
-        ):
+                name_node = captures_dict["function.name"][0]
+                def_node = captures_dict["function.definition"][0]
 
-            classes.append(
-                {
-                    "name": source[name_node.start_byte:name_node.end_byte].decode(),
-                    "start_line": def_node.start_point[0] + 1,
-                    "end_line": def_node.end_point[0] + 1,
-                    "start_byte": def_node.start_byte,
-                    "end_byte": def_node.end_byte,
-                    "code": source[def_node.start_byte:def_node.end_byte].decode()
-                }
-            )
-        for node in captures.get("import", []):
+                functions.append(
+                    {
+                        "name": source[name_node.start_byte:name_node.end_byte].decode(),
+                        "start_line": def_node.start_point[0] + 1,
+                        "end_line": def_node.end_point[0] + 1,
+                        "start_byte": def_node.start_byte,
+                        "end_byte": def_node.end_byte,
+                        "code": source[def_node.start_byte:def_node.end_byte].decode()
+                    }
+                )
 
-            imports.append(
-                {
-                    "statement": source[node.start_byte:node.end_byte].decode(),
-                    "start_line": node.start_point[0] + 1
-                }
-            )
+            elif "class.name" in captures_dict:
 
-        for node in captures.get("decorator", []):
+                name_node = captures_dict["class.name"][0]
+                def_node = captures_dict["class.definition"][0]
 
-            decorators.append(
-                {
-                    "name": source[node.start_byte:node.end_byte].decode(),
-                    "start_line": node.start_point[0] + 1
-                }
-            )
+                classes.append(
+                    {
+                        "name": source[name_node.start_byte:name_node.end_byte].decode(),
+                        "start_line": def_node.start_point[0] + 1,
+                        "end_line": def_node.end_point[0] + 1,
+                        "start_byte": def_node.start_byte,
+                        "end_byte": def_node.end_byte,
+                        "code": source[def_node.start_byte:def_node.end_byte].decode()
+                    }
+                )
 
-        for node in captures.get("call.name", []):
+            elif "import" in captures_dict:
+
+                node = captures_dict["import"][0]
+
+                imports.append(
+                    {
+                        "statement": source[node.start_byte:node.end_byte].decode(),
+                        "start_line": node.start_point[0] + 1
+                    }
+                )
+
+            elif "decorator" in captures_dict:
+
+                node = captures_dict["decorator"][0]
+
+                decorators.append(
+                    {
+                        "name": source[node.start_byte:node.end_byte].decode(),
+                        "start_line": node.start_point[0] + 1
+                    }
+                )
+
+            elif "call.name" in captures_dict:
+
+                call_nodes.append(captures_dict["call.name"][0])
+
+        # Pass 2: attribute each call to its enclosing function with the complete functions list available.
+        for node in call_nodes:
 
             caller = None
 
@@ -103,7 +121,6 @@ class PythonParser:
                 ):
                     caller = function["name"]
                     break
-
 
             calls.append(
                 {

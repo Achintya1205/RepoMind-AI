@@ -41,6 +41,13 @@ const getLayoutedElements = (nodes: Node[], edges: Edge[]) => {
     };
 };
 
+const readableLabel = (id: string) => {
+    if (id.includes("::")) {
+        return id.split("::").pop() as string;
+    }
+    return id.replace(/\\/g, "/").split("/").pop() as string;
+};
+
 const nodeStyle = (type: string) => {
     if (type === "function") {
         return {
@@ -137,10 +144,41 @@ export default function GraphViewer({ suggestedSymbol }: Props) {
         )
             .then((res) => res.json())
             .then((data) => {
-                const affected = new Set(data.affected_nodes);
+                const affected = new Set(data.affected_nodes as string[]);
 
-                setNodes((currentNodes) =>
-                    currentNodes.map((n) => ({
+                const existingNodeIds = new Set(nodes.map((n) => n.id));
+                const existingEdgeIds = new Set(edges.map((e) => e.id));
+
+                // Impact Analysis walks the FULL transitive caller chain,
+                // while the graph view only ever fetched one hop - so it
+                // routinely finds real functions that were never added
+                // to the canvas. Add them now instead of only dimming
+                // whatever happened to already be there.
+                const newNodeObjs: Node[] = (data.affected_nodes as string[])
+                    .filter((id) => !existingNodeIds.has(id))
+                    .map((id) => ({
+                        id,
+                        data: { label: readableLabel(id) },
+                        position: { x: 0, y: 0 },
+                        style: nodeStyle("function")
+                    }));
+
+                const newEdgeObjs: Edge[] = (data.affected_edges || [])
+                    .filter((e: any) => !existingEdgeIds.has(e.id))
+                    .map((e: any) => ({
+                        id: e.id,
+                        source: e.source,
+                        target: e.target,
+                        label: e.type
+                    }));
+
+                const layout = getLayoutedElements(
+                    [...nodes, ...newNodeObjs],
+                    [...edges, ...newEdgeObjs]
+                );
+
+                setNodes(
+                    layout.nodes.map((n) => ({
                         ...n,
                         style: {
                             ...n.style,
@@ -149,8 +187,8 @@ export default function GraphViewer({ suggestedSymbol }: Props) {
                     }))
                 );
 
-                setEdges((currentEdges) =>
-                    currentEdges.map((e) => ({
+                setEdges(
+                    layout.edges.map((e) => ({
                         ...e,
                         style: {
                             ...e.style,
@@ -286,7 +324,10 @@ export default function GraphViewer({ suggestedSymbol }: Props) {
 
                             <p>
                                 <b>Affected nodes:</b>{" "}
-                                {selectedNode.impact.affected_nodes?.length || 0}
+                                {Math.max(
+                                    (selectedNode.impact.affected_nodes?.length || 1) - 1,
+                                    0
+                                )}
                             </p>
 
                             <p>
