@@ -1,25 +1,19 @@
 from retrieval.hybrid_retriever import HybridRetriever
-import re
+from agents.utils.symbol_extractor import extract_symbol
 
 
 class DocumentationGenerator:
 
-    def __init__(self):
+    def __init__(self, graph_tool):
         self.retriever = HybridRetriever()
+        self.graph_tool = graph_tool
 
 
     def generate(self, query):
 
         chunks = self.retriever.hybrid_retrieve(query)
-        symbol = None
 
-        match = re.search(
-            r"(?:for|of)\s+([A-Za-z_][A-Za-z0-9_]*)",
-            query
-        )
-
-        if match:
-            symbol = match.group(1)
+        symbol = extract_symbol(query, self.graph_tool)
 
 
         if symbol:

@@ -17,7 +17,7 @@ MAX_RETRIES = 2
 
 code_graph = GraphTool()
 qa_agent = QAAgent()
-doc_generator = DocumentationGenerator()
+doc_generator = DocumentationGenerator(code_graph)
 refactor_agent = RefactorAgent(code_graph)
 impact_agent = ImpactAnalyzer(code_graph)
 debug_agent = DebugAgent()
@@ -180,12 +180,6 @@ def docs_node(state):
 
 def verifier_node(state):
 
-    # qa/docs are LLM-generated free text, so this only makes sense for
-    # them - see grounded_verifier_node below. impact/refactor/architecture
-    # are deterministic graph/template output (no hallucination risk to
-    # check), so this is deliberately just an "did we produce anything"
-    # check, not a grounding check.
-
     passed = bool(
         state.get("answer")
     )
@@ -330,7 +324,7 @@ def reload_state():
 
     code_graph = GraphTool()
     qa_agent = QAAgent()
-    doc_generator = DocumentationGenerator()
+    doc_generator = DocumentationGenerator(code_graph)
     refactor_agent = RefactorAgent(code_graph)
     impact_agent = ImpactAnalyzer(code_graph)
     debug_agent = DebugAgent()
