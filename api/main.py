@@ -1,49 +1,56 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
-
 from agents import graph as agent_graph
 from agents.graph import app
 from agents.impact_explainer import ImpactExplainer
-
 from ingestion.pipeline import index_repository, IndexingError
 
 import json
+import re
 import time
 import threading
 import queue as queue_module
-
 
 api = FastAPI(
     title="RepoMind AI API"
 )
 
-
 class ChatRequest(BaseModel):
     query: str
 
 
+GITHUB_REPO_URL_PATTERN = re.compile(
+    r"^https://github\.com/[\w.-]+/[\w.-]+(?:\.git)?/?$"
+)
+
 class IndexRequest(BaseModel):
     repo_url: str
 
+    @field_validator("repo_url")
+    @classmethod
+    def validate_repo_url(cls, value):
+
+        if not GITHUB_REPO_URL_PATTERN.match(value.strip()):
+            raise ValueError(
+                "repo_url must be a valid https://github.com/<owner>/<repo> URL"
+            )
+
+        return value.strip()
 
 _indexing_lock = threading.Lock()
-
 impact_explainer = ImpactExplainer()
 
 
 def readable_label(node_id):
-    # function/class nodes are "path::name" - show just the name.
-    # file nodes are a raw path - show just the filename, not the
-    # full (often long, Windows-style) path.
+    
     node_str = str(node_id)
 
     if "::" in node_str:
         return node_str.split("::")[-1]
 
     return node_str.replace("\\", "/").split("/")[-1]
-
 
 api.add_middleware(
     CORSMiddleware,
@@ -158,9 +165,6 @@ def get_graph(symbol: str):
                     visited_edges.add(edge_id)
 
 
-    # Disambiguate colliding labels (e.g. two different classes each
-    # defining __init__) - only when a collision actually exists in
-    # THIS result set, so the common case stays short and clean.
     from collections import Counter
 
     label_counts = Counter(
