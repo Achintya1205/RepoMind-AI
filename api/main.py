@@ -193,8 +193,6 @@ def get_graph(symbol: str):
 @api.get("/symbol/{symbol_id:path}")
 def get_symbol(symbol_id: str):
 
-    symbol_id = symbol_id.replace("/", "\\")
-
     result = {
         "callers": [],
         "callees": []
@@ -206,12 +204,7 @@ def get_symbol(symbol_id: str):
 
     if symbol_id not in graph:
 
-        print("NOT FOUND:", symbol_id)
-
         return result
-
-
-    print("FOUND:", symbol_id)
 
 
     # CALLERS
@@ -460,4 +453,4 @@ def index_stream(request: IndexRequest):
     return StreamingResponse(
         event_generator(),
         media_type="text/event-stream"
-    )
+    ) 

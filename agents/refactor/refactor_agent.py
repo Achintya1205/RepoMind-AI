@@ -13,8 +13,7 @@ class RefactorAgent:
 
         impact = self.impact_analyzer.analyze(symbol)
 
-
-        affected = impact["affected_files"]
+        affected = impact["affected_nodes"]
 
 
         plan = self.generate_plan(

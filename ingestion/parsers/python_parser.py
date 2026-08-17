@@ -34,9 +34,6 @@ class PythonParser:
 
         cursor = QueryCursor(self.function_query)
 
-        # IMPORTANT: use matches(), not captures(). captures() returns each @capture-name as a SEPARATE flat list with no guaranteed
-        # correspondence in order across lists - zipping @function.name against @function.definition positionally silently pairs
-        # unrelated functions together. matches() groups captures BY MATCH, so name/definition pairs from the same real function stay correctly associated.
         matches = cursor.matches(tree.root_node)
 
         functions = []
@@ -112,6 +109,7 @@ class PythonParser:
         for node in call_nodes:
 
             caller = None
+            caller_span = None
 
             for function in functions:
 
@@ -119,8 +117,12 @@ class PythonParser:
                     function["start_line"] <= node.start_point[0] + 1
                     <= function["end_line"]
                 ):
-                    caller = function["name"]
-                    break
+
+                    span = function["end_line"] - function["start_line"]
+
+                    if caller_span is None or span < caller_span:
+                        caller = function["name"]
+                        caller_span = span
 
             calls.append(
                 {

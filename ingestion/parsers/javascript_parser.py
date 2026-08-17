@@ -189,6 +189,8 @@ class JavascriptParser:
         for node in captures.get("call.name", []):
 
             caller = None
+            caller_span = None
+
             for function in functions:
 
                 if (
@@ -197,9 +199,11 @@ class JavascriptParser:
                     <= function["end_byte"]
                 ):
 
-                    caller = function["name"]
+                    span = function["end_byte"] - function["start_byte"]
 
-                    break
+                    if caller_span is None or span < caller_span:
+                        caller = function["name"]
+                        caller_span = span
 
 
             calls.append(

@@ -50,10 +50,6 @@ class ImportResolver:
 
         repo_boundary = self._infer_repo_root(current_file)
 
-        # Try every ancestor directory between the importing file and the
-        # sample repo's own root as a candidate package root - handles
-        # any layout (backend/app/, src/app/, app/ directly, etc.)
-        # without hardcoding a specific subfolder name.
         candidate_root = current_file.parent
 
         candidates = [candidate_root]
@@ -98,7 +94,7 @@ class ImportResolver:
             base_dir = base_dir.parent
 
         if not stripped:
-            # "from . import x" - x lives directly in base_dir's package
+
             candidate = base_dir / "__init__.py"
 
             if candidate.exists():
@@ -139,42 +135,40 @@ class ImportResolver:
             )
 
 
-        # ----------------------------
-        # Alias imports
-        # @/ -> app/src/
-        # Example:
-        # @/lib/authorization
-        # ----------------------------
+
 
         elif import_path.startswith("@/"):
 
             relative = import_path.replace("@/", "")
 
-
             parts = current_file.parts
 
-            app_name = None
+            repo_root = self._infer_repo_root(current_file)
 
+            candidate_bases = []
 
             if "apps" in parts:
 
                 index = parts.index("apps")
-
                 app_name = parts[index + 1]
 
+                candidate_bases.append(
+                    repo_root / "apps" / app_name / "src" / relative
+                )
 
-            if app_name is None:
+            candidate_bases.append(repo_root / "src" / relative)
 
-                return None
+   
+            candidate_bases.append(repo_root / relative)
 
+            for base_path in candidate_bases:
 
-            base_path = (
-                self._infer_repo_root(current_file)
-                / "apps"
-                / app_name
-                / "src"
-                / relative
-            )
+                resolved = self._resolve_with_extensions(base_path)
+
+                if resolved:
+                    return resolved
+
+            return None
 
 
         else:
@@ -182,6 +176,9 @@ class ImportResolver:
             return None
 
 
+        return self._resolve_with_extensions(base_path)
+
+    def _resolve_with_extensions(self, base_path):
 
         extensions = [
             "",

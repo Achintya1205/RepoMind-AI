@@ -178,7 +178,7 @@
             },
             {
                 "name": "requestClone.headers.entries",
-                "caller": "getResponse",
+                "caller": "passthrough",
                 "start_line": 186
             },
             {
@@ -223,7 +223,7 @@
             },
             {
                 "name": "Object.fromEntries",
-                "caller": "getResponse",
+                "caller": "passthrough",
                 "start_line": 186
             },
             {
@@ -235,11 +235,6 @@
                 "name": "respondWithMock",
                 "caller": "getResponse",
                 "start_line": 237
-            },
-            {
-                "name": "Response.error",
-                "caller": "respondWithMock",
-                "start_line": 273
             },
             {
                 "name": "passthrough",
@@ -302,13 +297,13 @@
                 "start_line": 278
             },
             {
-                "name": "passthrough",
-                "caller": "getResponse",
-                "start_line": 245
+                "name": "Response.error",
+                "caller": "respondWithMock",
+                "start_line": 273
             },
             {
                 "name": "fetch",
-                "caller": "getResponse",
+                "caller": "passthrough",
                 "start_line": 193
             },
             {
@@ -325,6 +320,11 @@
                 "name": "resolve",
                 "caller": "sendToClient",
                 "start_line": 257
+            },
+            {
+                "name": "passthrough",
+                "caller": "getResponse",
+                "start_line": 245
             }
         ],
         "jsx": []
@@ -397,6 +397,11 @@
                 "start_line": 84
             },
             {
+                "name": "allClients.filter",
+                "caller": null,
+                "start_line": 78
+            },
+            {
                 "name": "sendToClient",
                 "caller": null,
                 "start_line": 50
@@ -405,11 +410,6 @@
                 "name": "self.addEventListener",
                 "caller": null,
                 "start_line": 92
-            },
-            {
-                "name": "allClients.filter",
-                "caller": null,
-                "start_line": 78
             },
             {
                 "name": "getResponse",
@@ -448,7 +448,7 @@
             },
             {
                 "name": "Object.fromEntries",
-                "caller": "getResponse",
+                "caller": "passthrough",
                 "start_line": 186
             },
             {
@@ -483,7 +483,7 @@
             },
             {
                 "name": "fetch",
-                "caller": "getResponse",
+                "caller": "passthrough",
                 "start_line": 193
             },
             {
@@ -643,7 +643,7 @@
             },
             {
                 "name": "requestClone.headers.entries",
-                "caller": "getResponse",
+                "caller": "passthrough",
                 "start_line": 186
             },
             {
@@ -778,7 +778,7 @@
             },
             {
                 "name": "requestClone.headers.entries",
-                "caller": "getResponse",
+                "caller": "passthrough",
                 "start_line": 186
             },
             {
@@ -833,7 +833,7 @@
             },
             {
                 "name": "fetch",
-                "caller": "getResponse",
+                "caller": "passthrough",
                 "start_line": 193
             },
             {
@@ -848,7 +848,7 @@
             },
             {
                 "name": "Object.fromEntries",
-                "caller": "getResponse",
+                "caller": "passthrough",
                 "start_line": 186
             },
             {
@@ -1008,12 +1008,12 @@
                 "start_line": 3
             },
             {
-                "statement": "import { initializeDb } from './src/testing/mocks/db';",
-                "start_line": 6
-            },
-            {
                 "statement": "import cors from 'cors';",
                 "start_line": 2
+            },
+            {
+                "statement": "import { initializeDb } from './src/testing/mocks/db';",
+                "start_line": 6
             },
             {
                 "statement": "import { handlers } from './src/testing/mocks/handlers';",
@@ -1228,14 +1228,14 @@
                 "start_line": 12
             },
             {
-                "name": "page.getByLabel('Email Address').fill",
-                "caller": null,
-                "start_line": 20
-            },
-            {
                 "name": "page.getByLabel",
                 "caller": null,
                 "start_line": 19
+            },
+            {
+                "name": "page.getByLabel('Email Address').fill",
+                "caller": null,
+                "start_line": 20
             },
             {
                 "name": "page.getByLabel",
@@ -1380,12 +1380,12 @@
             {
                 "name": "page.getByLabel",
                 "caller": null,
-                "start_line": 16
+                "start_line": 18
             },
             {
                 "name": "page.getByLabel",
                 "caller": null,
-                "start_line": 18
+                "start_line": 16
             },
             {
                 "name": "page.getByLabel",
@@ -1499,14 +1499,14 @@
                 "start_line": 16
             },
             {
-                "name": "page.getByRole",
-                "caller": null,
-                "start_line": 11
-            },
-            {
                 "name": "expect(page.getByText('My bio')).toBeVisible",
                 "caller": null,
                 "start_line": 16
+            },
+            {
+                "name": "page.getByRole",
+                "caller": null,
+                "start_line": 11
             },
             {
                 "name": "page.getByText",
@@ -2311,12 +2311,12 @@
                 "start_line": 6
             },
             {
-                "name": "expect(result.current.notifications.length).toBe",
+                "name": "expect",
                 "caller": null,
                 "start_line": 8
             },
             {
-                "name": "expect",
+                "name": "expect(result.current.notifications.length).toBe",
                 "caller": null,
                 "start_line": 8
             },
@@ -2684,12 +2684,12 @@
                 "start_line": 1
             },
             {
-                "statement": "import { getInfiniteCommentsQueryOptions } from './get-comments';",
-                "start_line": 6
-            },
-            {
                 "statement": "import { api } from '@/lib/api-client';",
                 "start_line": 3
+            },
+            {
+                "statement": "import { getInfiniteCommentsQueryOptions } from './get-comments';",
+                "start_line": 6
             },
             {
                 "statement": "import { MutationConfig } from '@/lib/react-query';",
@@ -2713,14 +2713,14 @@
                 "start_line": 9
             },
             {
-                "name": "getInfiniteCommentsQueryOptions",
-                "caller": "useDeleteComment",
-                "start_line": 28
-            },
-            {
                 "name": "useQueryClient",
                 "caller": "useDeleteComment",
                 "start_line": 21
+            },
+            {
+                "name": "getInfiniteCommentsQueryOptions",
+                "caller": "useDeleteComment",
+                "start_line": 28
             },
             {
                 "name": "queryClient.invalidateQueries",
@@ -2813,12 +2813,12 @@
                 "start_line": 1
             },
             {
-                "statement": "import { MutationConfig } from '@/lib/react-query';",
-                "start_line": 5
-            },
-            {
                 "statement": "import { z } from 'zod';",
                 "start_line": 2
+            },
+            {
+                "statement": "import { MutationConfig } from '@/lib/react-query';",
+                "start_line": 5
             },
             {
                 "statement": "import { api } from '@/lib/api-client';",
@@ -2939,12 +2939,12 @@
                 "start_line": 1
             },
             {
-                "statement": "import { getDiscussionsQueryOptions } from './get-discussions';",
-                "start_line": 6
-            },
-            {
                 "statement": "import { api } from '@/lib/api-client';",
                 "start_line": 3
+            },
+            {
+                "statement": "import { getDiscussionsQueryOptions } from './get-discussions';",
+                "start_line": 6
             },
             {
                 "statement": "import { MutationConfig } from '@/lib/react-query';",
@@ -3023,12 +3023,12 @@
                 "start_line": 1
             },
             {
-                "statement": "import { Discussion } from '@/types/api';",
-                "start_line": 5
-            },
-            {
                 "statement": "import { api } from '@/lib/api-client';",
                 "start_line": 3
+            },
+            {
+                "statement": "import { Discussion } from '@/types/api';",
+                "start_line": 5
             },
             {
                 "statement": "import { QueryConfig } from '@/lib/react-query';",
@@ -3141,16 +3141,16 @@
                 "start_line": 1
             },
             {
-                "statement": "import { MutationConfig } from '@/lib/react-query';",
-                "start_line": 5
-            },
-            {
                 "statement": "import { z } from 'zod';",
                 "start_line": 2
             },
             {
                 "statement": "import { Discussion } from '@/types/api';",
                 "start_line": 6
+            },
+            {
+                "statement": "import { MutationConfig } from '@/lib/react-query';",
+                "start_line": 5
             },
             {
                 "statement": "import { api } from '@/lib/api-client';",
@@ -3262,12 +3262,12 @@
                 "start_line": 1
             },
             {
-                "statement": "import { Team } from '@/types/api';",
-                "start_line": 5
-            },
-            {
                 "statement": "import { api } from '@/lib/api-client';",
                 "start_line": 3
+            },
+            {
+                "statement": "import { Team } from '@/types/api';",
+                "start_line": 5
             },
             {
                 "statement": "import { QueryConfig } from '@/lib/react-query';",
@@ -3345,12 +3345,12 @@
                 "start_line": 1
             },
             {
-                "statement": "import { getUsersQueryOptions } from './get-users';",
-                "start_line": 6
-            },
-            {
                 "statement": "import { api } from '@/lib/api-client';",
                 "start_line": 3
+            },
+            {
+                "statement": "import { getUsersQueryOptions } from './get-users';",
+                "start_line": 6
             },
             {
                 "statement": "import { MutationConfig } from '@/lib/react-query';",
@@ -3374,14 +3374,14 @@
                 "start_line": 13
             },
             {
-                "name": "useQueryClient",
-                "caller": "useDeleteUser",
-                "start_line": 23
-            },
-            {
                 "name": "useMutation",
                 "caller": "useDeleteUser",
                 "start_line": 27
+            },
+            {
+                "name": "useQueryClient",
+                "caller": "useDeleteUser",
+                "start_line": 23
             },
             {
                 "name": "queryClient.invalidateQueries",
@@ -3429,12 +3429,12 @@
                 "start_line": 1
             },
             {
-                "statement": "import { User } from '@/types/api';",
-                "start_line": 5
-            },
-            {
                 "statement": "import { api } from '@/lib/api-client';",
                 "start_line": 3
+            },
+            {
+                "statement": "import { User } from '@/types/api';",
+                "start_line": 5
             },
             {
                 "statement": "import { QueryConfig } from '@/lib/react-query';",
@@ -4198,14 +4198,14 @@
                 "start_line": 14
             },
             {
-                "name": "randParagraph",
-                "caller": "generateDiscussion",
-                "start_line": 46
-            },
-            {
                 "name": "randUuid",
                 "caller": "generateTeam",
                 "start_line": 31
+            },
+            {
+                "name": "randParagraph",
+                "caller": "generateDiscussion",
+                "start_line": 46
             },
             {
                 "name": "randParagraph",
@@ -4247,14 +4247,14 @@
                 "start_line": 8
             },
             {
-                "name": "vi.fn",
-                "caller": null,
-                "start_line": 32
-            },
-            {
                 "name": "Buffer.from(str, 'base64').toString",
                 "caller": null,
                 "start_line": 38
+            },
+            {
+                "name": "vi.fn",
+                "caller": null,
+                "start_line": 32
             },
             {
                 "name": "server.resetHandlers",
@@ -4262,14 +4262,14 @@
                 "start_line": 43
             },
             {
-                "name": "vi.mock",
-                "caller": null,
-                "start_line": 10
-            },
-            {
                 "name": "server.listen",
                 "caller": null,
                 "start_line": 9
+            },
+            {
+                "name": "vi.mock",
+                "caller": null,
+                "start_line": 10
             },
             {
                 "name": "vi.fn",
@@ -4342,14 +4342,14 @@
                 "start_line": 29
             },
             {
-                "name": "vi.fn",
-                "caller": null,
-                "start_line": 30
-            },
-            {
                 "name": "Buffer.from",
                 "caller": null,
                 "start_line": 37
+            },
+            {
+                "name": "vi.fn",
+                "caller": null,
+                "start_line": 30
             },
             {
                 "name": "Buffer.from",
@@ -4869,12 +4869,12 @@
                 "start_line": 7
             },
             {
-                "statement": "import { db, persistDb } from '../db';",
-                "start_line": 6
-            },
-            {
                 "statement": "import { env } from '@/config/env';",
                 "start_line": 4
+            },
+            {
+                "statement": "import { db, persistDb } from '../db';",
+                "start_line": 6
             },
             {
                 "statement": "import { HttpResponse, http } from 'msw';",
@@ -6150,6 +6150,11 @@
                 "start_line": 9
             },
             {
+                "name": "express.json",
+                "caller": null,
+                "start_line": 18
+            },
+            {
                 "name": "app.use",
                 "caller": null,
                 "start_line": 11
@@ -6163,11 +6168,6 @@
                 "name": "cors",
                 "caller": null,
                 "start_line": 12
-            },
-            {
-                "name": "express.json",
-                "caller": null,
-                "start_line": 18
             },
             {
                 "name": "app.use",
@@ -6405,6 +6405,11 @@
                 "start_line": 17
             },
             {
+                "name": "page.getByLabel('Last Name').fill",
+                "caller": null,
+                "start_line": 18
+            },
+            {
                 "name": "page.getByLabel",
                 "caller": null,
                 "start_line": 18
@@ -6413,11 +6418,6 @@
                 "name": "page.getByLabel('Email Address').fill",
                 "caller": null,
                 "start_line": 20
-            },
-            {
-                "name": "page.getByLabel('Last Name').fill",
-                "caller": null,
-                "start_line": 18
             },
             {
                 "name": "page.getByLabel",
@@ -6706,12 +6706,12 @@
         "exports": [],
         "calls": [
             {
-                "name": "page.getByLabel('Title').fill",
+                "name": "page.getByLabel",
                 "caller": null,
                 "start_line": 21
             },
             {
-                "name": "page.getByLabel",
+                "name": "page.getByLabel('Title').fill",
                 "caller": null,
                 "start_line": 21
             },
@@ -6721,14 +6721,14 @@
                 "start_line": 33
             },
             {
-                "name": "expect(\r\n    page.getByText('Are you sure you want to delete this comment?'),\r\n  ).toBeVisible",
-                "caller": null,
-                "start_line": 68
-            },
-            {
                 "name": "page.getByLabel",
                 "caller": null,
                 "start_line": 57
+            },
+            {
+                "name": "expect(\r\n    page.getByText('Are you sure you want to delete this comment?'),\r\n  ).toBeVisible",
+                "caller": null,
+                "start_line": 68
             },
             {
                 "name": "page.getByRole('link', { name: 'Discussions' }).click",
@@ -6831,14 +6831,14 @@
                 "start_line": 92
             },
             {
-                "name": "page.getByRole('button', { name: 'Delete Comment' }).click",
-                "caller": null,
-                "start_line": 67
-            },
-            {
                 "name": "page.getByLabel('Body').fill",
                 "caller": null,
                 "start_line": 58
+            },
+            {
+                "name": "page.getByRole('button', { name: 'Delete Comment' }).click",
+                "caller": null,
+                "start_line": 67
             },
             {
                 "name": "expect",
@@ -7141,16 +7141,6 @@
                 "start_line": 87
             },
             {
-                "name": "page.getByLabel('Title').click",
-                "caller": null,
-                "start_line": 40
-            },
-            {
-                "name": "page\r\n    .getByLabel('Comment Deleted')\r\n    .getByRole",
-                "caller": null,
-                "start_line": 72
-            },
-            {
                 "name": "expect(\r\n    page.getByRole('heading', { name: `${discussion.title} - updated` }),\r\n  ).toBeVisible",
                 "caller": null,
                 "start_line": 50
@@ -7159,6 +7149,16 @@
                 "name": "expect",
                 "caller": null,
                 "start_line": 53
+            },
+            {
+                "name": "page.getByLabel('Title').click",
+                "caller": null,
+                "start_line": 40
+            },
+            {
+                "name": "page\r\n    .getByLabel('Comment Deleted')\r\n    .getByRole",
+                "caller": null,
+                "start_line": 72
             },
             {
                 "name": "page\r\n    .getByLabel",
@@ -7417,14 +7417,14 @@
                 "start_line": 20
             },
             {
-                "name": "set",
-                "caller": null,
-                "start_line": 27
-            },
-            {
                 "name": "state.notifications.filter",
                 "caller": null,
                 "start_line": 28
+            },
+            {
+                "name": "set",
+                "caller": null,
+                "start_line": 27
             },
             {
                 "name": "nanoid",
@@ -7936,11 +7936,6 @@
                 "start_line": 15
             },
             {
-                "name": "getInfiniteCommentsQueryOptions",
-                "caller": null,
-                "start_line": 51
-            },
-            {
                 "name": "useInfiniteQuery",
                 "caller": null,
                 "start_line": 50
@@ -7949,6 +7944,11 @@
                 "name": "attachCookie",
                 "caller": null,
                 "start_line": 21
+            },
+            {
+                "name": "getInfiniteCommentsQueryOptions",
+                "caller": null,
+                "start_line": 51
             },
             {
                 "name": "getComments",
@@ -8342,14 +8342,14 @@
                 "start_line": 11
             },
             {
-                "name": "z.string",
-                "caller": null,
-                "start_line": 12
-            },
-            {
                 "name": "z.string().min",
                 "caller": null,
                 "start_line": 11
+            },
+            {
+                "name": "z.string",
+                "caller": null,
+                "start_line": 12
             },
             {
                 "name": "z.boolean",
@@ -8455,14 +8455,14 @@
                 "start_line": 12
             },
             {
-                "name": "getTeamsQueryOptions",
-                "caller": "useTeams",
-                "start_line": 24
-            },
-            {
                 "name": "getTeams",
                 "caller": "getTeamsQueryOptions",
                 "start_line": 14
+            },
+            {
+                "name": "getTeamsQueryOptions",
+                "caller": "useTeams",
+                "start_line": 24
             }
         ],
         "jsx": []
@@ -8529,14 +8529,14 @@
                 "start_line": 23
             },
             {
-                "name": "getUsersQueryOptions",
-                "caller": "useDeleteUser",
-                "start_line": 30
-            },
-            {
                 "name": "queryClient.invalidateQueries",
                 "caller": "useDeleteUser",
                 "start_line": 29
+            },
+            {
+                "name": "getUsersQueryOptions",
+                "caller": "useDeleteUser",
+                "start_line": 30
             },
             {
                 "name": "useMutation",
@@ -9380,9 +9380,9 @@
                 "start_line": 14
             },
             {
-                "name": "vi.fn",
+                "name": "initializeDb",
                 "caller": null,
-                "start_line": 17
+                "start_line": 25
             },
             {
                 "name": "afterEach",
@@ -9390,14 +9390,14 @@
                 "start_line": 27
             },
             {
+                "name": "vi.fn",
+                "caller": null,
+                "start_line": 17
+            },
+            {
                 "name": "Buffer.from",
                 "caller": null,
                 "start_line": 22
-            },
-            {
-                "name": "initializeDb",
-                "caller": null,
-                "start_line": 25
             },
             {
                 "name": "Buffer.from",
@@ -9875,14 +9875,14 @@
                 "start_line": 29
             },
             {
-                "name": "encode",
-                "caller": null,
-                "start_line": 70
-            },
-            {
                 "name": "db.user.findFirst",
                 "caller": null,
                 "start_line": 60
+            },
+            {
+                "name": "encode",
+                "caller": null,
+                "start_line": 70
             },
             {
                 "name": "decode",
@@ -9905,14 +9905,14 @@
                 "start_line": 19
             },
             {
-                "name": "hash",
-                "caller": null,
-                "start_line": 68
-            },
-            {
                 "name": "sanitizeUser",
                 "caller": null,
                 "start_line": 69
+            },
+            {
+                "name": "hash",
+                "caller": null,
+                "start_line": 68
             },
             {
                 "name": "delay",
@@ -10042,14 +10042,14 @@
                 "start_line": 70
             },
             {
-                "name": "http.post",
-                "caller": null,
-                "start_line": 112
-            },
-            {
                 "name": "HttpResponse.json",
                 "caller": null,
                 "start_line": 98
+            },
+            {
+                "name": "http.post",
+                "caller": null,
+                "start_line": 112
             },
             {
                 "name": "Cookies.set",
@@ -10122,11 +10122,6 @@
                 "start_line": 54
             },
             {
-                "name": "persistDb",
-                "caller": null,
-                "start_line": 88
-            },
-            {
                 "name": "authenticate",
                 "caller": null,
                 "start_line": 90
@@ -10135,6 +10130,11 @@
                 "name": "request.json",
                 "caller": null,
                 "start_line": 116
+            },
+            {
+                "name": "persistDb",
+                "caller": null,
+                "start_line": 88
             },
             {
                 "name": "Cookies.remove",
@@ -10372,12 +10372,12 @@
                 "start_line": 3
             },
             {
-                "statement": "import {\r\n  requireAuth,\r\n  requireAdmin,\r\n  sanitizeUser,\r\n  networkDelay,\r\n} from '../utils';",
-                "start_line": 6
-            },
-            {
                 "statement": "import { db, persistDb } from '../db';",
                 "start_line": 5
+            },
+            {
+                "statement": "import {\r\n  requireAuth,\r\n  requireAdmin,\r\n  sanitizeUser,\r\n  networkDelay,\r\n} from '../utils';",
+                "start_line": 6
             }
         ],
         "exports": [
@@ -10618,6 +10618,11 @@
                 "start_line": 54
             },
             {
+                "name": "networkDelay",
+                "caller": null,
+                "start_line": 85
+            },
+            {
                 "name": "sanitizeUser",
                 "caller": null,
                 "start_line": 63
@@ -10626,11 +10631,6 @@
                 "name": "db.discussion.findFirst",
                 "caller": null,
                 "start_line": 89
-            },
-            {
-                "name": "networkDelay",
-                "caller": null,
-                "start_line": 85
             },
             {
                 "name": "requireAuth",
@@ -10777,7 +10777,7 @@
             {
                 "name": "HttpResponse.json",
                 "caller": null,
-                "start_line": 16
+                "start_line": 14
             },
             {
                 "name": "db.team.getAll",
@@ -10787,7 +10787,7 @@
             {
                 "name": "HttpResponse.json",
                 "caller": null,
-                "start_line": 14
+                "start_line": 16
             },
             {
                 "name": "networkDelay",
@@ -11491,14 +11491,14 @@
                 "start_line": 35
             },
             {
-                "name": "page.getByRole",
-                "caller": null,
-                "start_line": 38
-            },
-            {
                 "name": "page.getByLabel",
                 "caller": null,
                 "start_line": 37
+            },
+            {
+                "name": "page.getByRole",
+                "caller": null,
+                "start_line": 38
             },
             {
                 "name": "page.getByLabel('First Name').click",
@@ -11561,14 +11561,14 @@
                 "start_line": 41
             },
             {
-                "name": "page.goto",
-                "caller": null,
-                "start_line": 9
-            },
-            {
                 "name": "page.getByRole",
                 "caller": null,
                 "start_line": 10
+            },
+            {
+                "name": "page.goto",
+                "caller": null,
+                "start_line": 9
             },
             {
                 "name": "page.getByRole",
@@ -11927,14 +11927,14 @@
                 "start_line": 82
             },
             {
-                "name": "page.getByRole('button', { name: 'Get started' }).click",
-                "caller": null,
-                "start_line": 12
-            },
-            {
                 "name": "createComment",
                 "caller": null,
                 "start_line": 9
+            },
+            {
+                "name": "page.getByRole('button', { name: 'Get started' }).click",
+                "caller": null,
+                "start_line": 12
             },
             {
                 "name": "page.getByRole('link', { name: 'Discussions' }).click",
@@ -12558,6 +12558,11 @@
                 "start_line": 23
             },
             {
+                "name": "result.current.dismissNotification",
+                "caller": null,
+                "start_line": 24
+            },
+            {
                 "name": "expect(result.current.notifications).not.toContainEqual",
                 "caller": null,
                 "start_line": 27
@@ -12566,11 +12571,6 @@
                 "name": "expect",
                 "caller": null,
                 "start_line": 27
-            },
-            {
-                "name": "result.current.dismissNotification",
-                "caller": null,
-                "start_line": 24
             }
         ],
         "jsx": []
@@ -12786,12 +12786,12 @@
                 "start_line": 1
             },
             {
-                "statement": "import { z } from 'zod';",
-                "start_line": 2
-            },
-            {
                 "statement": "import { Comment } from '@/types/api';",
                 "start_line": 6
+            },
+            {
+                "statement": "import { z } from 'zod';",
+                "start_line": 2
             },
             {
                 "statement": "import { MutationConfig } from '@/lib/react-query';",
@@ -13082,14 +13082,14 @@
                 "start_line": 11
             },
             {
-                "name": "z.string",
-                "caller": null,
-                "start_line": 12
-            },
-            {
                 "name": "z.string().min",
                 "caller": null,
                 "start_line": 11
+            },
+            {
+                "name": "z.string",
+                "caller": null,
+                "start_line": 12
             },
             {
                 "name": "z.string().min",
@@ -13411,22 +13411,22 @@
             {
                 "name": "z.string",
                 "caller": null,
-                "start_line": 11
-            },
-            {
-                "name": "z.string().min",
-                "caller": null,
                 "start_line": 12
-            },
-            {
-                "name": "z.string().min",
-                "caller": null,
-                "start_line": 11
             },
             {
                 "name": "z.string",
                 "caller": null,
+                "start_line": 11
+            },
+            {
+                "name": "z.string().min",
+                "caller": null,
                 "start_line": 12
+            },
+            {
+                "name": "z.string().min",
+                "caller": null,
+                "start_line": 11
             },
             {
                 "name": "useQueryClient",
@@ -14138,12 +14138,12 @@
                 "start_line": 1
             },
             {
-                "statement": "import { paths } from '@/config/paths';",
-                "start_line": 5
-            },
-            {
                 "statement": "import { env } from '@/config/env';",
                 "start_line": 4
+            },
+            {
+                "statement": "import { paths } from '@/config/paths';",
+                "start_line": 5
             },
             {
                 "statement": "import { useNotifications } from '@/components/ui/notifications';",
@@ -14398,6 +14398,11 @@
                 "start_line": 18
             },
             {
+                "name": "generateTeam",
+                "caller": null,
+                "start_line": 40
+            },
+            {
                 "name": "randCatchPhrase",
                 "caller": "generateDiscussion",
                 "start_line": 45
@@ -14406,11 +14411,6 @@
                 "name": "randParagraph",
                 "caller": "generateTeam",
                 "start_line": 33
-            },
-            {
-                "name": "generateTeam",
-                "caller": null,
-                "start_line": 40
             }
         ],
         "jsx": []
@@ -14522,14 +14522,14 @@
                 "start_line": 22
             },
             {
-                "name": "server.resetHandlers",
-                "caller": null,
-                "start_line": 25
-            },
-            {
                 "name": "vi.stubGlobal",
                 "caller": null,
                 "start_line": 17
+            },
+            {
+                "name": "server.resetHandlers",
+                "caller": null,
+                "start_line": 25
             }
         ],
         "jsx": []
@@ -14700,17 +14700,17 @@
             {
                 "name": "primaryKey",
                 "caller": null,
-                "start_line": 31
-            },
-            {
-                "name": "primaryKey",
-                "caller": null,
                 "start_line": 23
             },
             {
                 "name": "factory",
                 "caller": null,
                 "start_line": 39
+            },
+            {
+                "name": "primaryKey",
+                "caller": null,
+                "start_line": 31
             },
             {
                 "name": "JSON.parse",
@@ -14738,11 +14738,6 @@
                 "start_line": 55
             },
             {
-                "name": "writeFile",
-                "caller": "storeDb",
-                "start_line": 73
-            },
-            {
                 "name": "storeDb",
                 "caller": "persistDb",
                 "start_line": 84
@@ -14751,6 +14746,11 @@
                 "name": "window.localStorage.getItem",
                 "caller": "loadDb",
                 "start_line": 65
+            },
+            {
+                "name": "writeFile",
+                "caller": "storeDb",
+                "start_line": 73
             },
             {
                 "name": "JSON.stringify",
@@ -15787,16 +15787,16 @@
                 "start_line": 1
             },
             {
+                "statement": "import { networkDelay } from '../utils';",
+                "start_line": 6
+            },
+            {
                 "statement": "import { db } from '../db';",
                 "start_line": 5
             },
             {
                 "statement": "import { env } from '@/config/env';",
                 "start_line": 3
-            },
-            {
-                "statement": "import { networkDelay } from '../utils';",
-                "start_line": 6
             }
         ],
         "exports": [
@@ -15957,22 +15957,17 @@
             {
                 "name": "HttpResponse.json",
                 "caller": null,
-                "start_line": 68
+                "start_line": 66
             },
             {
                 "name": "HttpResponse.json",
                 "caller": null,
-                "start_line": 66
+                "start_line": 68
             },
             {
                 "name": "requireAuth",
                 "caller": null,
                 "start_line": 52
-            },
-            {
-                "name": "persistDb",
-                "caller": null,
-                "start_line": 65
             },
             {
                 "name": "HttpResponse.json",
@@ -15983,6 +15978,11 @@
                 "name": "request.json",
                 "caller": null,
                 "start_line": 56
+            },
+            {
+                "name": "persistDb",
+                "caller": null,
+                "start_line": 65
             },
             {
                 "name": "requireAdmin",
@@ -17005,6 +17005,11 @@
                 "start_line": 148
             },
             {
+                "name": "userEvent.click",
+                "caller": null,
+                "start_line": 124
+            },
+            {
                 "name": "expect",
                 "caller": null,
                 "start_line": 163
@@ -17020,9 +17025,9 @@
                 "start_line": 108
             },
             {
-                "name": "userEvent.click",
+                "name": "within",
                 "caller": null,
-                "start_line": 124
+                "start_line": 152
             },
             {
                 "name": "within",
@@ -17048,6 +17053,11 @@
                 "name": "expect(drawer).not.toBeInTheDocument",
                 "caller": null,
                 "start_line": 126
+            },
+            {
+                "name": "screen.findByRole",
+                "caller": null,
+                "start_line": 130
             },
             {
                 "name": "vi.importActual",
@@ -17115,17 +17125,7 @@
                 "start_line": 120
             },
             {
-                "name": "screen.findByRole",
-                "caller": null,
-                "start_line": 130
-            },
-            {
                 "name": "within(\r\n      confirmationDialog,\r\n    ).findByRole",
-                "caller": null,
-                "start_line": 152
-            },
-            {
-                "name": "within",
                 "caller": null,
                 "start_line": 152
             },
@@ -17165,14 +17165,14 @@
                 "start_line": 34
             },
             {
-                "name": "expect(screen.getByText(fakeDiscussion.body)).toBeInTheDocument",
-                "caller": null,
-                "start_line": 58
-            },
-            {
                 "name": "test",
                 "caller": null,
                 "start_line": 56
+            },
+            {
+                "name": "expect(screen.getByText(fakeDiscussion.body)).toBeInTheDocument",
+                "caller": null,
+                "start_line": 58
             },
             {
                 "name": "within",
@@ -17342,16 +17342,16 @@
                 "start_line": 3
             },
             {
+                "statement": "import { DiscussionsList } from '@/features/discussions/components/discussions-list';",
+                "start_line": 8
+            },
+            {
                 "statement": "import { ContentLayout } from '@/components/layouts/content-layout';",
                 "start_line": 5
             },
             {
                 "statement": "import { getInfiniteCommentsQueryOptions } from '@/features/comments/api/get-comments';",
                 "start_line": 6
-            },
-            {
-                "statement": "import { DiscussionsList } from '@/features/discussions/components/discussions-list';",
-                "start_line": 8
             },
             {
                 "statement": "import { CreateDiscussion } from '@/features/discussions/components/create-discussion';",
@@ -17395,12 +17395,12 @@
                 "start_line": 16
             },
             {
-                "text": "<div className=\"mt-4\">\r\n        <DiscussionsList\r\n          onDiscussionPrefetch={(id) => {\r\n            // Prefetch the comments data when the user hovers over the link in the list\r\n            queryClient.prefetchInfiniteQuery(\r\n              getInfiniteCommentsQueryOptions(id),\r\n            );\r\n          }}\r\n        />\r\n      </div>",
-                "start_line": 18
-            },
-            {
                 "text": "<DiscussionsList\r\n          onDiscussionPrefetch={(id) => {\r\n            // Prefetch the comments data when the user hovers over the link in the list\r\n            queryClient.prefetchInfiniteQuery(\r\n              getInfiniteCommentsQueryOptions(id),\r\n            );\r\n          }}\r\n        />",
                 "start_line": 19
+            },
+            {
+                "text": "<div className=\"mt-4\">\r\n        <DiscussionsList\r\n          onDiscussionPrefetch={(id) => {\r\n            // Prefetch the comments data when the user hovers over the link in the list\r\n            queryClient.prefetchInfiniteQuery(\r\n              getInfiniteCommentsQueryOptions(id),\r\n            );\r\n          }}\r\n        />\r\n      </div>",
+                "start_line": 18
             }
         ]
     },
@@ -17439,11 +17439,6 @@
                 "start_line": 16
             },
             {
-                "name": "afterAll",
-                "caller": null,
-                "start_line": 20
-            },
-            {
                 "name": "vi.spyOn(console, 'error').mockImplementation",
                 "caller": null,
                 "start_line": 17
@@ -17452,6 +17447,11 @@
                 "name": "vi.spyOn",
                 "caller": null,
                 "start_line": 17
+            },
+            {
+                "name": "afterAll",
+                "caller": null,
+                "start_line": 20
             },
             {
                 "name": "renderApp",
@@ -18550,9 +18550,9 @@
                 "start_line": 9
             },
             {
-                "name": "router.replace",
+                "name": "decodeURIComponent",
                 "caller": "LoginPage",
-                "start_line": 16
+                "start_line": 17
             },
             {
                 "name": "searchParams?.get",
@@ -18565,9 +18565,9 @@
                 "start_line": 10
             },
             {
-                "name": "decodeURIComponent",
+                "name": "router.replace",
                 "caller": "LoginPage",
-                "start_line": 17
+                "start_line": 16
             },
             {
                 "name": "paths.app.dashboard.getHref",
@@ -18698,12 +18698,12 @@
                 "start_line": 3
             },
             {
-                "statement": "import { Link } from '@/components/ui/link';",
-                "start_line": 6
-            },
-            {
                 "statement": "import { useUser } from '@/lib/auth';",
                 "start_line": 8
+            },
+            {
+                "statement": "import { Link } from '@/components/ui/link';",
+                "start_line": 6
             },
             {
                 "statement": "import { paths } from '@/config/paths';",
@@ -18877,14 +18877,14 @@
                 "start_line": 21
             },
             {
-                "name": "queryClient.prefetchInfiniteQuery",
-                "caller": "preloadData",
-                "start_line": 34
-            },
-            {
                 "name": "getDiscussionQueryOptions",
                 "caller": "preloadData",
                 "start_line": 33
+            },
+            {
+                "name": "queryClient.prefetchInfiniteQuery",
+                "caller": "preloadData",
+                "start_line": 34
             },
             {
                 "name": "Promise.all",
@@ -19297,13 +19297,13 @@
             },
             {
                 "name": "cn",
-                "caller": null,
-                "start_line": 90
+                "caller": "DialogFooter",
+                "start_line": 75
             },
             {
                 "name": "cn",
-                "caller": "DialogFooter",
-                "start_line": 75
+                "caller": null,
+                "start_line": 90
             },
             {
                 "name": "cn",
@@ -19796,14 +19796,14 @@
                 "start_line": 63
             },
             {
-                "name": "expect(screen.queryByText(titleText)).not.toBeInTheDocument",
-                "caller": null,
-                "start_line": 66
-            },
-            {
                 "name": "screen.findByText",
                 "caller": null,
                 "start_line": 61
+            },
+            {
+                "name": "expect(screen.queryByText(titleText)).not.toBeInTheDocument",
+                "caller": null,
+                "start_line": 66
             },
             {
                 "name": "expect(await screen.findByText(titleText)).toBeInTheDocument",
@@ -19816,14 +19816,14 @@
                 "start_line": 21
             },
             {
-                "name": "test",
-                "caller": null,
-                "start_line": 54
-            },
-            {
                 "name": "open",
                 "caller": "TestDialog",
                 "start_line": 31
+            },
+            {
+                "name": "test",
+                "caller": null,
+                "start_line": 54
             }
         ],
         "jsx": [
@@ -19942,12 +19942,12 @@
                 "start_line": 39
             },
             {
-                "text": "<Button variant=\"outline\">Open</Button>",
-                "start_line": 40
-            },
-            {
                 "text": "<div className=\"flex flex-col\">\r\n          <DrawerHeader>\r\n            <DrawerTitle>Drawer Header</DrawerTitle>\r\n            <DrawerDescription>\r\n              Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n            </DrawerDescription>\r\n          </DrawerHeader>\r\n          <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>\r\n        </div>",
                 "start_line": 43
+            },
+            {
+                "text": "<Button variant=\"outline\">Open</Button>",
+                "start_line": 40
             },
             {
                 "text": "<DrawerContent className=\"flex max-w-[800px] flex-col justify-between sm:max-w-[540px]\">\r\n        <div className=\"flex flex-col\">\r\n          <DrawerHeader>\r\n            <DrawerTitle>Drawer Header</DrawerTitle>\r\n            <DrawerDescription>\r\n              Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n            </DrawerDescription>\r\n          </DrawerHeader>\r\n          <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>\r\n        </div>\r\n        <DrawerFooter>\r\n          <DrawerClose asChild>\r\n            <Button type=\"submit\">Save changes</Button>\r\n          </DrawerClose>\r\n        </DrawerFooter>\r\n      </DrawerContent>",
@@ -20497,16 +20497,16 @@
                 "start_line": 48
             },
             {
+                "text": "<DropdownMenuTrigger asChild>\r\n        <Button>Open Menu</Button>\r\n      </DropdownMenuTrigger>",
+                "start_line": 73
+            },
+            {
                 "text": "<Button>Open Menu</Button>",
                 "start_line": 74
             },
             {
                 "text": "<DropdownMenuLabel>Select an option</DropdownMenuLabel>",
                 "start_line": 77
-            },
-            {
-                "text": "<DropdownMenuTrigger asChild>\r\n        <Button>Open Menu</Button>\r\n      </DropdownMenuTrigger>",
-                "start_line": 73
             },
             {
                 "text": "<DropdownMenuRadioGroup value={value} onValueChange={setValue}>\r\n          <DropdownMenuRadioItem value=\"one\">Option One</DropdownMenuRadioItem>\r\n          <DropdownMenuRadioItem value=\"two\">Option Two</DropdownMenuRadioItem>\r\n          <DropdownMenuRadioItem value=\"three\">\r\n            Option Three\r\n          </DropdownMenuRadioItem>\r\n        </DropdownMenuRadioGroup>",
@@ -20752,12 +20752,12 @@
                 "start_line": 22
             },
             {
-                "text": "<Error errorMessage={error?.message} />",
-                "start_line": 27
-            },
-            {
                 "text": "<div className=\"mt-1\">{children}</div>",
                 "start_line": 25
+            },
+            {
+                "text": "<Error errorMessage={error?.message} />",
+                "start_line": 27
             },
             {
                 "text": "<Label>\r\n        {label}\r\n        <div className=\"mt-1\">{children}</div>\r\n      </Label>",
@@ -21023,16 +21023,16 @@
                 "start_line": 79
             },
             {
-                "text": "<Textarea\r\n            label=\"Description\"\r\n            error={formState.errors['description']}\r\n            registration={register('description')}\r\n          />",
-                "start_line": 32
+                "text": "<Select\r\n            label=\"Type\"\r\n            error={formState.errors['type']}\r\n            registration={register('type')}\r\n            options={['A', 'B', 'C'].map((type) => ({\r\n              label: type,\r\n              value: type,\r\n            }))}\r\n          />",
+                "start_line": 37
             },
             {
                 "text": "<Input\r\n            label=\"Title\"\r\n            error={formState.errors['title']}\r\n            registration={register('title')}\r\n          />",
                 "start_line": 27
             },
             {
-                "text": "<Select\r\n            label=\"Type\"\r\n            error={formState.errors['type']}\r\n            registration={register('type')}\r\n            options={['A', 'B', 'C'].map((type) => ({\r\n              label: type,\r\n              value: type,\r\n            }))}\r\n          />",
-                "start_line": 37
+                "text": "<Textarea\r\n            label=\"Description\"\r\n            error={formState.errors['description']}\r\n            registration={register('description')}\r\n          />",
+                "start_line": 32
             },
             {
                 "text": "<Button type=\"submit\" className=\"w-full\">\r\n                Submit\r\n              </Button>",
@@ -21641,12 +21641,12 @@
                 "start_line": 22
             },
             {
-                "text": "<>\r\n          <Input\r\n            label=\"Title\"\r\n            error={formState.errors['title']}\r\n            registration={register('title')}\r\n          />\r\n\r\n          <Button name=\"submit\" type=\"submit\" className=\"w-full\">\r\n            Submit\r\n          </Button>\r\n        </>",
-                "start_line": 24
-            },
-            {
                 "text": "<Form onSubmit={handleSubmit} schema={schema} id=\"my-form\">\r\n      {({ register, formState }) => (\r\n        <>\r\n          <Input\r\n            label=\"Title\"\r\n            error={formState.errors['title']}\r\n            registration={register('title')}\r\n          />\r\n\r\n          <Button name=\"submit\" type=\"submit\" className=\"w-full\">\r\n            Submit\r\n          </Button>\r\n        </>\r\n      )}\r\n    </Form>",
                 "start_line": 52
+            },
+            {
+                "text": "<>\r\n          <Input\r\n            label=\"Title\"\r\n            error={formState.errors['title']}\r\n            registration={register('title')}\r\n          />\r\n\r\n          <Button name=\"submit\" type=\"submit\" className=\"w-full\">\r\n            Submit\r\n          </Button>\r\n        </>",
+                "start_line": 24
             },
             {
                 "text": "<>\r\n          <Input\r\n            label=\"Title\"\r\n            error={formState.errors['title']}\r\n            registration={register('title')}\r\n          />\r\n\r\n          <Button name=\"submit\" type=\"submit\" className=\"w-full\">\r\n            Submit\r\n          </Button>\r\n        </>",
@@ -21923,12 +21923,12 @@
                 "start_line": 7
             },
             {
-                "text": "<div className=\"flex w-full flex-col items-center space-y-4 sm:items-end\">\r\n      <div className=\"pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black/5\">\r\n        <div className=\"p-4\" role=\"alert\" aria-label={title}>\r\n          <div className=\"flex items-start\">\r\n            <div className=\"shrink-0\">{icons[type]}</div>\r\n            <div className=\"ml-3 w-0 flex-1 pt-0.5\">\r\n              <p className=\"text-sm font-medium text-gray-900\">{title}</p>\r\n              <p className=\"mt-1 text-sm text-gray-500\">{message}</p>\r\n            </div>\r\n            <div className=\"ml-4 flex shrink-0\">\r\n              <button\r\n                className=\"inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2\"\r\n                onClick={() => {\r\n                  onDismiss(id);\r\n                }}\r\n              >\r\n                <span className=\"sr-only\">Close</span>\r\n                <CircleX className=\"size-5\" aria-hidden=\"true\" />\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>",
-                "start_line": 29
-            },
-            {
                 "text": "<CircleX className=\"size-6 text-red-500\" aria-hidden=\"true\" />",
                 "start_line": 11
+            },
+            {
+                "text": "<div className=\"flex w-full flex-col items-center space-y-4 sm:items-end\">\r\n      <div className=\"pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black/5\">\r\n        <div className=\"p-4\" role=\"alert\" aria-label={title}>\r\n          <div className=\"flex items-start\">\r\n            <div className=\"shrink-0\">{icons[type]}</div>\r\n            <div className=\"ml-3 w-0 flex-1 pt-0.5\">\r\n              <p className=\"text-sm font-medium text-gray-900\">{title}</p>\r\n              <p className=\"mt-1 text-sm text-gray-500\">{message}</p>\r\n            </div>\r\n            <div className=\"ml-4 flex shrink-0\">\r\n              <button\r\n                className=\"inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2\"\r\n                onClick={() => {\r\n                  onDismiss(id);\r\n                }}\r\n              >\r\n                <span className=\"sr-only\">Close</span>\r\n                <CircleX className=\"size-5\" aria-hidden=\"true\" />\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>",
+                "start_line": 29
             },
             {
                 "text": "<CircleAlert className=\"size-6 text-yellow-500\" aria-hidden=\"true\" />",
@@ -22360,12 +22360,12 @@
                 "start_line": 163
             },
             {
-                "text": "<PaginationLink\r\n    aria-label=\"Go to previous page\"\r\n    size=\"default\"\r\n    className={cn('gap-1 pl-2.5', className)}\r\n    {...props}\r\n  >\r\n    <ChevronLeftIcon className=\"size-4\" />\r\n    <span>Previous</span>\r\n  </PaginationLink>",
-                "start_line": 77
-            },
-            {
                 "text": "<li ref={ref} className={cn('', className)} {...props} />",
                 "start_line": 39
+            },
+            {
+                "text": "<PaginationLink\r\n    aria-label=\"Go to previous page\"\r\n    size=\"default\"\r\n    className={cn('gap-1 pl-2.5', className)}\r\n    {...props}\r\n  >\r\n    <ChevronLeftIcon className=\"size-4\" />\r\n    <span>Previous</span>\r\n  </PaginationLink>",
+                "start_line": 77
             },
             {
                 "text": "<PaginationItem>\r\n            <PaginationPrevious href={createHref(currentPage - 1)} />\r\n          </PaginationItem>",
@@ -22479,17 +22479,17 @@
             {
                 "name": "cn",
                 "caller": null,
+                "start_line": 49
+            },
+            {
+                "name": "cn",
+                "caller": null,
                 "start_line": 37
             },
             {
                 "name": "cn",
                 "caller": null,
                 "start_line": 27
-            },
-            {
-                "name": "cn",
-                "caller": null,
-                "start_line": 49
             },
             {
                 "name": "cn",
@@ -22710,12 +22710,12 @@
                 "start_line": 24
             },
             {
-                "text": "<Input\r\n              type=\"email\"\r\n              label=\"Email Address\"\r\n              error={formState.errors['email']}\r\n              registration={register('email')}\r\n            />",
-                "start_line": 32
-            },
-            {
                 "text": "<Input\r\n              type=\"password\"\r\n              label=\"Password\"\r\n              error={formState.errors['password']}\r\n              registration={register('password')}\r\n            />",
                 "start_line": 38
+            },
+            {
+                "text": "<Input\r\n              type=\"email\"\r\n              label=\"Email Address\"\r\n              error={formState.errors['email']}\r\n              registration={register('email')}\r\n            />",
+                "start_line": 32
             },
             {
                 "text": "<div>\r\n              <Button\r\n                isLoading={login.isPending}\r\n                type=\"submit\"\r\n                className=\"w-full\"\r\n              >\r\n                Log in\r\n              </Button>\r\n            </div>",
@@ -23069,14 +23069,14 @@
                 "start_line": 24
             },
             {
-                "name": "userEvent.type",
-                "caller": null,
-                "start_line": 21
-            },
-            {
                 "name": "createUser",
                 "caller": null,
                 "start_line": 7
+            },
+            {
+                "name": "userEvent.type",
+                "caller": null,
+                "start_line": 21
             },
             {
                 "name": "vi.fn",
@@ -23366,12 +23366,12 @@
                 "start_line": 17
             },
             {
-                "text": "<CommentsList discussionId={discussionId} />",
-                "start_line": 21
-            },
-            {
                 "text": "<h3 className=\"text-xl font-bold\">Comments:</h3>",
                 "start_line": 18
+            },
+            {
+                "text": "<CommentsList discussionId={discussionId} />",
+                "start_line": 21
             }
         ]
     },
@@ -23399,12 +23399,12 @@
                 "start_line": 5
             },
             {
-                "statement": "import { Form, FormDrawer, Textarea } from '@/components/ui/form';",
-                "start_line": 6
-            },
-            {
                 "statement": "import {\r\n  useCreateComment,\r\n  createCommentInputSchema,\r\n} from '../api/create-comment';",
                 "start_line": 9
+            },
+            {
+                "statement": "import { Form, FormDrawer, Textarea } from '@/components/ui/form';",
+                "start_line": 6
             },
             {
                 "statement": "import { useNotifications } from '@/components/ui/notifications';",
@@ -23424,6 +23424,11 @@
                 "start_line": 19
             },
             {
+                "name": "register",
+                "caller": "CreateComment",
+                "start_line": 72
+            },
+            {
                 "name": "useCreateComment",
                 "caller": "CreateComment",
                 "start_line": 20
@@ -23437,11 +23442,6 @@
                 "name": "createCommentMutation.mutate",
                 "caller": "CreateComment",
                 "start_line": 56
-            },
-            {
-                "name": "register",
-                "caller": "CreateComment",
-                "start_line": 72
             }
         ],
         "jsx": [
@@ -23662,16 +23662,16 @@
                 "start_line": 43
             },
             {
+                "text": "<Button\r\n          form=\"create-discussion\"\r\n          type=\"submit\"\r\n          size=\"sm\"\r\n          isLoading={createDiscussionMutation.isPending}\r\n        >\r\n          Submit\r\n        </Button>",
+                "start_line": 52
+            },
+            {
                 "text": "<Plus className=\"size-4\" />",
                 "start_line": 46
             },
             {
                 "text": "<Button size=\"sm\" icon={<Plus className=\"size-4\" />}>\r\n          Create Discussion\r\n        </Button>",
                 "start_line": 46
-            },
-            {
-                "text": "<Button\r\n          form=\"create-discussion\"\r\n          type=\"submit\"\r\n          size=\"sm\"\r\n          isLoading={createDiscussionMutation.isPending}\r\n        >\r\n          Submit\r\n        </Button>",
-                "start_line": 52
             },
             {
                 "text": "<>\r\n            <Input\r\n              label=\"Title\"\r\n              error={formState.errors['title']}\r\n              registration={register('title')}\r\n            />\r\n\r\n            <Textarea\r\n              label=\"Body\"\r\n              error={formState.errors['body']}\r\n              registration={register('body')}\r\n            />\r\n\r\n            <div className=\"flex items-center space-x-2\">\r\n              <Switch\r\n                name=\"public\"\r\n                onCheckedChange={(value) => setValue('public', value)}\r\n                checked={watch('public')}\r\n                className={` relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2`}\r\n                id=\"public\"\r\n              />\r\n              <Label htmlFor=\"airplane-mode\">Public</Label>\r\n            </div>\r\n          </>",
@@ -24116,16 +24116,16 @@
                 "start_line": 5
             },
             {
-                "statement": "import { useUser } from '@/lib/auth';",
-                "start_line": 15
-            },
-            {
                 "statement": "import { useNotifications } from '@/components/ui/notifications';",
                 "start_line": 14
             },
             {
                 "statement": "import {\r\n  Form,\r\n  FormDrawer,\r\n  Input,\r\n  Label,\r\n  Switch,\r\n  Textarea,\r\n} from '@/components/ui/form';",
                 "start_line": 6
+            },
+            {
+                "statement": "import { useUser } from '@/lib/auth';",
+                "start_line": 15
             },
             {
                 "statement": "import { canUpdateDiscussion } from '@/lib/authorization';",
@@ -24782,14 +24782,14 @@
                 "start_line": 94
             },
             {
-                "name": "useQueryClient",
-                "caller": null,
-                "start_line": 34
-            },
-            {
                 "name": "useQuery",
                 "caller": "useUser",
                 "start_line": 31
+            },
+            {
+                "name": "useQueryClient",
+                "caller": null,
+                "start_line": 34
             },
             {
                 "name": "getUserQueryOptions",
@@ -24947,11 +24947,6 @@
                 "start_line": 46
             },
             {
-                "name": "expect",
-                "caller": null,
-                "start_line": 82
-            },
-            {
                 "name": "canCreateDiscussion",
                 "caller": null,
                 "start_line": 23
@@ -25082,11 +25077,6 @@
                 "start_line": 67
             },
             {
-                "name": "test",
-                "caller": null,
-                "start_line": 76
-            },
-            {
                 "name": "canDeleteComment",
                 "caller": null,
                 "start_line": 82
@@ -25105,6 +25095,11 @@
                 "name": "expect(canViewUsers(adminUser)).toBe",
                 "caller": null,
                 "start_line": 44
+            },
+            {
+                "name": "test",
+                "caller": null,
+                "start_line": 76
             },
             {
                 "name": "expect(canDeleteComment(undefined, comment)).toBe",
@@ -25132,14 +25127,14 @@
                 "start_line": 23
             },
             {
-                "name": "expect(canCreateDiscussion(undefined)).toBe",
-                "caller": null,
-                "start_line": 26
-            },
-            {
                 "name": "expect(canDeleteDiscussion(adminUser)).toBe",
                 "caller": null,
                 "start_line": 30
+            },
+            {
+                "name": "expect(canCreateDiscussion(undefined)).toBe",
+                "caller": null,
+                "start_line": 26
             },
             {
                 "name": "canDeleteDiscussion",
@@ -25167,19 +25162,9 @@
                 "start_line": 33
             },
             {
-                "name": "canUpdateDiscussion",
-                "caller": null,
-                "start_line": 38
-            },
-            {
                 "name": "expect(canViewUsers(null)).toBe",
                 "caller": null,
                 "start_line": 46
-            },
-            {
-                "name": "canViewUsers",
-                "caller": null,
-                "start_line": 47
             },
             {
                 "name": "expect(canDeleteComment(adminUser, comment)).toBe",
@@ -25187,7 +25172,17 @@
                 "start_line": 73
             },
             {
+                "name": "canViewUsers",
+                "caller": null,
+                "start_line": 47
+            },
+            {
                 "name": "expect(canDeleteComment(regularUser, comment)).toBe",
+                "caller": null,
+                "start_line": 82
+            },
+            {
+                "name": "expect",
                 "caller": null,
                 "start_line": 82
             },
@@ -25205,6 +25200,11 @@
                 "name": "expect",
                 "caller": null,
                 "start_line": 47
+            },
+            {
+                "name": "canUpdateDiscussion",
+                "caller": null,
+                "start_line": 38
             },
             {
                 "name": "describe",
@@ -25409,12 +25409,12 @@
                 "start_line": 2
             },
             {
-                "statement": "import { MainErrorFallback } from '@/components/errors/main';",
-                "start_line": 6
-            },
-            {
                 "statement": "import { ErrorBoundary } from 'react-error-boundary';",
                 "start_line": 4
+            },
+            {
+                "statement": "import { MainErrorFallback } from '@/components/errors/main';",
+                "start_line": 6
             },
             {
                 "statement": "import * as React from 'react';",
@@ -25540,6 +25540,10 @@
                 "start_line": 41
             },
             {
+                "text": "<ContentLayout title=\"Dashboard\">{page}</ContentLayout>",
+                "start_line": 42
+            },
+            {
                 "text": "<li>Delete all comments</li>",
                 "start_line": 32
             },
@@ -25586,10 +25590,6 @@
             {
                 "text": "<li>Comment on discussions</li>",
                 "start_line": 31
-            },
-            {
-                "text": "<ContentLayout title=\"Dashboard\">{page}</ContentLayout>",
-                "start_line": 42
             }
         ]
     },
@@ -25815,12 +25815,12 @@
                 "start_line": 1
             },
             {
-                "statement": "import { ReactElement } from 'react';",
-                "start_line": 8
-            },
-            {
                 "statement": "import { GetServerSideProps, InferGetServerSidePropsType } from 'next';",
                 "start_line": 6
+            },
+            {
+                "statement": "import { ReactElement } from 'react';",
+                "start_line": 8
             },
             {
                 "statement": "import { ErrorBoundary } from 'react-error-boundary';",
@@ -25876,11 +25876,6 @@
                 "start_line": 30
             },
             {
-                "name": "dehydrate",
-                "caller": null,
-                "start_line": 39
-            },
-            {
                 "name": "queryClient.prefetchInfiniteQuery",
                 "caller": null,
                 "start_line": 33
@@ -25894,6 +25889,11 @@
                 "name": "getInfiniteCommentsQueryOptions",
                 "caller": null,
                 "start_line": 34
+            },
+            {
+                "name": "dehydrate",
+                "caller": null,
+                "start_line": 39
             },
             {
                 "name": "useRouter",
@@ -26143,6 +26143,11 @@
                 "start_line": 113
             },
             {
+                "name": "expect",
+                "caller": null,
+                "start_line": 146
+            },
+            {
                 "name": "within",
                 "caller": null,
                 "start_line": 146
@@ -26161,11 +26166,6 @@
                 "name": "within(drawer).findByRole",
                 "caller": null,
                 "start_line": 103
-            },
-            {
-                "name": "expect",
-                "caller": null,
-                "start_line": 146
             },
             {
                 "name": "createUser",
@@ -26434,12 +26434,12 @@
                 "start_line": 4
             },
             {
-                "statement": "import { DiscussionsPage } from '../discussions';",
-                "start_line": 14
-            },
-            {
                 "statement": "import { createDiscussion } from '@/testing/data-generators';",
                 "start_line": 3
+            },
+            {
+                "statement": "import { DiscussionsPage } from '../discussions';",
+                "start_line": 14
             }
         ],
         "exports": [],
@@ -26805,14 +26805,14 @@
                 "start_line": 14
             },
             {
-                "name": "router.replace",
-                "caller": "RegisterPage",
-                "start_line": 25
-            },
-            {
                 "name": "paths.app.dashboard.getHref",
                 "caller": "RegisterPage",
                 "start_line": 26
+            },
+            {
+                "name": "router.replace",
+                "caller": "RegisterPage",
+                "start_line": 25
             },
             {
                 "name": "useTeams",
@@ -26946,11 +26946,6 @@
                 "start_line": 22
             },
             {
-                "name": "useRouter",
-                "caller": "AuthLayout",
-                "start_line": 18
-            },
-            {
                 "name": "useEffect",
                 "caller": "AuthLayout",
                 "start_line": 20
@@ -26959,6 +26954,11 @@
                 "name": "paths.app.dashboard.getHref",
                 "caller": "AuthLayout",
                 "start_line": 22
+            },
+            {
+                "name": "useRouter",
+                "caller": "AuthLayout",
+                "start_line": 18
             },
             {
                 "name": "paths.home.getHref",
@@ -27131,12 +27131,12 @@
                 "start_line": 2
             },
             {
-                "statement": "import { useEffect, useState, Suspense } from 'react';",
-                "start_line": 4
-            },
-            {
                 "statement": "import { ErrorBoundary } from 'react-error-boundary';",
                 "start_line": 5
+            },
+            {
+                "statement": "import { useEffect, useState, Suspense } from 'react';",
+                "start_line": 4
             },
             {
                 "statement": "import { useRouter } from 'next/router';",
@@ -27188,23 +27188,23 @@
         "calls": [
             {
                 "name": "setProgress",
-                "caller": "Progress",
+                "caller": "handleRouteChangeStart",
                 "start_line": 49
             },
             {
                 "name": "clearInterval",
-                "caller": "Progress",
+                "caller": "handleRouteChangeStart",
                 "start_line": 51
-            },
-            {
-                "name": "setProgress",
-                "caller": "Progress",
-                "start_line": 67
             },
             {
                 "name": "router.events.on",
                 "caller": "Progress",
                 "start_line": 73
+            },
+            {
+                "name": "setProgress",
+                "caller": "handleRouteChangeComplete",
+                "start_line": 67
             },
             {
                 "name": "router.events.on",
@@ -27253,7 +27253,7 @@
             },
             {
                 "name": "setInterval",
-                "caller": "Progress",
+                "caller": "handleRouteChangeStart",
                 "start_line": 48
             },
             {
@@ -27288,12 +27288,12 @@
             },
             {
                 "name": "setProgress",
-                "caller": "Progress",
+                "caller": "handleRouteChangeStart",
                 "start_line": 47
             },
             {
                 "name": "setTimeout",
-                "caller": "Progress",
+                "caller": "handleRouteChangeComplete",
                 "start_line": 66
             },
             {
@@ -27327,23 +27327,23 @@
                 "start_line": 205
             },
             {
-                "name": "useState",
-                "caller": "Progress",
-                "start_line": 43
-            },
-            {
                 "name": "useEffect",
                 "caller": "Progress",
                 "start_line": 45
             },
             {
-                "name": "clearInterval",
+                "name": "useState",
                 "caller": "Progress",
+                "start_line": 43
+            },
+            {
+                "name": "clearInterval",
+                "caller": "handleRouteChangeStart",
                 "start_line": 60
             },
             {
                 "name": "setProgress",
-                "caller": "Progress",
+                "caller": "handleRouteChangeComplete",
                 "start_line": 65
             },
             {
@@ -28012,12 +28012,12 @@
                 "start_line": 1
             },
             {
-                "statement": "import { Button } from '@/components/ui/button';",
-                "start_line": 5
-            },
-            {
                 "statement": "import { useDisclosure } from '@/hooks/use-disclosure';",
                 "start_line": 6
+            },
+            {
+                "statement": "import { Button } from '@/components/ui/button';",
+                "start_line": 5
             },
             {
                 "statement": "import { useEffect } from 'react';",
@@ -28322,14 +28322,14 @@
                 "start_line": 57
             },
             {
-                "name": "waitFor",
-                "caller": null,
-                "start_line": 65
-            },
-            {
                 "name": "expect",
                 "caller": null,
                 "start_line": 66
+            },
+            {
+                "name": "waitFor",
+                "caller": null,
+                "start_line": 65
             },
             {
                 "name": "screen.queryByText",
@@ -28417,16 +28417,16 @@
                 "start_line": 55
             },
             {
-                "text": "<DialogContent className=\"sm:max-w-[425px]\">\r\n        <DialogHeader>\r\n          <DialogTitle>{titleText}</DialogTitle>\r\n        </DialogHeader>\r\n\r\n        <DialogFooter>\r\n          <Button type=\"submit\">Submit</Button>\r\n          <Button ref={cancelButtonRef} variant=\"outline\" onClick={close}>\r\n            {cancelButtonText}\r\n          </Button>\r\n        </DialogFooter>\r\n      </DialogContent>",
-                "start_line": 38
-            },
-            {
                 "text": "<DialogHeader>\r\n          <DialogTitle>{titleText}</DialogTitle>\r\n        </DialogHeader>",
                 "start_line": 39
             },
             {
                 "text": "<Button variant=\"outline\">{openButtonText}</Button>",
                 "start_line": 36
+            },
+            {
+                "text": "<DialogContent className=\"sm:max-w-[425px]\">\r\n        <DialogHeader>\r\n          <DialogTitle>{titleText}</DialogTitle>\r\n        </DialogHeader>\r\n\r\n        <DialogFooter>\r\n          <Button type=\"submit\">Submit</Button>\r\n          <Button ref={cancelButtonRef} variant=\"outline\" onClick={close}>\r\n            {cancelButtonText}\r\n          </Button>\r\n        </DialogFooter>\r\n      </DialogContent>",
+                "start_line": 38
             },
             {
                 "text": "<DialogTrigger asChild>\r\n        <Button variant=\"outline\">{openButtonText}</Button>\r\n      </DialogTrigger>",
@@ -28739,12 +28739,12 @@
                 "start_line": 44
             },
             {
-                "name": "expect",
+                "name": "expect(screen.queryByText(titleText)).not.toBeInTheDocument",
                 "caller": null,
                 "start_line": 47
             },
             {
-                "name": "expect(screen.queryByText(titleText)).not.toBeInTheDocument",
+                "name": "screen.queryByText",
                 "caller": null,
                 "start_line": 47
             },
@@ -28754,7 +28754,7 @@
                 "start_line": 45
             },
             {
-                "name": "screen.queryByText",
+                "name": "expect",
                 "caller": null,
                 "start_line": 47
             },
@@ -28824,10 +28824,6 @@
                 "start_line": 45
             },
             {
-                "text": "<Button variant=\"outline\">{openButtonText}</Button>",
-                "start_line": 23
-            },
-            {
                 "text": "<DrawerContent className=\"flex max-w-[800px] flex-col justify-between sm:max-w-[540px]\">\r\n        <div className=\"flex flex-col\">\r\n          <DrawerHeader>\r\n            <DrawerTitle>{titleText}</DrawerTitle>\r\n          </DrawerHeader>\r\n          <div>{drawerContentText}</div>\r\n        </div>\r\n        <DrawerFooter>\r\n          <DrawerClose asChild>\r\n            <Button value=\"outline\" type=\"submit\">\r\n              {cancelButtonText}\r\n            </Button>\r\n          </DrawerClose>\r\n        </DrawerFooter>\r\n      </DrawerContent>",
                 "start_line": 25
             },
@@ -28838,6 +28834,10 @@
             {
                 "text": "<div className=\"flex flex-col\">\r\n          <DrawerHeader>\r\n            <DrawerTitle>{titleText}</DrawerTitle>\r\n          </DrawerHeader>\r\n          <div>{drawerContentText}</div>\r\n        </div>",
                 "start_line": 26
+            },
+            {
+                "text": "<Button variant=\"outline\">{openButtonText}</Button>",
+                "start_line": 23
             },
             {
                 "text": "<DrawerHeader>\r\n            <DrawerTitle>{titleText}</DrawerTitle>\r\n          </DrawerHeader>",
@@ -29062,6 +29062,10 @@
                 "start_line": 92
             },
             {
+                "text": "<DropdownMenuCheckboxItem\r\n          checked={checked}\r\n          onCheckedChange={setChecked}\r\n        >\r\n          Option One\r\n        </DropdownMenuCheckboxItem>",
+                "start_line": 51
+            },
+            {
                 "text": "<DropdownMenuItem>Item One</DropdownMenuItem>",
                 "start_line": 33
             },
@@ -29072,10 +29076,6 @@
             {
                 "text": "<DropdownMenuItem>Item Two</DropdownMenuItem>",
                 "start_line": 34
-            },
-            {
-                "text": "<DropdownMenuCheckboxItem\r\n          checked={checked}\r\n          onCheckedChange={setChecked}\r\n        >\r\n          Option One\r\n        </DropdownMenuCheckboxItem>",
-                "start_line": 51
             },
             {
                 "text": "<DropdownMenuCheckboxItem\r\n          checked={checked2}\r\n          onCheckedChange={setChecked2}\r\n        >\r\n          Option Two\r\n        </DropdownMenuCheckboxItem>",
@@ -29155,17 +29155,17 @@
             {
                 "name": "cn",
                 "caller": null,
-                "start_line": 104
-            },
-            {
-                "name": "cn",
-                "caller": null,
                 "start_line": 69
             },
             {
                 "name": "cn",
                 "caller": null,
                 "start_line": 88
+            },
+            {
+                "name": "cn",
+                "caller": null,
+                "start_line": 104
             },
             {
                 "name": "cn",
@@ -29366,16 +29366,16 @@
                 "start_line": 1
             },
             {
-                "statement": "import {\r\n  Drawer,\r\n  DrawerClose,\r\n  DrawerContent,\r\n  DrawerFooter,\r\n  DrawerHeader,\r\n  DrawerTrigger,\r\n  DrawerTitle,\r\n} from '../drawer';",
-                "start_line": 6
-            },
-            {
                 "statement": "import { Button } from '../button';",
                 "start_line": 5
             },
             {
                 "statement": "import { useDisclosure } from '@/hooks/use-disclosure';",
                 "start_line": 3
+            },
+            {
+                "statement": "import {\r\n  Drawer,\r\n  DrawerClose,\r\n  DrawerContent,\r\n  DrawerFooter,\r\n  DrawerHeader,\r\n  DrawerTrigger,\r\n  DrawerTitle,\r\n} from '../drawer';",
+                "start_line": 6
             }
         ],
         "exports": [
@@ -29604,16 +29604,16 @@
                 "start_line": 79
             },
             {
-                "text": "<Select\r\n            label=\"Type\"\r\n            error={formState.errors['type']}\r\n            registration={register('type')}\r\n            options={['A', 'B', 'C'].map((type) => ({\r\n              label: type,\r\n              value: type,\r\n            }))}\r\n          />",
-                "start_line": 37
-            },
-            {
                 "text": "<Input\r\n            label=\"Title\"\r\n            error={formState.errors['title']}\r\n            registration={register('title')}\r\n          />",
                 "start_line": 27
             },
             {
                 "text": "<Textarea\r\n            label=\"Description\"\r\n            error={formState.errors['description']}\r\n            registration={register('description')}\r\n          />",
                 "start_line": 32
+            },
+            {
+                "text": "<Select\r\n            label=\"Type\"\r\n            error={formState.errors['type']}\r\n            registration={register('type')}\r\n            options={['A', 'B', 'C'].map((type) => ({\r\n              label: type,\r\n              value: type,\r\n            }))}\r\n          />",
+                "start_line": 37
             },
             {
                 "text": "<Button type=\"submit\" className=\"w-full\">\r\n                Submit\r\n              </Button>",
@@ -29921,16 +29921,16 @@
                 "start_line": 1
             },
             {
-                "statement": "import { FieldWrapper, FieldWrapperPassThroughProps } from './field-wrapper';",
-                "start_line": 6
-            },
-            {
                 "statement": "import { cn } from '@/utils/cn';",
                 "start_line": 4
             },
             {
                 "statement": "import { UseFormRegisterReturn } from 'react-hook-form';",
                 "start_line": 2
+            },
+            {
+                "statement": "import { FieldWrapper, FieldWrapperPassThroughProps } from './field-wrapper';",
+                "start_line": 6
             }
         ],
         "exports": [
@@ -30030,16 +30030,16 @@
                 "start_line": 1
             },
             {
-                "statement": "import { FieldWrapper, FieldWrapperPassThroughProps } from './field-wrapper';",
-                "start_line": 6
-            },
-            {
                 "statement": "import { cn } from '@/utils/cn';",
                 "start_line": 4
             },
             {
                 "statement": "import { UseFormRegisterReturn } from 'react-hook-form';",
                 "start_line": 2
+            },
+            {
+                "statement": "import { FieldWrapper, FieldWrapperPassThroughProps } from './field-wrapper';",
+                "start_line": 6
             }
         ],
         "exports": [
@@ -30805,14 +30805,14 @@
                 "start_line": 29
             },
             {
-                "name": "cn",
-                "caller": null,
-                "start_line": 39
-            },
-            {
                 "name": "buttonVariants",
                 "caller": "PaginationLink",
                 "start_line": 60
+            },
+            {
+                "name": "cn",
+                "caller": null,
+                "start_line": 39
             },
             {
                 "name": "cn",
@@ -31247,11 +31247,6 @@
                 "start_line": 14
             },
             {
-                "name": "register",
-                "caller": "LoginForm",
-                "start_line": 40
-            },
-            {
                 "name": "login.mutate",
                 "caller": "LoginForm",
                 "start_line": 24
@@ -31265,6 +31260,11 @@
                 "name": "useRouter",
                 "caller": "LoginForm",
                 "start_line": 17
+            },
+            {
+                "name": "register",
+                "caller": "LoginForm",
+                "start_line": 40
             },
             {
                 "name": "paths.auth.register.getHref",
@@ -31556,12 +31556,12 @@
                 "start_line": 23
             },
             {
-                "name": "expect",
+                "name": "waitFor",
                 "caller": null,
                 "start_line": 23
             },
             {
-                "name": "waitFor",
+                "name": "expect",
                 "caller": null,
                 "start_line": 23
             }
@@ -31655,14 +31655,14 @@
                 "start_line": 29
             },
             {
-                "name": "createUser",
-                "caller": null,
-                "start_line": 7
-            },
-            {
                 "name": "renderApp",
                 "caller": null,
                 "start_line": 11
+            },
+            {
+                "name": "createUser",
+                "caller": null,
+                "start_line": 7
             },
             {
                 "name": "vi.fn",
@@ -31839,12 +31839,12 @@
                 "start_line": 88
             },
             {
-                "text": "<ArchiveX className=\"size-10\" />",
-                "start_line": 43
-            },
-            {
                 "text": "<h4>No Comments Found</h4>",
                 "start_line": 44
+            },
+            {
+                "text": "<ArchiveX className=\"size-10\" />",
+                "start_line": 43
             },
             {
                 "text": "<Spinner size=\"lg\" />",
@@ -32115,16 +32115,16 @@
                 "start_line": 29
             },
             {
-                "text": "<Button\r\n          isLoading={deleteCommentMutation.isPending}\r\n          type=\"button\"\r\n          variant=\"destructive\"\r\n          onClick={() => deleteCommentMutation.mutate({ commentId: id })}\r\n        >\r\n          Delete Comment\r\n        </Button>",
-                "start_line": 44
-            },
-            {
                 "text": "<Trash className=\"size-4\" />",
                 "start_line": 38
             },
             {
                 "text": "<Button\r\n          variant=\"destructive\"\r\n          size=\"sm\"\r\n          icon={<Trash className=\"size-4\" />}\r\n        >\r\n          Delete Comment\r\n        </Button>",
                 "start_line": 35
+            },
+            {
+                "text": "<Button\r\n          isLoading={deleteCommentMutation.isPending}\r\n          type=\"button\"\r\n          variant=\"destructive\"\r\n          onClick={() => deleteCommentMutation.mutate({ commentId: id })}\r\n        >\r\n          Delete Comment\r\n        </Button>",
+                "start_line": 44
             }
         ]
     },
@@ -32181,9 +32181,9 @@
                 "start_line": 21
             },
             {
-                "name": "register",
+                "name": "createDiscussionMutation.mutate",
                 "caller": "CreateDiscussion",
-                "start_line": 73
+                "start_line": 57
             },
             {
                 "name": "useCreateDiscussion",
@@ -32196,9 +32196,9 @@
                 "start_line": 25
             },
             {
-                "name": "createDiscussionMutation.mutate",
+                "name": "register",
                 "caller": "CreateDiscussion",
-                "start_line": 57
+                "start_line": 73
             },
             {
                 "name": "register",
@@ -32423,11 +32423,6 @@
                 "start_line": 14
             },
             {
-                "name": "formatDate",
-                "caller": "DiscussionView",
-                "start_line": 38
-            },
-            {
                 "name": "pathname?.startsWith",
                 "caller": "DiscussionView",
                 "start_line": 15
@@ -32441,6 +32436,11 @@
                 "name": "paths.public.discussion.getHref",
                 "caller": "DiscussionView",
                 "start_line": 49
+            },
+            {
+                "name": "formatDate",
+                "caller": "DiscussionView",
+                "start_line": 38
             }
         ],
         "jsx": [
@@ -32859,12 +32859,12 @@
                 "start_line": 29
             },
             {
-                "text": "<Button variant=\"destructive\">Delete</Button>",
-                "start_line": 33
-            },
-            {
                 "text": "<Button\r\n          isLoading={deleteUserMutation.isPending}\r\n          type=\"button\"\r\n          variant=\"destructive\"\r\n          onClick={() => deleteUserMutation.mutate({ userId: id })}\r\n        >\r\n          Delete User\r\n        </Button>",
                 "start_line": 35
+            },
+            {
+                "text": "<Button variant=\"destructive\">Delete</Button>",
+                "start_line": 33
             }
         ]
     },
@@ -33068,12 +33068,12 @@
                 "start_line": 25
             },
             {
-                "text": "<span>{formatDate(createdAt)}</span>",
-                "start_line": 48
-            },
-            {
                 "text": "<DeleteUser id={id} />",
                 "start_line": 55
+            },
+            {
+                "text": "<span>{formatDate(createdAt)}</span>",
+                "start_line": 48
             },
             {
                 "text": "<Spinner size=\"lg\" />",
@@ -33133,14 +33133,14 @@
                 "start_line": 25
             },
             {
-                "name": "z.string().min",
-                "caller": null,
-                "start_line": 25
-            },
-            {
                 "name": "z.object",
                 "caller": null,
                 "start_line": 24
+            },
+            {
+                "name": "z.string().min",
+                "caller": null,
+                "start_line": 25
             },
             {
                 "name": "z.string",
@@ -33203,14 +33203,14 @@
                 "start_line": 38
             },
             {
-                "name": "z.string",
-                "caller": null,
-                "start_line": 36
-            },
-            {
                 "name": "z\r\n      .object({\r\n        teamId: z.string().min(1, 'Required'),\r\n        teamName: z.null().default(null),\r\n      })\r\n      .or",
                 "caller": null,
                 "start_line": 42
+            },
+            {
+                "name": "z.string",
+                "caller": null,
+                "start_line": 36
             },
             {
                 "name": "z.string",
@@ -33544,14 +33544,14 @@
                 "start_line": 42
             },
             {
-                "name": "screen.getByText",
-                "caller": null,
-                "start_line": 46
-            },
-            {
                 "name": "screen.queryByText",
                 "caller": null,
                 "start_line": 44
+            },
+            {
+                "name": "screen.getByText",
+                "caller": null,
+                "start_line": 46
             },
             {
                 "name": "expect",
@@ -33719,12 +33719,12 @@
             },
             {
                 "name": "router.push",
-                "caller": "HomePage",
+                "caller": "handleStart",
                 "start_line": 14
             },
             {
                 "name": "paths.app.dashboard.getHref",
-                "caller": "HomePage",
+                "caller": "handleStart",
                 "start_line": 14
             },
             {
@@ -33734,12 +33734,12 @@
             },
             {
                 "name": "router.push",
-                "caller": "HomePage",
+                "caller": "handleStart",
                 "start_line": 16
             },
             {
                 "name": "paths.auth.login.getHref",
-                "caller": "HomePage",
+                "caller": "handleStart",
                 "start_line": 16
             }
         ],
@@ -33753,10 +33753,6 @@
                 "start_line": 38
             },
             {
-                "text": "<div className=\"ml-3 inline-flex\">\r\n              <a\r\n                href=\"https://github.com/alan2207/bulletproof-react\"\r\n                target=\"_blank\"\r\n                rel=\"noreferrer\"\r\n              >\r\n                <Button\r\n                  variant=\"outline\"\r\n                  icon={\r\n                    <svg\r\n                      fill=\"currentColor\"\r\n                      viewBox=\"0 0 24 24\"\r\n                      className=\"size-6\"\r\n                    >\r\n                      <path\r\n                        fillRule=\"evenodd\"\r\n                        d=\"M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z\"\r\n                        clipRule=\"evenodd\"\r\n                      />\r\n                    </svg>\r\n                  }\r\n                >\r\n                  Github Repo\r\n                </Button>\r\n              </a>\r\n            </div>",
-                "start_line": 57
-            },
-            {
                 "text": "<svg\r\n                      fill=\"currentColor\"\r\n                      viewBox=\"0 0 24 24\"\r\n                      className=\"size-6\"\r\n                    >\r\n                      <path\r\n                        fillRule=\"evenodd\"\r\n                        d=\"M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z\"\r\n                        clipRule=\"evenodd\"\r\n                      />\r\n                    </svg>",
                 "start_line": 66
             },
@@ -33765,16 +33761,16 @@
                 "start_line": 58
             },
             {
-                "text": "<h2 className=\"text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl\">\r\n            <span className=\"block\">Bulletproof React</span>\r\n          </h2>",
-                "start_line": 28
+                "text": "<div className=\"mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 lg:px-8 lg:py-16\">\r\n          <h2 className=\"text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl\">\r\n            <span className=\"block\">Bulletproof React</span>\r\n          </h2>\r\n          <img src=\"/logo.svg\" alt=\"react\" />\r\n          <p>Showcasing Best Practices For Building React Applications</p>\r\n          <div className=\"mt-8 flex justify-center\">\r\n            <div className=\"inline-flex rounded-md shadow\">\r\n              <Button\r\n                onClick={handleStart}\r\n                icon={\r\n                  <svg\r\n                    xmlns=\"http://www.w3.org/2000/svg\"\r\n                    className=\"size-6\"\r\n                    fill=\"none\"\r\n                    viewBox=\"0 0 24 24\"\r\n                    stroke=\"currentColor\"\r\n                  >\r\n                    <path\r\n                      strokeLinecap=\"round\"\r\n                      strokeLinejoin=\"round\"\r\n                      strokeWidth=\"2\"\r\n                      d=\"M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6\"\r\n                    />\r\n                  </svg>\r\n                }\r\n              >\r\n                Get started\r\n              </Button>\r\n            </div>\r\n            <div className=\"ml-3 inline-flex\">\r\n              <a\r\n                href=\"https://github.com/alan2207/bulletproof-react\"\r\n                target=\"_blank\"\r\n                rel=\"noreferrer\"\r\n              >\r\n                <Button\r\n                  variant=\"outline\"\r\n                  icon={\r\n                    <svg\r\n                      fill=\"currentColor\"\r\n                      viewBox=\"0 0 24 24\"\r\n                      className=\"size-6\"\r\n                    >\r\n                      <path\r\n                        fillRule=\"evenodd\"\r\n                        d=\"M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z\"\r\n                        clipRule=\"evenodd\"\r\n                      />\r\n                    </svg>\r\n                  }\r\n                >\r\n                  Github Repo\r\n                </Button>\r\n              </a>\r\n            </div>\r\n          </div>\r\n        </div>",
+                "start_line": 27
             },
             {
                 "text": "<Head\r\n        title={'Bulletproof React'}\r\n        description=\"Welcome to bulletproof react\"\r\n      />",
                 "start_line": 22
             },
             {
-                "text": "<div className=\"mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 lg:px-8 lg:py-16\">\r\n          <h2 className=\"text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl\">\r\n            <span className=\"block\">Bulletproof React</span>\r\n          </h2>\r\n          <img src=\"/logo.svg\" alt=\"react\" />\r\n          <p>Showcasing Best Practices For Building React Applications</p>\r\n          <div className=\"mt-8 flex justify-center\">\r\n            <div className=\"inline-flex rounded-md shadow\">\r\n              <Button\r\n                onClick={handleStart}\r\n                icon={\r\n                  <svg\r\n                    xmlns=\"http://www.w3.org/2000/svg\"\r\n                    className=\"size-6\"\r\n                    fill=\"none\"\r\n                    viewBox=\"0 0 24 24\"\r\n                    stroke=\"currentColor\"\r\n                  >\r\n                    <path\r\n                      strokeLinecap=\"round\"\r\n                      strokeLinejoin=\"round\"\r\n                      strokeWidth=\"2\"\r\n                      d=\"M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6\"\r\n                    />\r\n                  </svg>\r\n                }\r\n              >\r\n                Get started\r\n              </Button>\r\n            </div>\r\n            <div className=\"ml-3 inline-flex\">\r\n              <a\r\n                href=\"https://github.com/alan2207/bulletproof-react\"\r\n                target=\"_blank\"\r\n                rel=\"noreferrer\"\r\n              >\r\n                <Button\r\n                  variant=\"outline\"\r\n                  icon={\r\n                    <svg\r\n                      fill=\"currentColor\"\r\n                      viewBox=\"0 0 24 24\"\r\n                      className=\"size-6\"\r\n                    >\r\n                      <path\r\n                        fillRule=\"evenodd\"\r\n                        d=\"M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z\"\r\n                        clipRule=\"evenodd\"\r\n                      />\r\n                    </svg>\r\n                  }\r\n                >\r\n                  Github Repo\r\n                </Button>\r\n              </a>\r\n            </div>\r\n          </div>\r\n        </div>",
-                "start_line": 27
+                "text": "<h2 className=\"text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl\">\r\n            <span className=\"block\">Bulletproof React</span>\r\n          </h2>",
+                "start_line": 28
             },
             {
                 "text": "<div className=\"flex h-screen items-center bg-white\">\r\n        <div className=\"mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 lg:px-8 lg:py-16\">\r\n          <h2 className=\"text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl\">\r\n            <span className=\"block\">Bulletproof React</span>\r\n          </h2>\r\n          <img src=\"/logo.svg\" alt=\"react\" />\r\n          <p>Showcasing Best Practices For Building React Applications</p>\r\n          <div className=\"mt-8 flex justify-center\">\r\n            <div className=\"inline-flex rounded-md shadow\">\r\n              <Button\r\n                onClick={handleStart}\r\n                icon={\r\n                  <svg\r\n                    xmlns=\"http://www.w3.org/2000/svg\"\r\n                    className=\"size-6\"\r\n                    fill=\"none\"\r\n                    viewBox=\"0 0 24 24\"\r\n                    stroke=\"currentColor\"\r\n                  >\r\n                    <path\r\n                      strokeLinecap=\"round\"\r\n                      strokeLinejoin=\"round\"\r\n                      strokeWidth=\"2\"\r\n                      d=\"M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6\"\r\n                    />\r\n                  </svg>\r\n                }\r\n              >\r\n                Get started\r\n              </Button>\r\n            </div>\r\n            <div className=\"ml-3 inline-flex\">\r\n              <a\r\n                href=\"https://github.com/alan2207/bulletproof-react\"\r\n                target=\"_blank\"\r\n                rel=\"noreferrer\"\r\n              >\r\n                <Button\r\n                  variant=\"outline\"\r\n                  icon={\r\n                    <svg\r\n                      fill=\"currentColor\"\r\n                      viewBox=\"0 0 24 24\"\r\n                      className=\"size-6\"\r\n                    >\r\n                      <path\r\n                        fillRule=\"evenodd\"\r\n                        d=\"M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z\"\r\n                        clipRule=\"evenodd\"\r\n                      />\r\n                    </svg>\r\n                  }\r\n                >\r\n                  Github Repo\r\n                </Button>\r\n              </a>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>",
@@ -33807,6 +33803,10 @@
             {
                 "text": "<path\r\n                      strokeLinecap=\"round\"\r\n                      strokeLinejoin=\"round\"\r\n                      strokeWidth=\"2\"\r\n                      d=\"M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6\"\r\n                    />",
                 "start_line": 45
+            },
+            {
+                "text": "<div className=\"ml-3 inline-flex\">\r\n              <a\r\n                href=\"https://github.com/alan2207/bulletproof-react\"\r\n                target=\"_blank\"\r\n                rel=\"noreferrer\"\r\n              >\r\n                <Button\r\n                  variant=\"outline\"\r\n                  icon={\r\n                    <svg\r\n                      fill=\"currentColor\"\r\n                      viewBox=\"0 0 24 24\"\r\n                      className=\"size-6\"\r\n                    >\r\n                      <path\r\n                        fillRule=\"evenodd\"\r\n                        d=\"M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z\"\r\n                        clipRule=\"evenodd\"\r\n                      />\r\n                    </svg>\r\n                  }\r\n                >\r\n                  Github Repo\r\n                </Button>\r\n              </a>\r\n            </div>",
+                "start_line": 57
             },
             {
                 "text": "<Button\r\n                  variant=\"outline\"\r\n                  icon={\r\n                    <svg\r\n                      fill=\"currentColor\"\r\n                      viewBox=\"0 0 24 24\"\r\n                      className=\"size-6\"\r\n                    >\r\n                      <path\r\n                        fillRule=\"evenodd\"\r\n                        d=\"M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z\"\r\n                        clipRule=\"evenodd\"\r\n                      />\r\n                    </svg>\r\n                  }\r\n                >\r\n                  Github Repo\r\n                </Button>",
@@ -34059,11 +34059,6 @@
                 "start_line": 19
             },
             {
-                "name": "db.user.create",
-                "caller": null,
-                "start_line": 29
-            },
-            {
                 "name": "screen.queryAllByText",
                 "caller": "waitForLoadingToFinish",
                 "start_line": 22
@@ -34077,6 +34072,11 @@
                 "name": "screen.queryAllByTestId",
                 "caller": "waitForLoadingToFinish",
                 "start_line": 21
+            },
+            {
+                "name": "db.user.create",
+                "caller": null,
+                "start_line": 29
             },
             {
                 "name": "hash",
@@ -34114,14 +34114,14 @@
                 "start_line": 50
             },
             {
-                "name": "rtlRender",
-                "caller": null,
-                "start_line": 64
-            },
-            {
                 "name": "initializeUser",
                 "caller": null,
                 "start_line": 61
+            },
+            {
+                "name": "rtlRender",
+                "caller": null,
+                "start_line": 64
             },
             {
                 "name": "createUser",
@@ -34665,17 +34665,17 @@
             },
             {
                 "name": "paths.app.dashboard.getHref",
-                "caller": "LandingRoute",
+                "caller": "handleStart",
                 "start_line": 15
             },
             {
                 "name": "navigate",
-                "caller": "LandingRoute",
+                "caller": "handleStart",
                 "start_line": 15
             },
             {
                 "name": "navigate",
-                "caller": "LandingRoute",
+                "caller": "handleStart",
                 "start_line": 17
             },
             {
@@ -34685,7 +34685,7 @@
             },
             {
                 "name": "paths.auth.login.getHref",
-                "caller": "LandingRoute",
+                "caller": "handleStart",
                 "start_line": 17
             }
         ],
@@ -34879,6 +34879,10 @@
                 "start_line": 27
             },
             {
+                "text": "<b>{user.data?.role}</b>",
+                "start_line": 13
+            },
+            {
                 "text": "<h1 className=\"text-xl\">\r\n        Welcome <b>{`${user.data?.firstName} ${user.data?.lastName}`}</b>\r\n      </h1>",
                 "start_line": 9
             },
@@ -34889,10 +34893,6 @@
             {
                 "text": "<h4 className=\"my-3\">\r\n        Your role is : <b>{user.data?.role}</b>\r\n      </h4>",
                 "start_line": 12
-            },
-            {
-                "text": "<b>{user.data?.role}</b>",
-                "start_line": 13
             },
             {
                 "text": "<p className=\"font-medium\">In this application you can:</p>",
@@ -35417,11 +35417,6 @@
                 "start_line": 15
             },
             {
-                "name": "queryClient.fetchQuery",
-                "caller": "clientLoader",
-                "start_line": 21
-            },
-            {
                 "name": "getDiscussionsQueryOptions",
                 "caller": "clientLoader",
                 "start_line": 17
@@ -35435,6 +35430,11 @@
                 "name": "url.searchParams.get",
                 "caller": "clientLoader",
                 "start_line": 15
+            },
+            {
+                "name": "queryClient.fetchQuery",
+                "caller": "clientLoader",
+                "start_line": 21
             },
             {
                 "name": "useQueryClient",
@@ -35562,14 +35562,14 @@
                 "start_line": 100
             },
             {
-                "name": "expect",
-                "caller": null,
-                "start_line": 139
-            },
-            {
                 "name": "within",
                 "caller": null,
                 "start_line": 128
+            },
+            {
+                "name": "expect",
+                "caller": null,
+                "start_line": 139
             },
             {
                 "name": "expect",
@@ -35647,6 +35647,11 @@
                 "start_line": 134
             },
             {
+                "name": "renderDiscussion",
+                "caller": null,
+                "start_line": 80
+            },
+            {
                 "name": "screen.getByRole",
                 "caller": null,
                 "start_line": 85
@@ -35655,11 +35660,6 @@
                 "name": "userEvent.click",
                 "caller": null,
                 "start_line": 122
-            },
-            {
-                "name": "within",
-                "caller": null,
-                "start_line": 139
             },
             {
                 "name": "expect(commentElement).toBeInTheDocument",
@@ -35672,9 +35672,9 @@
                 "start_line": 72
             },
             {
-                "name": "renderDiscussion",
+                "name": "within",
                 "caller": null,
-                "start_line": 80
+                "start_line": 139
             },
             {
                 "name": "renderApp",
@@ -35762,11 +35762,6 @@
                 "start_line": 33
             },
             {
-                "name": "screen.findByRole",
-                "caller": null,
-                "start_line": 47
-            },
-            {
                 "name": "userEvent.click",
                 "caller": null,
                 "start_line": 43
@@ -35775,6 +35770,11 @@
                 "name": "userEvent.type",
                 "caller": null,
                 "start_line": 58
+            },
+            {
+                "name": "screen.findByRole",
+                "caller": null,
+                "start_line": 47
             },
             {
                 "name": "screen.getByRole",
@@ -35845,10 +35845,6 @@
                 "start_line": 1
             },
             {
-                "statement": "import { default as DiscussionsRoute } from '../discussions';",
-                "start_line": 13
-            },
-            {
                 "statement": "import {\r\n  renderApp,\r\n  screen,\r\n  userEvent,\r\n  waitFor,\r\n  within,\r\n} from '@/testing/test-utils';",
                 "start_line": 4
             },
@@ -35859,6 +35855,10 @@
             {
                 "statement": "import { createDiscussion } from '@/testing/data-generators';",
                 "start_line": 3
+            },
+            {
+                "statement": "import { default as DiscussionsRoute } from '../discussions';",
+                "start_line": 13
             }
         ],
         "exports": [],
@@ -36034,11 +36034,6 @@
                 "start_line": 29
             },
             {
-                "name": "userEvent.click",
-                "caller": null,
-                "start_line": 33
-            },
-            {
                 "name": "within",
                 "caller": null,
                 "start_line": 41
@@ -36047,6 +36042,11 @@
                 "name": "screen.getByRole",
                 "caller": null,
                 "start_line": 34
+            },
+            {
+                "name": "userEvent.click",
+                "caller": null,
+                "start_line": 33
             },
             {
                 "name": "within",
@@ -36575,12 +36575,12 @@
                 "start_line": 11
             },
             {
-                "statement": "import {\r\n  DropdownMenu,\r\n  DropdownMenuContent,\r\n  DropdownMenuItem,\r\n  DropdownMenuSeparator,\r\n  DropdownMenuTrigger,\r\n} from '../ui/dropdown';",
-                "start_line": 13
-            },
-            {
                 "statement": "import { Link } from '../ui/link';",
                 "start_line": 20
+            },
+            {
+                "statement": "import {\r\n  DropdownMenu,\r\n  DropdownMenuContent,\r\n  DropdownMenuItem,\r\n  DropdownMenuSeparator,\r\n  DropdownMenuTrigger,\r\n} from '../ui/dropdown';",
+                "start_line": 13
             }
         ],
         "exports": [],
@@ -36686,14 +36686,14 @@
                 "start_line": 192
             },
             {
-                "name": "setProgress",
-                "caller": "Progress",
-                "start_line": 45
-            },
-            {
                 "name": "useState",
                 "caller": "Progress",
                 "start_line": 42
+            },
+            {
+                "name": "setProgress",
+                "caller": "Progress",
+                "start_line": 45
             },
             {
                 "name": "navigate",
@@ -36751,10 +36751,6 @@
                 "start_line": 146
             },
             {
-                "text": "<Button size=\"icon\" variant=\"outline\" className=\"sm:hidden\">\r\n                <PanelLeft className=\"size-5\" />\r\n                <span className=\"sr-only\">Toggle Menu</span>\r\n              </Button>",
-                "start_line": 132
-            },
-            {
                 "text": "<span className=\"text-sm font-semibold text-white\">\r\n        Bulletproof React\r\n      </span>",
                 "start_line": 32
             },
@@ -36769,6 +36765,10 @@
             {
                 "text": "<Drawer>\r\n            <DrawerTrigger asChild>\r\n              <Button size=\"icon\" variant=\"outline\" className=\"sm:hidden\">\r\n                <PanelLeft className=\"size-5\" />\r\n                <span className=\"sr-only\">Toggle Menu</span>\r\n              </Button>\r\n            </DrawerTrigger>\r\n            <DrawerContent\r\n              side=\"left\"\r\n              className=\"bg-black pt-10 text-white sm:max-w-60\"\r\n            >\r\n              <nav className=\"grid gap-6 text-lg font-medium\">\r\n                <div className=\"flex h-16 shrink-0 items-center px-4\">\r\n                  <Logo />\r\n                </div>\r\n                {navigation.map((item) => (\r\n                  <NavLink\r\n                    key={item.name}\r\n                    to={item.to}\r\n                    end\r\n                    className={({ isActive }) =>\r\n                      cn(\r\n                        'text-gray-300 hover:bg-gray-700 hover:text-white',\r\n                        'group flex flex-1 w-full items-center rounded-md p-2 text-base font-medium',\r\n                        isActive && 'bg-gray-900 text-white',\r\n                      )\r\n                    }\r\n                  >\r\n                    <item.icon\r\n                      className={cn(\r\n                        'text-gray-400 group-hover:text-gray-300',\r\n                        'mr-4 size-6 shrink-0',\r\n                      )}\r\n                      aria-hidden=\"true\"\r\n                    />\r\n                    {item.name}\r\n                  </NavLink>\r\n                ))}\r\n              </nav>\r\n            </DrawerContent>\r\n          </Drawer>",
                 "start_line": 130
+            },
+            {
+                "text": "<Button size=\"icon\" variant=\"outline\" className=\"sm:hidden\">\r\n                <PanelLeft className=\"size-5\" />\r\n                <span className=\"sr-only\">Toggle Menu</span>\r\n              </Button>",
+                "start_line": 132
             },
             {
                 "text": "<span className=\"sr-only\">Open user menu</span>",
@@ -37167,20 +37167,20 @@
                 "start_line": 62
             },
             {
-                "text": "<DialogContent className=\"sm:max-w-[425px]\">\r\n        <DialogHeader>\r\n          <DialogTitle>Edit profile</DialogTitle>\r\n          <DialogDescription>Lorem ipsum</DialogDescription>\r\n        </DialogHeader>\r\n        <div className=\"grid gap-4 py-4\">Lorem ipsum</div>\r\n\r\n        <DialogFooter>\r\n          <Button type=\"submit\">Save changes</Button>\r\n          <Button ref={cancelButtonRef} variant=\"outline\" onClick={close}>\r\n            Cancel\r\n          </Button>\r\n        </DialogFooter>\r\n      </DialogContent>",
-                "start_line": 35
-            },
-            {
                 "text": "<DialogHeader>\r\n          <DialogTitle>Edit profile</DialogTitle>\r\n          <DialogDescription>Lorem ipsum</DialogDescription>\r\n        </DialogHeader>",
                 "start_line": 36
             },
             {
-                "text": "<Button variant=\"outline\">Open Dialog</Button>",
-                "start_line": 33
+                "text": "<DialogContent className=\"sm:max-w-[425px]\">\r\n        <DialogHeader>\r\n          <DialogTitle>Edit profile</DialogTitle>\r\n          <DialogDescription>Lorem ipsum</DialogDescription>\r\n        </DialogHeader>\r\n        <div className=\"grid gap-4 py-4\">Lorem ipsum</div>\r\n\r\n        <DialogFooter>\r\n          <Button type=\"submit\">Save changes</Button>\r\n          <Button ref={cancelButtonRef} variant=\"outline\" onClick={close}>\r\n            Cancel\r\n          </Button>\r\n        </DialogFooter>\r\n      </DialogContent>",
+                "start_line": 35
             },
             {
                 "text": "<DialogTrigger asChild>\r\n        <Button variant=\"outline\">Open Dialog</Button>\r\n      </DialogTrigger>",
                 "start_line": 32
+            },
+            {
+                "text": "<Button variant=\"outline\">Open Dialog</Button>",
+                "start_line": 33
             },
             {
                 "text": "<DialogTitle>Edit profile</DialogTitle>",
@@ -37444,6 +37444,11 @@
                 "start_line": 37
             },
             {
+                "name": "close",
+                "caller": "ConfirmationDialog",
+                "start_line": 50
+            },
+            {
                 "name": "useEffect",
                 "caller": "ConfirmationDialog",
                 "start_line": 39
@@ -37452,11 +37457,6 @@
                 "name": "close",
                 "caller": "ConfirmationDialog",
                 "start_line": 41
-            },
-            {
-                "name": "close",
-                "caller": "ConfirmationDialog",
-                "start_line": 50
             },
             {
                 "name": "open",
@@ -37751,6 +37751,11 @@
                 "start_line": 22
             },
             {
+                "name": "screen.findByText",
+                "caller": null,
+                "start_line": 61
+            },
+            {
                 "name": "expect(screen.queryByText(titleText)).not.toBeInTheDocument",
                 "caller": null,
                 "start_line": 66
@@ -37759,11 +37764,6 @@
                 "name": "expect",
                 "caller": null,
                 "start_line": 66
-            },
-            {
-                "name": "screen.findByText",
-                "caller": null,
-                "start_line": 61
             },
             {
                 "name": "screen.getByRole",
@@ -38178,11 +38178,6 @@
                 "start_line": 55
             },
             {
-                "name": "expect",
-                "caller": null,
-                "start_line": 64
-            },
-            {
                 "name": "expect(screen.queryByText(titleText)).not.toBeInTheDocument",
                 "caller": null,
                 "start_line": 64
@@ -38196,6 +38191,11 @@
                 "name": "screen.getByRole",
                 "caller": null,
                 "start_line": 58
+            },
+            {
+                "name": "expect",
+                "caller": null,
+                "start_line": 64
             },
             {
                 "name": "screen.queryByText",
@@ -38760,12 +38760,12 @@
                 "start_line": 1
             },
             {
-                "statement": "import {\r\n  Drawer,\r\n  DrawerClose,\r\n  DrawerContent,\r\n  DrawerFooter,\r\n  DrawerHeader,\r\n  DrawerTrigger,\r\n  DrawerTitle,\r\n} from '../drawer';",
-                "start_line": 6
-            },
-            {
                 "statement": "import { Button } from '../button';",
                 "start_line": 5
+            },
+            {
+                "statement": "import {\r\n  Drawer,\r\n  DrawerClose,\r\n  DrawerContent,\r\n  DrawerFooter,\r\n  DrawerHeader,\r\n  DrawerTrigger,\r\n  DrawerTitle,\r\n} from '../drawer';",
+                "start_line": 6
             },
             {
                 "statement": "import { useDisclosure } from '@/hooks/use-disclosure';",
@@ -39086,14 +39086,14 @@
                 "start_line": 197
             },
             {
-                "name": "zodResolver",
-                "caller": null,
-                "start_line": 193
-            },
-            {
                 "name": "form.handleSubmit",
                 "caller": null,
                 "start_line": 198
+            },
+            {
+                "name": "zodResolver",
+                "caller": null,
+                "start_line": 193
             },
             {
                 "name": "useFormField",
@@ -39121,6 +39121,11 @@
                 "start_line": 114
             },
             {
+                "name": "useForm",
+                "caller": null,
+                "start_line": 193
+            },
+            {
                 "name": "useFormField",
                 "caller": null,
                 "start_line": 153
@@ -39131,19 +39136,14 @@
                 "start_line": 142
             },
             {
-                "name": "useForm",
+                "name": "React.useContext",
                 "caller": null,
-                "start_line": 193
+                "start_line": 49
             },
             {
                 "name": "React.useId",
                 "caller": null,
                 "start_line": 82
-            },
-            {
-                "name": "React.useContext",
-                "caller": null,
-                "start_line": 49
             },
             {
                 "name": "children",
@@ -39162,12 +39162,12 @@
                 "start_line": 41
             },
             {
-                "text": "<FormItemContext.Provider value={{ id }}>\r\n      <div ref={ref} className={cn('space-y-2', className)} {...props} />\r\n    </FormItemContext.Provider>",
-                "start_line": 85
-            },
-            {
                 "text": "<Label\r\n      ref={ref}\r\n      className={cn(error && 'text-destructive', className)}\r\n      htmlFor={formItemId}\r\n      {...props}\r\n    />",
                 "start_line": 99
+            },
+            {
+                "text": "<FormItemContext.Provider value={{ id }}>\r\n      <div ref={ref} className={cn('space-y-2', className)} {...props} />\r\n    </FormItemContext.Provider>",
+                "start_line": 85
             },
             {
                 "text": "<Slot\r\n      ref={ref}\r\n      id={formItemId}\r\n      aria-describedby={\r\n        !error\r\n          ? `${formDescriptionId}`\r\n          : `${formDescriptionId} ${formMessageId}`\r\n      }\r\n      aria-invalid={!!error}\r\n      {...props}\r\n    />",
@@ -39253,16 +39253,16 @@
                 "start_line": 1
             },
             {
+                "statement": "import { cn } from '@/utils/cn';",
+                "start_line": 5
+            },
+            {
                 "statement": "import * as React from 'react';",
                 "start_line": 3
             },
             {
                 "statement": "import { cva, type VariantProps } from 'class-variance-authority';",
                 "start_line": 2
-            },
-            {
-                "statement": "import { cn } from '@/utils/cn';",
-                "start_line": 5
             }
         ],
         "exports": [
@@ -39278,12 +39278,12 @@
                 "start_line": 7
             },
             {
-                "name": "labelVariants",
+                "name": "cn",
                 "caller": null,
                 "start_line": 18
             },
             {
-                "name": "cn",
+                "name": "labelVariants",
                 "caller": null,
                 "start_line": 18
             }
@@ -39545,14 +39545,14 @@
                 "start_line": 39
             },
             {
-                "name": "expect",
-                "caller": null,
-                "start_line": 44
-            },
-            {
                 "name": "waitFor",
                 "caller": null,
                 "start_line": 43
+            },
+            {
+                "name": "expect",
+                "caller": null,
+                "start_line": 44
             },
             {
                 "name": "register",
@@ -40344,12 +40344,12 @@
                 "start_line": 14
             },
             {
-                "text": "<ul\r\n    ref={ref}\r\n    className={cn('flex flex-row items-center gap-1', className)}\r\n    {...props}\r\n  />",
-                "start_line": 27
-            },
-            {
                 "text": "<PaginationLink\r\n    aria-label=\"Go to previous page\"\r\n    size=\"default\"\r\n    className={cn('gap-1 pl-2.5', className)}\r\n    {...props}\r\n  >\r\n    <ChevronLeftIcon className=\"size-4\" />\r\n    <span>Previous</span>\r\n  </PaginationLink>",
                 "start_line": 77
+            },
+            {
+                "text": "<ul\r\n    ref={ref}\r\n    className={cn('flex flex-row items-center gap-1', className)}\r\n    {...props}\r\n  />",
+                "start_line": 27
             },
             {
                 "text": "<PaginationItem>\r\n            <PaginationEllipsis />\r\n          </PaginationItem>",
@@ -40548,12 +40548,12 @@
                 "start_line": 154
             },
             {
-                "text": "<tbody\r\n    ref={ref}\r\n    className={cn('[&_tr:last-child]:border-0', className)}\r\n    {...props}\r\n  />",
-                "start_line": 35
-            },
-            {
                 "text": "<tfoot\r\n    ref={ref}\r\n    className={cn(\r\n      'border-t bg-muted/50 font-medium [&>tr]:last:border-b-0',\r\n      className,\r\n    )}\r\n    {...props}\r\n  />",
                 "start_line": 47
+            },
+            {
+                "text": "<tbody\r\n    ref={ref}\r\n    className={cn('[&_tr:last-child]:border-0', className)}\r\n    {...props}\r\n  />",
+                "start_line": 35
             },
             {
                 "text": "<>\r\n      <TableElement>\r\n        <TableHeader>\r\n          <TableRow>\r\n            {columns.map((column, index) => (\r\n              <TableHead key={column.title + index}>{column.title}</TableHead>\r\n            ))}\r\n          </TableRow>\r\n        </TableHeader>\r\n        <TableBody>\r\n          {data.map((entry, entryIndex) => (\r\n            <TableRow key={entry?.id || entryIndex}>\r\n              {columns.map(({ Cell, field, title }, columnIndex) => (\r\n                <TableCell key={title + columnIndex}>\r\n                  {Cell ? <Cell entry={entry} /> : `${entry[field]}`}\r\n                </TableCell>\r\n              ))}\r\n            </TableRow>\r\n          ))}\r\n        </TableBody>\r\n      </TableElement>\r\n\r\n      {pagination && <TablePagination {...pagination} />}\r\n    </>",
@@ -40831,12 +40831,12 @@
                 "start_line": 88
             },
             {
-                "text": "<Input\r\n              type=\"text\"\r\n              label=\"Last Name\"\r\n              error={formState.errors['lastName']}\r\n              registration={register('lastName')}\r\n            />",
-                "start_line": 46
-            },
-            {
                 "text": "<Input\r\n              type=\"text\"\r\n              label=\"First Name\"\r\n              error={formState.errors['firstName']}\r\n              registration={register('firstName')}\r\n            />",
                 "start_line": 40
+            },
+            {
+                "text": "<Input\r\n              type=\"text\"\r\n              label=\"Last Name\"\r\n              error={formState.errors['lastName']}\r\n              registration={register('lastName')}\r\n            />",
+                "start_line": 46
             },
             {
                 "text": "<Form\r\n        onSubmit={(values) => {\r\n          registering.mutate(values);\r\n        }}\r\n        schema={registerInputSchema}\r\n        options={{\r\n          shouldUnregister: true,\r\n        }}\r\n      >\r\n        {({ register, formState }) => (\r\n          <>\r\n            <Input\r\n              type=\"text\"\r\n              label=\"First Name\"\r\n              error={formState.errors['firstName']}\r\n              registration={register('firstName')}\r\n            />\r\n            <Input\r\n              type=\"text\"\r\n              label=\"Last Name\"\r\n              error={formState.errors['lastName']}\r\n              registration={register('lastName')}\r\n            />\r\n            <Input\r\n              type=\"email\"\r\n              label=\"Email Address\"\r\n              error={formState.errors['email']}\r\n              registration={register('email')}\r\n            />\r\n            <Input\r\n              type=\"password\"\r\n              label=\"Password\"\r\n              error={formState.errors['password']}\r\n              registration={register('password')}\r\n            />\r\n\r\n            <div className=\"flex items-center space-x-2\">\r\n              <Switch\r\n                checked={chooseTeam}\r\n                onCheckedChange={setChooseTeam}\r\n                className={`${\r\n                  chooseTeam ? 'bg-blue-600' : 'bg-gray-200'\r\n                } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2`}\r\n                id=\"choose-team\"\r\n              />\r\n              <Label htmlFor=\"airplane-mode\">Join Existing Team</Label>\r\n            </div>\r\n\r\n            {chooseTeam && teams ? (\r\n              <Select\r\n                label=\"Team\"\r\n                error={formState.errors['teamId']}\r\n                registration={register('teamId')}\r\n                options={teams?.map((team) => ({\r\n                  label: team.name,\r\n                  value: team.id,\r\n                }))}\r\n              />\r\n            ) : (\r\n              <Input\r\n                type=\"text\"\r\n                label=\"Team Name\"\r\n                error={formState.errors['teamName']}\r\n                registration={register('teamName')}\r\n              />\r\n            )}\r\n            <div>\r\n              <Button\r\n                isLoading={registering.isPending}\r\n                type=\"submit\"\r\n                className=\"w-full\"\r\n              >\r\n                Register\r\n              </Button>\r\n            </div>\r\n          </>\r\n        )}\r\n      </Form>",
@@ -40907,24 +40907,24 @@
                 "start_line": 11
             },
             {
-                "name": "vi.fn",
-                "caller": null,
-                "start_line": 14
-            },
-            {
                 "name": "userEvent.type",
                 "caller": null,
                 "start_line": 18
             },
             {
-                "name": "createUser",
+                "name": "vi.fn",
                 "caller": null,
-                "start_line": 12
+                "start_line": 14
             },
             {
                 "name": "renderApp",
                 "caller": null,
                 "start_line": 16
+            },
+            {
+                "name": "createUser",
+                "caller": null,
+                "start_line": 12
             },
             {
                 "name": "screen.getByLabelText",
@@ -41016,6 +41016,11 @@
                 "start_line": 27
             },
             {
+                "name": "expect",
+                "caller": null,
+                "start_line": 29
+            },
+            {
                 "name": "expect(onSuccess).toHaveBeenCalledTimes",
                 "caller": null,
                 "start_line": 29
@@ -41024,11 +41029,6 @@
                 "name": "screen.getByLabelText",
                 "caller": null,
                 "start_line": 24
-            },
-            {
-                "name": "expect",
-                "caller": null,
-                "start_line": 29
             },
             {
                 "name": "vi.fn",
@@ -41304,10 +41304,6 @@
                 "start_line": 10
             },
             {
-                "text": "<CommentsList discussionId={discussionId} />",
-                "start_line": 15
-            },
-            {
                 "text": "<h3 className=\"text-xl font-bold\">Comments:</h3>",
                 "start_line": 12
             },
@@ -41318,6 +41314,10 @@
             {
                 "text": "<CreateComment discussionId={discussionId} />",
                 "start_line": 13
+            },
+            {
+                "text": "<CommentsList discussionId={discussionId} />",
+                "start_line": 15
             }
         ]
     },
@@ -41345,16 +41345,16 @@
                 "start_line": 3
             },
             {
-                "statement": "import { Form, FormDrawer, Textarea } from '@/components/ui/form';",
-                "start_line": 4
+                "statement": "import { useNotifications } from '@/components/ui/notifications';",
+                "start_line": 5
             },
             {
                 "statement": "import {\r\n  useCreateComment,\r\n  createCommentInputSchema,\r\n} from '../api/create-comment';",
                 "start_line": 7
             },
             {
-                "statement": "import { useNotifications } from '@/components/ui/notifications';",
-                "start_line": 5
+                "statement": "import { Form, FormDrawer, Textarea } from '@/components/ui/form';",
+                "start_line": 4
             }
         ],
         "exports": [
@@ -41441,12 +41441,12 @@
                 "start_line": 3
             },
             {
-                "statement": "import { useNotifications } from '@/components/ui/notifications';",
-                "start_line": 5
-            },
-            {
                 "statement": "import { useDeleteComment } from '../api/delete-comment';",
                 "start_line": 7
+            },
+            {
+                "statement": "import { useNotifications } from '@/components/ui/notifications';",
+                "start_line": 5
             },
             {
                 "statement": "import { ConfirmationDialog } from '@/components/ui/dialog';",
@@ -42001,11 +42001,6 @@
                 "start_line": 24
             },
             {
-                "name": "updateDiscussionMutation.mutate",
-                "caller": "UpdateDiscussion",
-                "start_line": 58
-            },
-            {
                 "name": "useUpdateDiscussion",
                 "caller": "UpdateDiscussion",
                 "start_line": 21
@@ -42014,6 +42009,11 @@
                 "name": "useDiscussion",
                 "caller": "UpdateDiscussion",
                 "start_line": 20
+            },
+            {
+                "name": "updateDiscussionMutation.mutate",
+                "caller": "UpdateDiscussion",
+                "start_line": 58
             },
             {
                 "name": "register",
@@ -42032,16 +42032,16 @@
                 "start_line": 35
             },
             {
-                "text": "<Pen className=\"size-4\" />",
-                "start_line": 39
+                "text": "<Button\r\n            form=\"update-discussion\"\r\n            type=\"submit\"\r\n            size=\"sm\"\r\n            isLoading={updateDiscussionMutation.isPending}\r\n          >\r\n            Submit\r\n          </Button>",
+                "start_line": 45
             },
             {
                 "text": "<Button icon={<Pen className=\"size-4\" />} size=\"sm\">\r\n            Update Discussion\r\n          </Button>",
                 "start_line": 39
             },
             {
-                "text": "<Button\r\n            form=\"update-discussion\"\r\n            type=\"submit\"\r\n            size=\"sm\"\r\n            isLoading={updateDiscussionMutation.isPending}\r\n          >\r\n            Submit\r\n          </Button>",
-                "start_line": 45
+                "text": "<Pen className=\"size-4\" />",
+                "start_line": 39
             },
             {
                 "text": "<>\r\n              <Input\r\n                label=\"Title\"\r\n                error={formState.errors['title']}\r\n                registration={register('title')}\r\n              />\r\n              <Textarea\r\n                label=\"Body\"\r\n                error={formState.errors['body']}\r\n                registration={register('body')}\r\n              />\r\n            </>",
@@ -42173,12 +42173,12 @@
                 "start_line": 3
             },
             {
-                "statement": "import { Form, FormDrawer, Input, Textarea } from '@/components/ui/form';",
-                "start_line": 4
-            },
-            {
                 "statement": "import { useUser } from '@/lib/auth';",
                 "start_line": 6
+            },
+            {
+                "statement": "import { Form, FormDrawer, Input, Textarea } from '@/components/ui/form';",
+                "start_line": 4
             },
             {
                 "statement": "import { useNotifications } from '@/components/ui/notifications';",
@@ -42345,16 +42345,16 @@
                 "start_line": 14
             },
             {
+                "text": "<Table\r\n      data={users}\r\n      columns={[\r\n        {\r\n          title: 'First Name',\r\n          field: 'firstName',\r\n        },\r\n        {\r\n          title: 'Last Name',\r\n          field: 'lastName',\r\n        },\r\n        {\r\n          title: 'Email',\r\n          field: 'email',\r\n        },\r\n        {\r\n          title: 'Role',\r\n          field: 'role',\r\n        },\r\n        {\r\n          title: 'Created At',\r\n          field: 'createdAt',\r\n          Cell({ entry: { createdAt } }) {\r\n            return <span>{formatDate(createdAt)}</span>;\r\n          },\r\n        },\r\n        {\r\n          title: '',\r\n          field: 'id',\r\n          Cell({ entry: { id } }) {\r\n            return <DeleteUser id={id} />;\r\n          },\r\n        },\r\n      ]}\r\n    />",
+                "start_line": 25
+            },
+            {
                 "text": "<span>{formatDate(createdAt)}</span>",
                 "start_line": 48
             },
             {
                 "text": "<DeleteUser id={id} />",
                 "start_line": 55
-            },
-            {
-                "text": "<Table\r\n      data={users}\r\n      columns={[\r\n        {\r\n          title: 'First Name',\r\n          field: 'firstName',\r\n        },\r\n        {\r\n          title: 'Last Name',\r\n          field: 'lastName',\r\n        },\r\n        {\r\n          title: 'Email',\r\n          field: 'email',\r\n        },\r\n        {\r\n          title: 'Role',\r\n          field: 'role',\r\n        },\r\n        {\r\n          title: 'Created At',\r\n          field: 'createdAt',\r\n          Cell({ entry: { createdAt } }) {\r\n            return <span>{formatDate(createdAt)}</span>;\r\n          },\r\n        },\r\n        {\r\n          title: '',\r\n          field: 'id',\r\n          Cell({ entry: { id } }) {\r\n            return <DeleteUser id={id} />;\r\n          },\r\n        },\r\n      ]}\r\n    />",
-                "start_line": 25
             },
             {
                 "text": "<Spinner size=\"lg\" />",
@@ -42415,11 +42415,6 @@
                 "start_line": 25
             },
             {
-                "name": "z.string",
-                "caller": null,
-                "start_line": 35
-            },
-            {
                 "name": "z.string().min",
                 "caller": null,
                 "start_line": 38
@@ -42445,6 +42440,11 @@
                 "start_line": 49
             },
             {
+                "name": "api.post",
+                "caller": null,
+                "start_line": 59
+            },
+            {
                 "name": "z.null",
                 "caller": null,
                 "start_line": 44
@@ -42453,11 +42453,6 @@
                 "name": "registerWithEmailAndPassword",
                 "caller": null,
                 "start_line": 69
-            },
-            {
-                "name": "api.post",
-                "caller": null,
-                "start_line": 59
             },
             {
                 "name": "z.string().min",
@@ -42530,6 +42525,11 @@
                 "start_line": 84
             },
             {
+                "name": "z.string().min",
+                "caller": null,
+                "start_line": 35
+            },
+            {
                 "name": "z.string",
                 "caller": null,
                 "start_line": 24
@@ -42562,12 +42562,12 @@
             {
                 "name": "z.string",
                 "caller": null,
-                "start_line": 36
+                "start_line": 35
             },
             {
-                "name": "z\r\n      .object({\r\n        teamId: z.string().min(1, 'Required'),\r\n        teamName: z.null().default(null),\r\n      })\r\n      .or",
+                "name": "z.string",
                 "caller": null,
-                "start_line": 41
+                "start_line": 36
             },
             {
                 "name": "z.string",
@@ -42575,9 +42575,9 @@
                 "start_line": 37
             },
             {
-                "name": "z.string().min",
+                "name": "z\r\n      .object({\r\n        teamId: z.string().min(1, 'Required'),\r\n        teamName: z.null().default(null),\r\n      })\r\n      .or",
                 "caller": null,
-                "start_line": 35
+                "start_line": 41
             }
         ],
         "jsx": [
@@ -42916,11 +42916,6 @@
                 "start_line": 21
             },
             {
-                "name": "db.user.create",
-                "caller": null,
-                "start_line": 21
-            },
-            {
                 "name": "db.discussion.create",
                 "caller": null,
                 "start_line": 27
@@ -42929,6 +42924,11 @@
                 "name": "generateDiscussion",
                 "caller": null,
                 "start_line": 26
+            },
+            {
+                "name": "db.user.create",
+                "caller": null,
+                "start_line": 21
             },
             {
                 "name": "authenticate",

@@ -26,33 +26,42 @@ class GraphTool:
         return None
 
     def callers(self, symbol):
-        node = self.get_node(symbol)
 
-        if node is None:
+        nodes = self.get_nodes(symbol)
+
+        if not nodes:
             return []
+
+        node_set = set(nodes)
 
         callers = []
 
         for src, dst, data in self.graph.edges(data=True):
-            if dst == node and data.get("edge_type") == "CALLS":
+            if dst in node_set and data.get("edge_type") == "CALLS":
                 callers.append(src)
 
         return callers
 
     def has_call_edge(self, caller, callee):
 
-        caller_node = self.get_node(caller)
-        callee_node = self.get_node(callee)
+        caller_nodes = self.get_nodes(caller)
+        callee_nodes = self.get_nodes(callee)
 
-        if not caller_node or not callee_node:
+        if not caller_nodes or not callee_nodes:
             return False
 
-        edge = self.graph.get_edge_data(
-            caller_node,
-            callee_node
-        )
+        for caller_node in caller_nodes:
+            for callee_node in callee_nodes:
 
-        return edge is not None and edge.get("edge_type") == "CALLS"
+                edge = self.graph.get_edge_data(
+                    caller_node,
+                    callee_node
+                )
+
+                if edge is not None and edge.get("edge_type") == "CALLS":
+                    return True
+
+        return False
 
     def impact(self, symbol):
 
@@ -62,19 +71,17 @@ class GraphTool:
             return []
 
         impacted = []
-        visited = set()
+        visited = set(nodes)
         queue = list(nodes)
 
         while queue:
 
             current = queue.pop(0)
 
-            if current in visited:
-                continue
-
-            visited.add(current)
-
             for caller in self.graph.predecessors(current):
+
+                if caller in visited:
+                    continue
 
                 edge = self.graph.get_edge_data(
                     caller,
@@ -83,6 +90,7 @@ class GraphTool:
 
                 if edge.get("edge_type") == "CALLS":
 
+                    visited.add(caller)
                     impacted.append(caller)
                     queue.append(caller)
 

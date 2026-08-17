@@ -12,6 +12,7 @@ from agents.documentation import DocumentationGenerator
 from agents.utils.symbol_extractor import extract_symbol
 from agents.utils.greeting import is_greeting
 from agents.verifier.verifier import Verifier
+from agents.impact_explainer import ImpactExplainer
 
 MAX_RETRIES = 2
 
@@ -22,6 +23,7 @@ refactor_agent = RefactorAgent(code_graph)
 impact_agent = ImpactAnalyzer(code_graph)
 debug_agent = DebugAgent()
 architecture_agent = ArchitectureAgent()
+impact_explainer = ImpactExplainer()
 synthesizer = Synthesizer()
 
 def qa_node(state: AgentState):
@@ -96,7 +98,7 @@ def impact_node(state: AgentState):
     result = impact_agent.analyze(symbol)
 
     return {
-        "answer": result["impact"],
+        "answer": impact_explainer.explain(result),
         "metadata": result
     }
 

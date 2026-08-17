@@ -28,21 +28,21 @@ def ground_truth_callers(graph, nodes):
     """
 
     actual = []
-    visited = set()
+    visited = set(nodes)
     queue = list(nodes)
 
     while queue:
         current = queue.pop(0)
 
-        if current in visited:
-            continue
-
-        visited.add(current)
-
         for caller in graph.predecessors(current):
+
+            if caller in visited:
+                continue
+
             edge = graph.get_edge_data(caller, current)
 
             if edge.get("edge_type") == "CALLS":
+                visited.add(caller)
                 actual.append(caller)
                 queue.append(caller)
 
