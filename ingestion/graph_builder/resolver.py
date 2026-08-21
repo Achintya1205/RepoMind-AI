@@ -5,7 +5,7 @@ class ImportResolver:
 
     def __init__(self, repo_root):
 
-        self.repo_root = Path(repo_root)
+        self.repo_root = Path(repo_root).resolve()
 
 
     def _infer_repo_root(self, current_file):
@@ -16,7 +16,6 @@ class ImportResolver:
 
             index = parts.index("sample_repos")
 
-            # sample_repos/<repo-name>
             return Path(*parts[:index + 2])
 
         return self.repo_root
@@ -39,7 +38,7 @@ class ImportResolver:
 
     def resolve_python_import(self, current_file, import_name):
 
-        current_file = Path(current_file)
+        current_file = Path(current_file).resolve()
 
         if import_name.startswith("."):
             return self._resolve_relative_python_import(
@@ -75,14 +74,6 @@ class ImportResolver:
 
 
     def _resolve_relative_python_import(self, current_file, import_name):
-        """
-        Handles `from .module import x` / `from ..module import x` /
-        `from . import x`. Dot count means how many package levels up
-        from the importing file's own directory - NOT a literal path
-        separator, so this can't reuse the naive dot-to-slash logic
-        used for absolute imports (that turns a leading dot into a
-        leading slash, which pathlib then treats as a full path reset).
-        """
 
         stripped = import_name.lstrip(".")
 
@@ -94,7 +85,6 @@ class ImportResolver:
             base_dir = base_dir.parent
 
         if not stripped:
-
             candidate = base_dir / "__init__.py"
 
             if candidate.exists():
@@ -118,14 +108,8 @@ class ImportResolver:
 
     def resolve_javascript_import(self, current_file, import_path):
 
-        current_file = Path(current_file)
+        current_file = Path(current_file).resolve()
 
-
-        # ----------------------------
-        # Relative imports
-        # ./file
-        # ../file
-        # ----------------------------
 
         if import_path.startswith("."):
 
@@ -133,9 +117,6 @@ class ImportResolver:
                 current_file.parent /
                 import_path
             )
-
-
-
 
         elif import_path.startswith("@/"):
 
@@ -158,7 +139,6 @@ class ImportResolver:
 
             candidate_bases.append(repo_root / "src" / relative)
 
-   
             candidate_bases.append(repo_root / relative)
 
             for base_path in candidate_bases:

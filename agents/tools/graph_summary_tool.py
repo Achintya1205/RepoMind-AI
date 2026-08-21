@@ -33,6 +33,28 @@ class GraphSummaryTool:
             if data.get("node_type") == "class"
         )
 
+    def language_breakdown(self):
+        """
+        Counts file nodes by extension so the architecture summary can
+        describe what the repository actually is, instead of assuming
+        it. A repo indexed via the dynamic pipeline could be pure
+        Python, pure JS/TS, or a mix of both.
+        """
+
+        counts = Counter()
+
+        for node, data in self.graph.nodes(data=True):
+
+            if data.get("node_type") != "file":
+                continue
+
+            ext = Path(node).suffix.lower()
+
+            if ext:
+                counts[ext] += 1
+
+        return dict(counts)
+
     def edge_counts(self):
         counter = Counter()
 
@@ -74,6 +96,7 @@ class GraphSummaryTool:
         entries = []
 
         include = [
+            # JavaScript / TypeScript
             "main.ts",
             "main.tsx",
             "index.tsx",
@@ -82,7 +105,15 @@ class GraphSummaryTool:
             "app.ts",
             "app.js",
             "next.config",
-            "vite.config"
+            "vite.config",
+            # Python
+            "main.py",
+            "__main__.py",
+            "cli.py",
+            "manage.py",
+            "app.py",
+            "wsgi.py",
+            "asgi.py",
         ]
 
         ignore = [
@@ -123,5 +154,6 @@ class GraphSummaryTool:
             "classes": self.class_count(),
             "edges": self.edge_counts(),
             "top_modules": self.top_modules(),
-            "entry_points": self.entry_points()
+            "entry_points": self.entry_points(),
+            "languages": self.language_breakdown()
         }

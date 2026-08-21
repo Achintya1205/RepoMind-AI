@@ -1,6 +1,8 @@
 from langgraph.graph import StateGraph, START, END
 from agents.tools.graph_tool import GraphTool
 from agents.impact_analyzer import ImpactAnalyzer
+from agents.impact_reasoner import ImpactReasoner
+from agents.impact_explainer import ImpactExplainer
 from agents.state import AgentState
 from agents.router import route_query
 from agents.qa.qa_agent import QAAgent
@@ -11,20 +13,40 @@ from agents.refactor.refactor_agent import RefactorAgent
 from agents.documentation import DocumentationGenerator
 from agents.utils.symbol_extractor import extract_symbol
 from agents.utils.greeting import is_greeting
+from agents.utils.chunk_lookup import ChunkStore
 from agents.verifier.verifier import Verifier
-from agents.impact_explainer import ImpactExplainer
 
 MAX_RETRIES = 2
 
+RETRY_NODE_BY_CATEGORY = {
+    "qa": "qa",
+    "docs": "docs",
+    "impact_analysis": "impact",
+    "debug": "debug",
+    "refactor": "refactor",
+}
+
+
+def _build_chunk_store():
+    try:
+        return ChunkStore()
+    except (FileNotFoundError, OSError):
+        return None
+
+
 code_graph = GraphTool()
+chunk_store = _build_chunk_store()
+
 qa_agent = QAAgent()
 doc_generator = DocumentationGenerator(code_graph)
-refactor_agent = RefactorAgent(code_graph)
+refactor_agent = RefactorAgent(code_graph, chunk_store=chunk_store)
 impact_agent = ImpactAnalyzer(code_graph)
-debug_agent = DebugAgent()
-architecture_agent = ArchitectureAgent()
+impact_reasoner = ImpactReasoner(chunk_store=chunk_store)
 impact_explainer = ImpactExplainer()
+debug_agent = DebugAgent(graph_tool=code_graph, chunk_store=chunk_store)
+architecture_agent = ArchitectureAgent(chunk_store=chunk_store)
 synthesizer = Synthesizer()
+
 
 def qa_node(state: AgentState):
 
@@ -50,6 +72,7 @@ def qa_node(state: AgentState):
         "metadata": result["sources"]
     }
 
+
 def architecture_node(state: AgentState):
 
     print("Architecture Agent")
@@ -61,6 +84,7 @@ def architecture_node(state: AgentState):
         "metadata": result["summary"]
     }
 
+
 def debug_node(state):
 
     print("Debugger")
@@ -70,13 +94,16 @@ def debug_node(state):
     if "error" in result:
         return {
             "answer": result["error"],
-            "metadata": {}
+            "metadata": []
         }
 
     return {
         "answer": result["explanation"],
-        "metadata": result
+        "metadata": _symbol_metadata(
+            [result["location"]["function"]] + result["callers"]
+        )
     }
+
 
 def impact_node(state: AgentState):
 
@@ -92,15 +119,20 @@ def impact_node(state: AgentState):
                 "that question. Try naming the exact symbol, e.g. "
                 "\"what breaks if I change getUserById?\""
             ),
-            "metadata": {}
+            "metadata": []
         }
 
     result = impact_agent.analyze(symbol)
 
+    answer = impact_reasoner.explain(result)
+
     return {
-        "answer": impact_explainer.explain(result),
-        "metadata": result
+        "answer": answer,
+        "metadata": _symbol_metadata(
+            [result["changed_symbol"]] + result["affected_nodes"]
+        )
     }
+
 
 def graph_node(state: AgentState):
 
@@ -141,6 +173,7 @@ def graph_node(state: AgentState):
         }
     }
 
+
 def refactor_node(state):
 
     print("Refactor Planner")
@@ -155,14 +188,16 @@ def refactor_node(state):
                 "that question. Try naming the exact symbol, e.g. "
                 "\"refactor getUserById\""
             ),
-            "metadata": {}
+            "metadata": []
         }
 
     result = refactor_agent.analyze(symbol)
 
     return {
         "answer": result["plan"],
-        "metadata": result
+        "metadata": _symbol_metadata(
+            [result["symbol"]] + result["affected_files"]
+        )
     }
 
 
@@ -178,6 +213,24 @@ def docs_node(state):
         "answer": result["documentation"],
         "metadata": result["citations"]
     }
+
+
+def _symbol_metadata(names):
+
+    seen = set()
+    out = []
+
+    for name in names:
+
+        short_name = name.split("::")[-1] if "::" in name else name
+
+        if not short_name or short_name in seen:
+            continue
+
+        seen.add(short_name)
+        out.append({"name": short_name})
+
+    return out
 
 
 def verifier_node(state):
@@ -224,8 +277,11 @@ def route_after_grounded_verifier(state):
     if state["retry_count"] > MAX_RETRIES:
         return "synthesizer"
 
-    # loop back to whichever of qa/docs produced this answer, and retry
-    return state["current_agent"]
+    return RETRY_NODE_BY_CATEGORY.get(
+        state["current_agent"],
+        "synthesizer"
+    )
+
 
 def synthesizer_node(state: AgentState):
 
@@ -234,6 +290,7 @@ def synthesizer_node(state: AgentState):
     return {
         "final_answer": synthesizer.format(state)
     }
+
 
 workflow = StateGraph(AgentState)
 workflow.add_node("router", route_query)
@@ -261,18 +318,17 @@ workflow.add_conditional_edges(
         "docs": "docs",
         "architecture": "architecture",
         "graph": "graph"
-    }   
+    }
 )
 workflow.add_node(
     "synthesizer",
     synthesizer_node
 )
-
 workflow.add_edge("qa", "grounded_verifier")
-workflow.add_edge("debug", "verifier")
-workflow.add_edge("impact", "verifier")
+workflow.add_edge("debug", "grounded_verifier")
+workflow.add_edge("impact", "grounded_verifier")
 workflow.add_edge("graph", "verifier")
-workflow.add_edge("refactor", "verifier")
+workflow.add_edge("refactor", "grounded_verifier")
 workflow.add_edge("docs", "grounded_verifier")
 
 workflow.add_edge(
@@ -286,7 +342,10 @@ workflow.add_conditional_edges(
     {
         "synthesizer": "synthesizer",
         "qa": "qa",
-        "docs": "docs"
+        "docs": "docs",
+        "debug": "debug",
+        "impact": "impact",
+        "refactor": "refactor"
     }
 )
 workflow.add_node(
@@ -308,39 +367,24 @@ dependency_graph = code_graph
 
 
 def reload_state():
-    """
-    Reconstructs every agent/tool object so a completed re-index actually
-    takes effect on a running server, instead of requiring a restart.
-
-    Each of these loads its data at construction time - GraphTool reads
-    dependency_graph.pkl, KeywordSearch reads chunks.json, VectorStore
-    opens chroma_db - so recreating them is what "picks up" a freshly
-    built index. The compiled LangGraph `app` does NOT need rebuilding:
-    its node functions look up these names in this module's global scope
-    at call time, not at compile time, so reassigning the globals here is
-    enough for every subsequent app.invoke()/app.stream() to use fresh data.
-    """
-
-    global code_graph, qa_agent, doc_generator, refactor_agent
-    global impact_agent, debug_agent, architecture_agent, dependency_graph
+    global code_graph, chunk_store, qa_agent, doc_generator, refactor_agent
+    global impact_agent, impact_reasoner, debug_agent, architecture_agent
+    global dependency_graph
 
     code_graph = GraphTool()
+    chunk_store = _build_chunk_store()
+
     qa_agent = QAAgent()
     doc_generator = DocumentationGenerator(code_graph)
-    refactor_agent = RefactorAgent(code_graph)
+    refactor_agent = RefactorAgent(code_graph, chunk_store=chunk_store)
     impact_agent = ImpactAnalyzer(code_graph)
-    debug_agent = DebugAgent()
-    architecture_agent = ArchitectureAgent()
+    impact_reasoner = ImpactReasoner(chunk_store=chunk_store)
+    debug_agent = DebugAgent(graph_tool=code_graph, chunk_store=chunk_store)
+    architecture_agent = ArchitectureAgent(chunk_store=chunk_store)
 
     dependency_graph = code_graph
 
 
 def get_dependency_graph():
-    """
-    Accessor for other modules (e.g. api/main.py) to always read the
-    CURRENT graph. A plain `from agents.graph import dependency_graph`
-    elsewhere would copy a reference at import time and go stale the
-    moment reload_state() reassigns it here - this function always
-    returns whatever the module global currently points to.
-    """
+
     return dependency_graph

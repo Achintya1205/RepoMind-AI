@@ -1,6 +1,4 @@
 import re
-
-
 class Verifier:
 
     def __init__(self, metadata, graph_tool):
@@ -45,19 +43,43 @@ class Verifier:
             caller_known = self.graph_tool.get_node(caller) is not None
             callee_known = self.graph_tool.get_node(callee) is not None
 
-            if not (caller_known and callee_known):
+            if caller_known and callee_known:
+
+                if not self.graph_tool.has_call_edge(caller, callee):
+
+                    grounded = False
+
+                    reasons.append(
+                        f"No CALLS edge between {caller} and {callee}"
+                    )
+
                 continue
 
-            if not self.graph_tool.has_call_edge(caller, callee):
+            for name, known in ((caller, caller_known), (callee, callee_known)):
 
-                grounded = False
+                if not known and self._looks_like_identifier(name):
 
-                reasons.append(
-                    f"No CALLS edge between {caller} and {callee}"
-                )
+                    grounded = False
+
+                    reasons.append(
+                        f"Unknown symbol referenced in call claim: {name}"
+                    )
 
 
         return {
             "passed": grounded,
             "reasons": reasons
         }
+
+    def _looks_like_identifier(self, token):
+
+        if "_" in token:
+            return True
+
+        if re.search(r"[a-z][A-Z]", token):
+            return True
+
+        if re.fullmatch(r"[A-Z][a-zA-Z0-9]*", token):
+            return True
+
+        return False

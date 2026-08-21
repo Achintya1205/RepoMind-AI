@@ -12,8 +12,8 @@ const getLayoutedElements = (nodes: Node[], edges: Edge[]) => {
 
     nodes.forEach((node) => {
         dagreGraph.setNode(node.id, {
-            width: 220,
-            height: 60
+            width: 200,
+            height: 44
         });
     });
 
@@ -48,39 +48,39 @@ const readableLabel = (id: string) => {
     return id.replace(/\\/g, "/").split("/").pop() as string;
 };
 
-const nodeStyle = (type: string) => {
-    if (type === "function") {
-        return {
-            background: "#90ee90",
-            padding: 10,
-            borderRadius: 8
-        };
-    }
+const NODE_BASE =
+    "font-mono text-xs font-medium px-3 py-2 rounded-md border cursor-pointer " +
+    "transition-shadow max-w-[220px] overflow-hidden text-ellipsis " +
+    "whitespace-nowrap text-text hover:shadow-sm";
 
-    if (type === "file") {
-        return {
-            background: "#87ceeb",
-            padding: 10,
-            borderRadius: 8
-        };
-    }
-
-    return {
-        background: "#ffa500",
-        padding: 10,
-        borderRadius: 8
-    };
+const NODE_TYPE_CLASSES: Record<string, string> = {
+    function: "bg-amber/15 border-amber/40",
+    file: "bg-slateblue/15 border-slateblue/40",
+    class: "bg-violet/15 border-violet/40",
 };
+
+function nodeClassName(type: string) {
+    return `${NODE_BASE} ${NODE_TYPE_CLASSES[type] || NODE_TYPE_CLASSES.function}`;
+}
+
+const EDGE_STYLE = { stroke: "#3a4054", strokeWidth: 1.4 };
+const EDGE_LABEL_STYLE = { fill: "#9297ac", fontSize: 10, fontFamily: "JetBrains Mono, monospace" };
+const EDGE_LABEL_BG = { fill: "#1b1e27", fillOpacity: 0.9 };
 
 interface Props {
     suggestedSymbol?: string;
+    onNodeSelect?: (node: any) => void;
 }
 
-export default function GraphViewer({ suggestedSymbol }: Props) {
+export default function GraphViewer({ suggestedSymbol, onNodeSelect }: Props) {
     const [nodes, setNodes] = useState<Node[]>([]);
     const [edges, setEdges] = useState<Edge[]>([]);
     const [query, setQuery] = useState("");
     const [selectedNode, setSelectedNode] = useState<any>(null);
+
+    useEffect(() => {
+        onNodeSelect?.(selectedNode);
+    }, [selectedNode]);
 
     const loadGraph = (symbolOverride?: string) => {
         const symbol = symbolOverride ?? query;
@@ -94,14 +94,19 @@ export default function GraphViewer({ suggestedSymbol }: Props) {
                     data: {
                         label: node.data.label
                     },
-                    style: nodeStyle(node.data.type)
+                    className: nodeClassName(node.data.type),
                 }));
 
                 const formattedEdges = data.edges.map((edge: any) => ({
                     id: edge.id,
                     source: edge.source,
                     target: edge.target,
-                    label: edge.type
+                    label: edge.type,
+                    style: EDGE_STYLE,
+                    labelStyle: EDGE_LABEL_STYLE,
+                    labelBgStyle: EDGE_LABEL_BG,
+                    labelBgPadding: [4, 2] as [number, number],
+                    labelBgBorderRadius: 3,
                 }));
 
                 const layout = getLayoutedElements(
@@ -119,6 +124,7 @@ export default function GraphViewer({ suggestedSymbol }: Props) {
             setQuery(suggestedSymbol);
             loadGraph(suggestedSymbol);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [suggestedSymbol]);
 
     const selectNode = (node: any) => {
@@ -149,18 +155,13 @@ export default function GraphViewer({ suggestedSymbol }: Props) {
                 const existingNodeIds = new Set(nodes.map((n) => n.id));
                 const existingEdgeIds = new Set(edges.map((e) => e.id));
 
-                // Impact Analysis walks the FULL transitive caller chain,
-                // while the graph view only ever fetched one hop - so it
-                // routinely finds real functions that were never added
-                // to the canvas. Add them now instead of only dimming
-                // whatever happened to already be there.
                 const newNodeObjs: Node[] = (data.affected_nodes as string[])
                     .filter((id) => !existingNodeIds.has(id))
                     .map((id) => ({
                         id,
                         data: { label: readableLabel(id) },
                         position: { x: 0, y: 0 },
-                        style: nodeStyle("function")
+                        className: nodeClassName("function"),
                     }));
 
                 const newEdgeObjs: Edge[] = (data.affected_edges || [])
@@ -169,7 +170,12 @@ export default function GraphViewer({ suggestedSymbol }: Props) {
                         id: e.id,
                         source: e.source,
                         target: e.target,
-                        label: e.type
+                        label: e.type,
+                        style: EDGE_STYLE,
+                        labelStyle: EDGE_LABEL_STYLE,
+                        labelBgStyle: EDGE_LABEL_BG,
+                        labelBgPadding: [4, 2] as [number, number],
+                        labelBgBorderRadius: 3,
                     }));
 
                 const layout = getLayoutedElements(
@@ -181,8 +187,7 @@ export default function GraphViewer({ suggestedSymbol }: Props) {
                     layout.nodes.map((n) => ({
                         ...n,
                         style: {
-                            ...n.style,
-                            opacity: affected.has(n.id) ? 1 : 0.2
+                            opacity: affected.has(n.id) ? 1 : 0.25
                         }
                     }))
                 );
@@ -191,7 +196,7 @@ export default function GraphViewer({ suggestedSymbol }: Props) {
                     layout.edges.map((e) => ({
                         ...e,
                         style: {
-                            ...e.style,
+                            ...EDGE_STYLE,
                             opacity:
                                 affected.has(e.source) &&
                                 affected.has(e.target)
@@ -209,24 +214,20 @@ export default function GraphViewer({ suggestedSymbol }: Props) {
     };
 
     return (
-        <div style={{ width: "100vw", height: "100vh" }}>
-            <div
-                style={{
-                    position: "absolute",
-                    zIndex: 10,
-                    top: 20,
-                    left: 20,
-                    background: "white",
-                    padding: 10
-                }}
-            >
+        <>
+            <div className="absolute top-4 left-4 z-10 flex gap-2">
                 <input
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && loadGraph()}
+                    placeholder="Jump to symbol…"
+                    className="w-[220px] h-[34px] px-3 bg-surface border border-border rounded-md text-text text-[12.5px] shadow-sm focus:outline-none focus:border-violet-dim focus:ring-3 focus:ring-violet/20"
                 />
-
-                <button onClick={() => loadGraph()}>
-                    Load
+                <button
+                    onClick={() => loadGraph()}
+                    className="inline-flex items-center justify-center h-[34px] px-4 rounded-md border border-border text-text-dim text-[12.5px] font-semibold bg-transparent hover:border-text-faint hover:text-text transition"
+                >
+                    Go
                 </button>
             </div>
 
@@ -236,116 +237,28 @@ export default function GraphViewer({ suggestedSymbol }: Props) {
                 fitView
                 onNodeClick={(_, node) => selectNode(node)}
                 onPaneClick={() => setSelectedNode(null)}
+                proOptions={{ hideAttribution: true }}
             >
-                <Background />
+                <Background color="#232734" gap={22} />
                 <Controls position="bottom-right" />
             </ReactFlow>
 
-            {selectedNode && (
-                <div
-                    style={{
-                        position: "absolute",
-                        right: 20,
-                        top: 20,
-                        width: 350,
-                        maxHeight: "75vh",
-                        overflowY: "auto",
-                        background: "white",
-                        padding: 20,
-                        border: "1px solid black",
-                        zIndex: 10
-                    }}
-                >
-                    <button
-                        onClick={() => setSelectedNode(null)}
-                        style={{
-                            position: "absolute",
-                            top: 10,
-                            right: 10,
-                            border: "none",
-                            background: "none",
-                            fontSize: 18,
-                            cursor: "pointer"
-                        }}
-                        aria-label="Close"
-                    >
-                        ✕
-                    </button>
-
-                    <h3>
-                        {selectedNode.data.label}
-                    </h3>
-
-                    <p>
-                        <b>Path:</b>
-                        <br />
-                        {selectedNode.id.includes("::")
-                            ? selectedNode.id.split("::")[0]
-                            : selectedNode.id}
-                    </p>
-
-                    {selectedNode.relations && (
-                        <>
-                            <div style={{ marginTop: 10 }}>
-                                <b>Callers:</b>
-
-                                {selectedNode.relations.callers.length === 0 ? (
-                                    <p style={{ color: "#888" }}>None found</p>
-                                ) : (
-                                    selectedNode.relations.callers.map(
-                                        (x: string) => (
-                                            <p key={x}>{x}</p>
-                                        )
-                                    )
-                                )}
-                            </div>
-
-                            <div style={{ marginTop: 10 }}>
-                                <b>Callees:</b>
-
-                                {selectedNode.relations.callees.length === 0 ? (
-                                    <p style={{ color: "#888" }}>None found</p>
-                                ) : (
-                                    selectedNode.relations.callees.map(
-                                        (x: string) => (
-                                            <p key={x}>{x}</p>
-                                        )
-                                    )
-                                )}
-                            </div>
-                        </>
-                    )}
-
-                    {selectedNode.impact && (
-                        <>
-                            <hr />
-
-                            <h3>Impact Analysis</h3>
-
-                            <p>
-                                <b>Affected nodes:</b>{" "}
-                                {Math.max(
-                                    (selectedNode.impact.affected_nodes?.length || 1) - 1,
-                                    0
-                                )}
-                            </p>
-
-                            <p>
-                                <b>Risk:</b>{" "}
-                                {selectedNode.impact.risk || "Not available"}
-                            </p>
-
-                            {selectedNode.impact.summary && (
-                                <p>
-                                    <b>Summary:</b>
-                                    <br />
-                                    {selectedNode.impact.summary}
-                                </p>
-                            )}
-                        </>
-                    )}
+            {nodes.length > 0 && (
+                <div className="absolute bottom-4 left-4 z-10 flex gap-3.5 px-3.5 py-2 bg-surface border border-border-soft rounded-md shadow-sm">
+                    <div className="flex items-center gap-1.5 text-[11px] text-text-dim">
+                        <span className="w-2 h-2 rounded-sm bg-amber" />
+                        Function
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[11px] text-text-dim">
+                        <span className="w-2 h-2 rounded-sm bg-slateblue" />
+                        File
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[11px] text-text-dim">
+                        <span className="w-2 h-2 rounded-sm bg-violet" />
+                        Class
+                    </div>
                 </div>
             )}
-        </div>
+        </>
     );
 }
