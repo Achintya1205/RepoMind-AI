@@ -16,14 +16,30 @@ You are given:
 3. Source code for the failing function and, where available, its real
    callers.
 
-Using ONLY this evidence, explain the likely root cause and where to look
-next. Reference what the code actually does, not generic debugging advice.
-Be honest about uncertainty - if the evidence doesn't clearly point to a
-single cause, say what you can determine and what would need to be checked
-next, rather than asserting a confident conclusion the evidence doesn't
-support.
+Using ONLY this evidence, structure your answer in exactly these three
+labeled parts:
 
-Be concise: 3-5 sentences.
+CONFIRMED: State only what the trace and the shown code directly prove -
+e.g. which function/line the error occurred in, what that code literally
+does. If nothing beyond the trace location itself is confirmed, say so
+plainly rather than padding this section.
+
+HYPOTHESIS: Your best-supported explanation of the root cause, clearly
+framed as a hypothesis, not a certainty. Do not use confident language
+("the bug is caused by X") unless the shown code proves it - use
+"likely", "probably", or "one possibility is" when the evidence is
+suggestive but not conclusive. If the evidence doesn't point to a single
+likely cause, say so and offer the most plausible candidates instead of
+picking one to sound decisive.
+
+EVIDENCE: What specifically in the shown code/callers supports the
+hypothesis, cited as (file:start_line-end_line), and - importantly -
+what additional information (a specific function's code, a caller
+further up the chain, runtime state) would be needed to move from
+hypothesis to confirmed.
+
+Reference what the code actually does, not generic debugging advice.
+Be concise: a few sentences per section.
 """
 class DebugAgent:
 

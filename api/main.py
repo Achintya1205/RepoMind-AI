@@ -6,8 +6,8 @@ from agents import graph as agent_graph
 from agents.graph import app
 from agents.impact_explainer import ImpactExplainer
 from ingestion.pipeline import index_repository, IndexingError
-
 import json
+import os
 import re
 import time
 import threading
@@ -17,13 +17,18 @@ api = FastAPI(
     title="RepoMind AI API"
 )
 
+@api.get("/")
+def health_check():
+
+    return {"status": "ok", "service": "RepoMind AI API"}
+
 class ChatRequest(BaseModel):
     query: str
-
 
 GITHUB_REPO_URL_PATTERN = re.compile(
     r"^https://github\.com/[\w.-]+/[\w.-]+(?:\.git)?/?$"
 )
+
 
 class IndexRequest(BaseModel):
     repo_url: str
@@ -39,12 +44,12 @@ class IndexRequest(BaseModel):
 
         return value.strip()
 
+
 _indexing_lock = threading.Lock()
 impact_explainer = ImpactExplainer()
 
 
 def readable_label(node_id):
-    
     node_str = str(node_id)
 
     if "::" in node_str:
@@ -52,14 +57,27 @@ def readable_label(node_id):
 
     return node_str.replace("\\", "/").split("/")[-1]
 
+import os
+
+_configured_origins = [
+    origin.strip()
+    for origin in os.environ.get("FRONTEND_ORIGINS", "").split(",")
+    if origin.strip()
+]
+
+allowed_origins = list({
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    *_configured_origins
+})
+
 api.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 def create_initial_state(query: str):
 
@@ -95,16 +113,16 @@ def get_graph(symbol: str):
 
         if node_name.lower() == symbol.lower():
 
+            node_data = dependency_graph.graph.nodes[node]
+
             nodes[str(node)] = {
                 "id": str(node),
                 "data": {
                     "label": readable_label(node),
-                    "type": "function"
+                    "type": node_data.get("node_type", "function")
                 }
             }
 
-
-            # outgoing
             for neighbor in dependency_graph.graph.successors(node):
 
                 edge_data = dependency_graph.graph.get_edge_data(node, neighbor)
@@ -133,9 +151,6 @@ def get_graph(symbol: str):
 
                     visited_edges.add(edge_id)
 
-
-
-            # incoming
             for caller in dependency_graph.graph.predecessors(node):
 
                 edge_data = dependency_graph.graph.get_edge_data(caller, node)
@@ -164,7 +179,6 @@ def get_graph(symbol: str):
 
                     visited_edges.add(edge_id)
 
-
     from collections import Counter
 
     label_counts = Counter(
@@ -172,15 +186,12 @@ def get_graph(symbol: str):
     )
 
     for node_id, node_data in nodes.items():
-
         label = node_data["data"]["label"]
 
         if label_counts[label] > 1:
-
             node_str = str(node_id)
 
             if "::" in node_str:
-
                 filename = (
                     node_str.split("::")[0]
                     .replace("\\", "/")
@@ -202,16 +213,10 @@ def get_symbol(symbol_id: str):
         "callees": []
     }
 
-
     graph = agent_graph.get_dependency_graph().graph
 
-
     if symbol_id not in graph:
-
         return result
-
-
-    # CALLERS
 
     for caller in graph.predecessors(symbol_id):
 
@@ -224,10 +229,6 @@ def get_symbol(symbol_id: str):
 
             result["callers"].append(readable_label(caller))
 
-
-
-    # CALLEES
-
     for callee in graph.successors(symbol_id):
 
         edge = graph.get_edge_data(
@@ -238,8 +239,6 @@ def get_symbol(symbol_id: str):
         if edge.get("edge_type") == "CALLS":
 
             result["callees"].append(readable_label(callee))
-
-
 
     return result
 
@@ -257,8 +256,6 @@ def get_impact(symbol_id: str):
         }
 
     affected = set()
-
-    # All callers recursively affected by changing this symbol
     stack = [symbol_id]
 
     while stack:
@@ -309,7 +306,6 @@ def get_impact(symbol_id: str):
         "risk": risk
     }
 
-
 @api.post("/chat")
 def chat(request: ChatRequest):
 
@@ -325,9 +321,6 @@ def chat(request: ChatRequest):
         "agent": result.get("current_agent", ""),
         "citations": result.get("metadata", [])
     }
-
-
-
 
 @api.post("/chat/stream")
 def chat_stream(request: ChatRequest):
@@ -348,9 +341,7 @@ def chat_stream(request: ChatRequest):
 
                 yield f"data: {json.dumps({'type':'agent','message':f'{node} completed'})}\n\n"
 
-
                 time.sleep(0.2)
-
 
                 if state.get("answer"):
 
@@ -365,8 +356,6 @@ def chat_stream(request: ChatRequest):
 
         yield f"data: {json.dumps({'type':'done'})}\n\n"
 
-
-
     return StreamingResponse(
         event_generator(),
         media_type="text/event-stream"
@@ -375,18 +364,6 @@ def chat_stream(request: ChatRequest):
 
 @api.post("/index/stream")
 def index_stream(request: IndexRequest):
-    """
-    Real dynamic repo indexing: clone -> parse -> chunk -> embed -> graph,
-    streamed as it happens. index_repository() is synchronous/blocking
-    (git clone, parsing, embedding all take real time), so it runs in a
-    background thread and progress is relayed through a queue - this is
-    the standard pattern for streaming progress out of blocking work in
-    a sync FastAPI endpoint.
-
-    On success, reload_state() is called so the already-running server
-    actually starts using the newly built index/graph immediately,
-    instead of requiring a restart.
-    """
 
     progress_queue = queue_module.Queue()
 
@@ -457,4 +434,4 @@ def index_stream(request: IndexRequest):
     return StreamingResponse(
         event_generator(),
         media_type="text/event-stream"
-    ) 
+    )

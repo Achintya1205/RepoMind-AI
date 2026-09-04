@@ -11,6 +11,8 @@ def extract_symbol(query, graph_tool):
     default symbol.
     """
 
+    import re
+
     query_lower = query.lower()
 
     names = set()
@@ -25,8 +27,8 @@ def extract_symbol(query, graph_tool):
     candidates = sorted(names, key=len, reverse=True)
 
     for name in candidates:
-
-        if name.lower() in query_lower:
+        
+        if re.search(r'\b' + re.escape(name.lower()) + r'\b', query_lower):
             return name
 
     return None

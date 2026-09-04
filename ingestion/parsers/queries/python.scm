@@ -23,3 +23,7 @@
   call
     function: (identifier) @call.name
 )
+(
+  call
+    function: (attribute) @call.name
+)

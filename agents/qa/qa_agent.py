@@ -31,9 +31,16 @@ If partial information exists, explain what can be determined from the sources
 and clearly mention what is missing.
 
 5. Be concise. Prefer direct, specific answers over general summaries.
+
+6. If the question asks you to diagnose a cause, identify why something might
+go wrong, or determine what's "likely" responsible for some behavior (a
+root-cause / diagnostic-style question, even without a formal error or stack
+trace) - distinguish what the sources actually PROVE from what you're
+inferring. Don't state a specific root cause with confident language unless
+the sources directly demonstrate it; use "likely", "one possibility is", or
+similar when the evidence is suggestive but not conclusive, and say plainly
+if the sources don't show enough to identify a cause at all.
 """
-
-
 class QAAgent:
 
     def __init__(self, retriever=None, llm_client=None):

@@ -5,21 +5,15 @@ import pickle
 from pathlib import Path
 
 import networkx as nx
-
-
 class DependencyGraphBuilder:
 
     def __init__(self, repo_root):
 
         self.graph = nx.DiGraph()
-
         self.resolver = ImportResolver(repo_root)
-
         self.function_nodes = {}
-
-        # name -> list of node_ids, across ALL files, so calls to functions
-        # defined elsewhere can be resolved (not just same-file calls)
         self.functions_by_name = {}
+        self.external_names_by_file = {}
 
     def load_ast(self, json_file):
 
@@ -77,19 +71,23 @@ class DependencyGraphBuilder:
 
         current_file = file_data["file"]
 
+        external_names = self.external_names_by_file.get(current_file, set())
+
         for call in file_data.get("calls", []):
 
             caller_name = call.get("caller")
-
             raw_callee = call.get("name")
 
             if caller_name is None or raw_callee is None:
                 continue
+            if "." in raw_callee:
 
-            # obj.method() -> method: local functions are never dotted,
-            # so the last segment is the only part that can match one.
+                receiver = raw_callee.split(".")[0]
+
+                if receiver != "self" and receiver in external_names:
+                    continue
+
             callee_name = raw_callee.split(".")[-1]
-
             caller_id = self.function_nodes.get(
                 (current_file, caller_name)
             )
@@ -112,7 +110,6 @@ class DependencyGraphBuilder:
 
     def _resolve_callee(self, current_file, callee_name):
 
-        # 1) same file
         same_file = self.function_nodes.get(
             (current_file, callee_name)
         )
@@ -120,7 +117,6 @@ class DependencyGraphBuilder:
         if same_file:
             return same_file
 
-        # 2) a file this one imports (using IMPORTS edges already built)
         imported_files = [
             v for u, v, d in self.graph.out_edges(current_file, data=True)
             if d.get("edge_type") == "IMPORTS"
@@ -135,8 +131,6 @@ class DependencyGraphBuilder:
             if candidate:
                 return candidate
 
-        # 3) fall back to a global name match, but only if it's unambiguous
-        # (a shared name across many files is a false-positive risk)
         candidates = self.functions_by_name.get(callee_name)
 
         if candidates and len(candidates) == 1:
@@ -158,8 +152,6 @@ class DependencyGraphBuilder:
 
             imported_file = None
 
-
-            # JavaScript / TypeScript imports
             if statement.startswith("import"):
 
                 if " from " in statement:
@@ -227,6 +219,10 @@ class DependencyGraphBuilder:
 
             self.add_import_edges(file_data)
 
+            self.external_names_by_file[file_path] = self._extract_external_names(
+                file_data
+            )
+
             for function in file_data.get("functions", []):
                 self.add_function_node(file_path, function)
 
@@ -245,3 +241,107 @@ class DependencyGraphBuilder:
             pickle.dump(self.graph, f)
 
         return self.graph
+
+    def _extract_external_names(self, file_data):
+
+        names = set()
+
+        for import_data in file_data.get("imports", []):
+
+            statement = import_data.get("statement")
+
+            if statement:
+                names.update(self._names_bound_by_import(statement))
+
+        return names
+
+    def _names_bound_by_import(self, statement):
+
+        statement = statement.strip().rstrip(";").rstrip(",")
+        names = set()
+
+        if statement.startswith("from") and " import " in statement:
+
+            imported_part = statement.split(" import ", 1)[1]
+
+            for piece in imported_part.split(","):
+                piece = piece.strip()
+
+                if not piece or piece == "*":
+                    continue
+
+                bound = (
+                    piece.split(" as ")[-1].strip()
+                    if " as " in piece
+                    else piece
+                )
+
+                if bound:
+                    names.add(bound)
+
+            return names
+
+        if statement.startswith("import") and "{" not in statement and " from " not in statement:
+
+            imported_part = statement[len("import"):].strip()
+            for piece in imported_part.split(","):
+
+                piece = piece.strip()
+
+                if not piece:
+                    continue
+
+                bound = (
+                    piece.split(" as ")[-1].strip()
+                    if " as " in piece
+                    else piece.split(".")[0].strip()
+                )
+                if bound:
+                    names.add(bound)
+
+            return names
+
+        if statement.startswith("import") and " from " in statement:
+
+            head = statement.split(" from ")[0][len("import"):].strip()
+            if head.startswith("*"):
+
+                alias = head.split(" as ")[-1].strip()
+
+                if alias:
+                    names.add(alias)
+
+                return names
+
+            default_part = head
+            named_part = None
+
+            if "{" in head:
+                default_part, rest = head.split("{", 1)
+                named_part = rest.split("}")[0]
+
+            default_part = default_part.strip().rstrip(",").strip()
+
+            if default_part:
+                names.add(default_part)
+
+            if named_part:
+
+                for piece in named_part.split(","):
+                    piece = piece.strip()
+
+                    if not piece:
+                        continue
+
+                    bound = (
+                        piece.split(" as ")[-1].strip()
+                        if " as " in piece
+                        else piece
+                    )
+
+                    if bound:
+                        names.add(bound)
+
+            return names
+
+        return names

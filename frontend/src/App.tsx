@@ -2,6 +2,7 @@ import { useState } from "react";
 import GraphViewer from "./components/GraphViewer";
 import ChatBox from "./components/ChatBox";
 import Logo from "./components/Logo";
+import { API_BASE_URL } from "./api/config";
 
 const STAGE_PROGRESS: Record<string, number> = {
     "Cloning repository...": 15,
@@ -22,6 +23,7 @@ function App() {
     const [error, setError] = useState("");
     const [isIndexing, setIsIndexing] = useState(false);
     const [suggestedSymbol, setSuggestedSymbol] = useState<string | undefined>();
+    const [graphStats, setGraphStats] = useState<{ nodes: number; edges: number } | null>(null);
 
     const [activeTab, setActiveTab] = useState<Tab>("chat");
     const [selectedNode, setSelectedNode] = useState<any>(null);
@@ -37,7 +39,7 @@ function App() {
         setProgress(5);
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/index/stream", {
+            const response = await fetch(`${API_BASE_URL}/index/stream`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ repo_url: repoUrl }),
@@ -73,6 +75,10 @@ function App() {
                         setProgress(100);
                         setIsIndexing(false);
                         setSuggestedSymbol(data.stats.sample_symbol);
+                        setGraphStats({
+                            nodes: data.stats.graph_nodes,
+                            edges: data.stats.graph_edges,
+                        });
                     }
 
                     if (data.type === "error") {
@@ -158,6 +164,7 @@ function App() {
                     <GraphViewer
                         suggestedSymbol={suggestedSymbol}
                         onNodeSelect={handleNodeSelect}
+                        totalGraphStats={graphStats}
                     />
                 </div>
 
@@ -189,10 +196,12 @@ function App() {
                     </div>
 
                     <div className="flex-1 min-h-0 flex flex-col">
-                        {activeTab === "chat" && <ChatBox />}
-                        {activeTab === "inspector" && (
+                        <div className={`flex-1 min-h-0 flex flex-col ${activeTab === "chat" ? "" : "hidden"}`}>
+                            <ChatBox />
+                        </div>
+                        <div className={`flex-1 min-h-0 ${activeTab === "inspector" ? "" : "hidden"}`}>
                             <Inspector node={selectedNode} />
-                        )}
+                        </div>
                     </div>
                 </aside>
             </div>

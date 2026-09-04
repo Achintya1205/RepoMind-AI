@@ -1,4 +1,5 @@
 import re
+
 class Verifier:
 
     def __init__(self, metadata, graph_tool):
@@ -16,7 +17,6 @@ class Verifier:
             for item in self.metadata
             if item.get("name")
         }
-
         identifier_pattern = re.compile(
             r"\b(?:validate|authenticate)(?:[A-Z]\w*|_\w+)\b"
         )
@@ -40,8 +40,8 @@ class Verifier:
             caller = match.group(1).rstrip(".").rstrip("()")
             callee = match.group(2).rstrip(".").rstrip("()")
 
-            caller_known = self.graph_tool.get_node(caller) is not None
-            callee_known = self.graph_tool.get_node(callee) is not None
+            caller_known = bool(self.graph_tool.get_nodes(caller))
+            callee_known = bool(self.graph_tool.get_nodes(callee))
 
             if caller_known and callee_known:
 

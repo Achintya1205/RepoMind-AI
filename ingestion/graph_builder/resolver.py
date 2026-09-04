@@ -1,23 +1,32 @@
 from pathlib import Path
-
-
 class ImportResolver:
 
     def __init__(self, repo_root):
 
         self.repo_root = Path(repo_root).resolve()
 
+    def _match_original_format(self, result_path, original_arg):
+
+        if result_path is None:
+            return None
+
+        if Path(original_arg).is_absolute():
+            return result_path
+
+        try:
+            return str(Path(result_path).resolve().relative_to(Path.cwd()))
+        except ValueError:
+            return result_path
+
 
     def _infer_repo_root(self, current_file):
 
         parts = current_file.parts
-
         if "sample_repos" in parts:
 
             index = parts.index("sample_repos")
-
             return Path(*parts[:index + 2])
-
+        
         return self.repo_root
 
     def extract_import_path(self, statement):
@@ -38,6 +47,11 @@ class ImportResolver:
 
     def resolve_python_import(self, current_file, import_name):
 
+        result = self._resolve_python_import_absolute(current_file, import_name)
+        return self._match_original_format(result, current_file)
+
+    def _resolve_python_import_absolute(self, current_file, import_name):
+
         current_file = Path(current_file).resolve()
 
         if import_name.startswith("."):
@@ -48,7 +62,6 @@ class ImportResolver:
         module_path = import_name.replace(".", "/")
 
         repo_boundary = self._infer_repo_root(current_file)
-
         candidate_root = current_file.parent
 
         candidates = [candidate_root]
@@ -76,9 +89,7 @@ class ImportResolver:
     def _resolve_relative_python_import(self, current_file, import_name):
 
         stripped = import_name.lstrip(".")
-
         dot_count = len(import_name) - len(stripped)
-
         base_dir = current_file.parent
 
         for _ in range(dot_count - 1):
@@ -104,12 +115,14 @@ class ImportResolver:
 
         return None
 
-
-
     def resolve_javascript_import(self, current_file, import_path):
 
-        current_file = Path(current_file).resolve()
+        result = self._resolve_javascript_import_absolute(current_file, import_path)
+        return self._match_original_format(result, current_file)
 
+    def _resolve_javascript_import_absolute(self, current_file, import_path):
+
+        current_file = Path(current_file).resolve()
 
         if import_path.startswith("."):
 
@@ -119,13 +132,9 @@ class ImportResolver:
             )
 
         elif import_path.startswith("@/"):
-
             relative = import_path.replace("@/", "")
-
             parts = current_file.parts
-
             repo_root = self._infer_repo_root(current_file)
-
             candidate_bases = []
 
             if "apps" in parts:
@@ -138,11 +147,9 @@ class ImportResolver:
                 )
 
             candidate_bases.append(repo_root / "src" / relative)
-
             candidate_bases.append(repo_root / relative)
 
             for base_path in candidate_bases:
-
                 resolved = self._resolve_with_extensions(base_path)
 
                 if resolved:
@@ -150,12 +157,9 @@ class ImportResolver:
 
             return None
 
-
         else:
-
             return None
-
-
+        
         return self._resolve_with_extensions(base_path)
 
     def _resolve_with_extensions(self, base_path):
@@ -168,9 +172,6 @@ class ImportResolver:
             ".tsx"
         ]
 
-
-        # direct file match
-
         for ext in extensions:
 
             candidate = Path(
@@ -178,12 +179,7 @@ class ImportResolver:
             )
 
             if candidate.exists():
-
                 return str(candidate)
-
-
-
-        # index file match
 
         for ext in extensions[1:]:
 
@@ -193,8 +189,6 @@ class ImportResolver:
             )
 
             if candidate.exists():
-
                 return str(candidate)
-
 
         return None

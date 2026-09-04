@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import dagre from "dagre";
 import ReactFlow, { Background, Controls } from "reactflow";
 import type { Node, Edge } from "reactflow";
 import "reactflow/dist/style.css";
+import { API_BASE_URL } from "../api/config";
 
 const getLayoutedElements = (nodes: Node[], edges: Edge[]) => {
     const dagreGraph = new dagre.graphlib.Graph();
@@ -70,13 +71,18 @@ const EDGE_LABEL_BG = { fill: "#1b1e27", fillOpacity: 0.9 };
 interface Props {
     suggestedSymbol?: string;
     onNodeSelect?: (node: any) => void;
+    totalGraphStats?: { nodes: number; edges: number } | null;
 }
 
-export default function GraphViewer({ suggestedSymbol, onNodeSelect }: Props) {
+export default function GraphViewer({ suggestedSymbol, onNodeSelect, totalGraphStats }: Props) {
     const [nodes, setNodes] = useState<Node[]>([]);
     const [edges, setEdges] = useState<Edge[]>([]);
     const [query, setQuery] = useState("");
     const [selectedNode, setSelectedNode] = useState<any>(null);
+    const [viewedSymbol, setViewedSymbol] = useState<string | undefined>();
+    const [highlightedSymbol, setHighlightedSymbol] = useState<string | undefined>();
+
+    const latestClickedNodeId = useRef<string | null>(null);
 
     useEffect(() => {
         onNodeSelect?.(selectedNode);
@@ -86,7 +92,7 @@ export default function GraphViewer({ suggestedSymbol, onNodeSelect }: Props) {
         const symbol = symbolOverride ?? query;
         if (!symbol) return;
 
-        fetch(`http://127.0.0.1:8000/graph/${symbol}`)
+        fetch(`${API_BASE_URL}/graph/${symbol}`)
             .then((res) => res.json())
             .then((data) => {
                 const formattedNodes = data.nodes.map((node: any) => ({
@@ -116,6 +122,9 @@ export default function GraphViewer({ suggestedSymbol, onNodeSelect }: Props) {
 
                 setNodes(layout.nodes);
                 setEdges(layout.edges);
+                setViewedSymbol(symbol);
+                setHighlightedSymbol(undefined);
+                setSelectedNode(null);
             });
     };
 
@@ -127,90 +136,144 @@ export default function GraphViewer({ suggestedSymbol, onNodeSelect }: Props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [suggestedSymbol]);
 
+    const clearHighlighting = () => {
+        latestClickedNodeId.current = null;
+
+        setSelectedNode(null);
+        setHighlightedSymbol(undefined);
+
+        setNodes((current) =>
+            current.map((n) => ({ ...n, style: { opacity: 1 } }))
+        );
+
+        setEdges((current) =>
+            current.map((e) => ({ ...e, style: { ...EDGE_STYLE, opacity: 1 } }))
+        );
+    };
+
     const selectNode = (node: any) => {
+        latestClickedNodeId.current = node.id;
+
         setSelectedNode({
             ...node,
             relations: null,
             impact: null
         });
+        setHighlightedSymbol(node.data?.label ?? node.id);
 
         fetch(
-            `http://127.0.0.1:8000/symbol/${encodeURIComponent(node.id)}`
+            `${API_BASE_URL}/symbol/${encodeURIComponent(node.id)}`
         )
             .then((res) => res.json())
             .then((data) => {
+                if (latestClickedNodeId.current !== node.id) return; 
+
                 setSelectedNode((current: any) => ({
                     ...current,
                     relations: data
                 }));
             });
+        const shortName = node.data?.label ?? readableLabel(node.id);
 
-        fetch(
-            `http://127.0.0.1:8000/impact/${encodeURIComponent(node.id)}`
-        )
-            .then((res) => res.json())
-            .then((data) => {
-                const affected = new Set(data.affected_nodes as string[]);
+        Promise.all([
+            fetch(`${API_BASE_URL}/impact/${encodeURIComponent(node.id)}`).then((r) => r.json()),
+            fetch(`${API_BASE_URL}/graph/${encodeURIComponent(shortName)}`).then((r) => r.json()),
+        ]).then(([impactData, graphData]) => {
+            if (latestClickedNodeId.current !== node.id) return;
 
-                const existingNodeIds = new Set(nodes.map((n) => n.id));
-                const existingEdgeIds = new Set(edges.map((e) => e.id));
+            const affected = new Set(impactData.affected_nodes as string[]);
 
-                const newNodeObjs: Node[] = (data.affected_nodes as string[])
-                    .filter((id) => !existingNodeIds.has(id))
-                    .map((id) => ({
-                        id,
-                        data: { label: readableLabel(id) },
-                        position: { x: 0, y: 0 },
-                        className: nodeClassName("function"),
-                    }));
+            const existingNodeIds = new Set(nodes.map((n) => n.id));
+            const existingEdgeIds = new Set(edges.map((e) => e.id));
 
-                const newEdgeObjs: Edge[] = (data.affected_edges || [])
-                    .filter((e: any) => !existingEdgeIds.has(e.id))
-                    .map((e: any) => ({
-                        id: e.id,
-                        source: e.source,
-                        target: e.target,
-                        label: e.type,
-                        style: EDGE_STYLE,
-                        labelStyle: EDGE_LABEL_STYLE,
-                        labelBgStyle: EDGE_LABEL_BG,
-                        labelBgPadding: [4, 2] as [number, number],
-                        labelBgBorderRadius: 3,
-                    }));
-
-                const layout = getLayoutedElements(
-                    [...nodes, ...newNodeObjs],
-                    [...edges, ...newEdgeObjs]
-                );
-
-                setNodes(
-                    layout.nodes.map((n) => ({
-                        ...n,
-                        style: {
-                            opacity: affected.has(n.id) ? 1 : 0.25
-                        }
-                    }))
-                );
-
-                setEdges(
-                    layout.edges.map((e) => ({
-                        ...e,
-                        style: {
-                            ...EDGE_STYLE,
-                            opacity:
-                                affected.has(e.source) &&
-                                affected.has(e.target)
-                                    ? 1
-                                    : 0.15
-                        }
-                    }))
-                );
-
-                setSelectedNode((current: any) => ({
-                    ...current,
-                    impact: data
+            const impactNodeObjs: Node[] = (impactData.affected_nodes as string[])
+                .filter((id) => !existingNodeIds.has(id))
+                .map((id) => ({
+                    id,
+                    data: { label: readableLabel(id) },
+                    position: { x: 0, y: 0 },
+                    className: nodeClassName("function"),
                 }));
-            });
+
+            const impactEdgeObjs: Edge[] = (impactData.affected_edges || [])
+                .filter((e: any) => !existingEdgeIds.has(e.id))
+                .map((e: any) => ({
+                    id: e.id,
+                    source: e.source,
+                    target: e.target,
+                    label: e.type,
+                    style: EDGE_STYLE,
+                    labelStyle: EDGE_LABEL_STYLE,
+                    labelBgStyle: EDGE_LABEL_BG,
+                    labelBgPadding: [4, 2] as [number, number],
+                    labelBgBorderRadius: 3,
+                }));
+
+            const mergedNodeIds = new Set([
+                ...existingNodeIds,
+                ...impactNodeObjs.map((n) => n.id),
+            ]);
+            const mergedEdgeIds = new Set([
+                ...existingEdgeIds,
+                ...impactEdgeObjs.map((e) => e.id),
+            ]);
+
+            const calleeNodeObjs: Node[] = (graphData.nodes || [])
+                .filter((n: any) => !mergedNodeIds.has(n.id))
+                .map((n: any) => ({
+                    id: n.id,
+                    data: { label: n.data.label },
+                    position: { x: 0, y: 0 },
+                    className: nodeClassName(n.data.type),
+                }));
+
+            const calleeEdgeObjs: Edge[] = (graphData.edges || [])
+                .filter((e: any) => !mergedEdgeIds.has(e.id))
+                .map((e: any) => ({
+                    id: e.id,
+                    source: e.source,
+                    target: e.target,
+                    label: e.type,
+                    style: EDGE_STYLE,
+                    labelStyle: EDGE_LABEL_STYLE,
+                    labelBgStyle: EDGE_LABEL_BG,
+                    labelBgPadding: [4, 2] as [number, number],
+                    labelBgBorderRadius: 3,
+                }));
+
+            const layout = getLayoutedElements(
+                [...nodes, ...impactNodeObjs, ...calleeNodeObjs],
+                [...edges, ...impactEdgeObjs, ...calleeEdgeObjs]
+            );
+
+            setNodes(
+                layout.nodes.map((n) => ({
+                    ...n,
+                    style: {
+                        opacity: affected.has(n.id) ? 1 : 0.25
+                    }
+                }))
+            );
+
+            setEdges(
+                layout.edges.map((e) => ({
+                    ...e,
+                    style: {
+                        ...EDGE_STYLE,
+                        opacity:
+                            affected.has(e.source) &&
+                            affected.has(e.target)
+                                ? 1
+                                : 0.15
+                    }
+                }))
+            );
+
+            setSelectedNode((current: any) => ({
+                ...current,
+                impact: impactData
+            }));
+        });
     };
 
     return (
@@ -229,14 +292,60 @@ export default function GraphViewer({ suggestedSymbol, onNodeSelect }: Props) {
                 >
                     Go
                 </button>
+                {viewedSymbol && (
+                    <button
+                        onClick={() => loadGraph(viewedSymbol)}
+                        title="Reload just the base neighborhood, discarding everything added by clicking around"
+                        className="inline-flex items-center justify-center h-[34px] px-4 rounded-md border border-border text-text-dim text-[12.5px] font-semibold bg-transparent hover:border-text-faint hover:text-text transition"
+                    >
+                        Reset view
+                    </button>
+                )}
             </div>
+
+            {viewedSymbol && (
+                <div className="absolute top-[58px] left-4 z-10 flex flex-col gap-1.5">
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-surface/90 border border-border-soft rounded-md text-[11.5px] text-text-dim">
+                        <span>
+                            Showing neighborhood of{" "}
+                            <span className="font-mono text-amber">{viewedSymbol}</span>
+                            {" "}({nodes.length} nodes shown)
+                        </span>
+                        {totalGraphStats && (
+                            <span className="text-text-faint border-l border-border pl-2 ml-1">
+                                repo total: {totalGraphStats.nodes} nodes · {totalGraphStats.edges} edges
+                            </span>
+                        )}
+                    </div>
+
+                    {highlightedSymbol ? (
+                        <div className="flex items-center gap-2 px-3 py-1.5 bg-violet/15 border border-violet/30 rounded-md text-[11.5px] text-violet">
+                            <span>
+                                Highlighting blast radius of{" "}
+                                <span className="font-mono">{highlightedSymbol}</span>
+                                {" "}— dimmed nodes aren't reached by it
+                            </span>
+                            <button
+                                onClick={clearHighlighting}
+                                className="text-[10.5px] font-semibold underline decoration-dotted hover:text-text"
+                            >
+                                clear
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="px-3 py-1 text-[11px] text-text-faint">
+                            Click any node to trace what calls it — the canvas grows as you explore.
+                        </div>
+                    )}
+                </div>
+            )}
 
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
                 fitView
                 onNodeClick={(_, node) => selectNode(node)}
-                onPaneClick={() => setSelectedNode(null)}
+                onPaneClick={() => clearHighlighting()}
                 proOptions={{ hideAttribution: true }}
             >
                 <Background color="#232734" gap={22} />

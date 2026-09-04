@@ -17,7 +17,6 @@ from agents.utils.chunk_lookup import ChunkStore
 from agents.verifier.verifier import Verifier
 
 MAX_RETRIES = 2
-
 RETRY_NODE_BY_CATEGORY = {
     "qa": "qa",
     "docs": "docs",
@@ -28,6 +27,7 @@ RETRY_NODE_BY_CATEGORY = {
 
 
 def _build_chunk_store():
+
     try:
         return ChunkStore()
     except (FileNotFoundError, OSError):
@@ -41,7 +41,7 @@ qa_agent = QAAgent()
 doc_generator = DocumentationGenerator(code_graph)
 refactor_agent = RefactorAgent(code_graph, chunk_store=chunk_store)
 impact_agent = ImpactAnalyzer(code_graph)
-impact_reasoner = ImpactReasoner(chunk_store=chunk_store)
+impact_reasoner = ImpactReasoner(chunk_store=chunk_store, graph_tool=code_graph)
 impact_explainer = ImpactExplainer()
 debug_agent = DebugAgent(graph_tool=code_graph, chunk_store=chunk_store)
 architecture_agent = ArchitectureAgent(chunk_store=chunk_store)
@@ -77,7 +77,7 @@ def architecture_node(state: AgentState):
 
     print("Architecture Agent")
 
-    result = architecture_agent.analyze()
+    result = architecture_agent.analyze(state["query"])
 
     return {
         "answer": result["explanation"],
@@ -124,7 +124,7 @@ def impact_node(state: AgentState):
 
     result = impact_agent.analyze(symbol)
 
-    answer = impact_reasoner.explain(result)
+    answer = impact_reasoner.explain(result, query=state["query"])
 
     return {
         "answer": answer,
@@ -191,7 +191,7 @@ def refactor_node(state):
             "metadata": []
         }
 
-    result = refactor_agent.analyze(symbol)
+    result = refactor_agent.analyze(symbol, query=state["query"])
 
     return {
         "answer": result["plan"],
@@ -330,12 +330,10 @@ workflow.add_edge("impact", "grounded_verifier")
 workflow.add_edge("graph", "verifier")
 workflow.add_edge("refactor", "grounded_verifier")
 workflow.add_edge("docs", "grounded_verifier")
-
 workflow.add_edge(
     "verifier",
     "synthesizer"
 )
-
 workflow.add_conditional_edges(
     "grounded_verifier",
     route_after_grounded_verifier,
@@ -367,6 +365,7 @@ dependency_graph = code_graph
 
 
 def reload_state():
+
     global code_graph, chunk_store, qa_agent, doc_generator, refactor_agent
     global impact_agent, impact_reasoner, debug_agent, architecture_agent
     global dependency_graph
@@ -378,7 +377,7 @@ def reload_state():
     doc_generator = DocumentationGenerator(code_graph)
     refactor_agent = RefactorAgent(code_graph, chunk_store=chunk_store)
     impact_agent = ImpactAnalyzer(code_graph)
-    impact_reasoner = ImpactReasoner(chunk_store=chunk_store)
+    impact_reasoner = ImpactReasoner(chunk_store=chunk_store, graph_tool=code_graph)
     debug_agent = DebugAgent(graph_tool=code_graph, chunk_store=chunk_store)
     architecture_agent = ArchitectureAgent(chunk_store=chunk_store)
 

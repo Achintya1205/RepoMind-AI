@@ -26,7 +26,6 @@ class GraphTool:
         return None
 
     def callers(self, symbol):
-
         nodes = self.get_nodes(symbol)
 
         if not nodes:
@@ -95,6 +94,39 @@ class GraphTool:
                     queue.append(caller)
 
         return impacted
+
+    def impact_with_depth(self, symbol):
+
+        nodes = self.get_nodes(symbol)
+
+        if not nodes:
+            return []
+
+        tagged = []
+        visited = set(nodes)
+        queue = [(node, 0) for node in nodes]
+
+        while queue:
+
+            current, depth = queue.pop(0)
+
+            for caller in self.graph.predecessors(current):
+
+                if caller in visited:
+                    continue
+
+                edge = self.graph.get_edge_data(
+                    caller,
+                    current
+                )
+
+                if edge.get("edge_type") == "CALLS":
+
+                    visited.add(caller)
+                    tagged.append((caller, depth + 1))
+                    queue.append((caller, depth + 1))
+
+        return tagged
 
     def callees(self, symbol):
         nodes = self.get_nodes(symbol)

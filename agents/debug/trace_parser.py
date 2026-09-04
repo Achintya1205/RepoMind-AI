@@ -1,8 +1,5 @@
 import re
-
-
 class TraceParser:
-
 
     def parse(self, trace):
 
@@ -12,9 +9,6 @@ class TraceParser:
             "function": None
         }
 
-
-        # Python:
-        # File "app.py", line 20, in login
         python_match = re.search(
             r'File "(.+)", line (\d+), in (\w+)',
             trace
@@ -29,20 +23,29 @@ class TraceParser:
 
             return result
 
-
-        # Javascript:
-        # at login (src/auth.js:20:5)
         js_match = re.search(
-            r'at (.+) \((.+):(\d+)(?::\d+)?\)',
+            r'at (.+) \((.+):(\d+):(\d+)\)',
             trace
         )
-
 
         if js_match:
 
             result["function"] = js_match.group(1).split(".")[-1]
             result["file"] = js_match.group(2)
             result["line"] = int(js_match.group(3))
+
+            return result
+
+        js_match_no_column = re.search(
+            r'at (.+) \((.+):(\d+)\)',
+            trace
+        )
+
+        if js_match_no_column:
+
+            result["function"] = js_match_no_column.group(1).split(".")[-1]
+            result["file"] = js_match_no_column.group(2)
+            result["line"] = int(js_match_no_column.group(3))
 
 
         return result

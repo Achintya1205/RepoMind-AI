@@ -11,21 +11,50 @@ You are given:
    dependency graph (file/function/class counts, edge counts, detected
    languages, entry points, most-imported modules). These facts are exact
    and ground truth - never contradict them.
-2. ENTRY POINT SOURCE CODE - real code snippets from the repository's
-   detected entry point files, where available.
+2. REPRESENTATIVE SOURCE CODE - real code snippets from the repository's
+   detected entry points and most-imported modules, where available.
+3. The user's actual question about this repository.
 
-Using ONLY this evidence, write a clear, accurate explanation of the
-repository's architecture: what kind of project it is, how it is organized,
-and how its main parts relate to one another.
+Using ONLY this evidence, answer the user's question with a genuine
+component/data-flow explanation - not a restatement of the structural
+facts. Specifically:
+
+- Identify the main components/modules the evidence reveals (e.g. a CLI
+  entry point, a core logic module, a set of utilities) and describe what
+  each one is responsible for, based on what the code actually shows.
+- Explain how these components relate: what calls what, what imports
+  what, and where data/control flow moves between them - citing
+  (file:start_line-end_line) when referencing specific code.
+- Directly address what the user asked, not a generic architecture
+  summary, if their question is specific (e.g. about a particular pattern
+  or flow).
 
 Rules:
-- Do not invent frameworks, patterns, folder conventions, or structure that
-  isn't supported by the evidence shown.
-- Do not simply restate the raw numbers - synthesize them into an
-  explanation a developer would actually find useful.
-- If entry point source code is unavailable or the evidence is sparse, say
-  so plainly rather than guessing or padding with generic description.
-- Be concise: 3-5 sentences.
+- Do not invent frameworks, patterns, folder conventions, components, or
+  relationships that aren't supported by the evidence shown.
+- Do not construct a confident causal explanation for a NUMBER in the
+  structural facts (e.g. "few imports means the code relies on decorator
+  magic instead of imports") unless the shown source code actually
+  demonstrates that mechanism. A low count often just means the code is
+  small or simple - that is the more likely explanation and should be
+  preferred unless the evidence specifically shows otherwise. If you're
+  not sure why a number is what it is, don't guess a specific reason -
+  just report the number, or say the evidence doesn't show why.
+- Do not restate the raw numbers from STRUCTURAL FACTS (file/function
+  counts, edge counts) - those are already shown to the user separately.
+  Your job is the relationship/flow narrative, not a second copy of the
+  statistics.
+- If the evidence is sparse (e.g. no entry points detected, no source
+  retrieved), say so plainly and explain what conclusions the graph facts
+  alone can and cannot support, rather than padding with generic
+  description.
+- The dependency graph reflects static analysis of the parsed source - it
+  will not capture dynamic imports, reflection-based dispatch, or code the
+  parser couldn't resolve. Don't present it as a guaranteed-complete map
+  of the repository's real structure.
+
+Be substantive but concise: a few sentences per component/relationship,
+not a wall of text.
 """
 
 
@@ -46,12 +75,12 @@ class ArchitectureAgent:
         except (FileNotFoundError, OSError):
             return None
 
-    def analyze(self):
+    def analyze(self, query=None):
 
         summary = self.graph_summary.summary()
 
         facts_block = self._render_facts(summary)
-        narrative = self._reason_about_architecture(summary)
+        narrative = self._reason_about_architecture(summary, query)
 
         explanation = f"{facts_block}\n\nArchitecture Summary:\n\n{narrative}\n"
 
@@ -99,29 +128,51 @@ Detected entry points:
 
 {entry_text}"""
 
-    def _reason_about_architecture(self, summary):
+    def _reason_about_architecture(self, summary, query=None):
 
         entry_points = summary.get("entry_points", [])
-
+        top_modules = [module for module, count in summary.get("top_modules", [])]
         entry_chunks = (
-            self.chunk_store.get_for_files(entry_points)
+            self.chunk_store.get_for_files(entry_points, per_file_limit=1)
+            if self.chunk_store
+            else []
+        )
+        module_chunks = (
+            self.chunk_store.get_for_files(top_modules, per_file_limit=1)
             if self.chunk_store
             else []
         )
 
+        seen_files = set()
+        combined_chunks = []
+
+        for chunk in entry_chunks + module_chunks:
+            file = chunk["metadata"].get("file")
+            if file in seen_files:
+                continue
+            seen_files.add(file)
+            combined_chunks.append(chunk)
+
         facts_text = self._render_facts(summary)
-        sources_block = format_sources(entry_chunks)
+        sources_block = format_sources(combined_chunks[:8])
+
+        question_text = (
+            query.strip()
+            if query and query.strip()
+            else "Explain this repository's overall architecture."
+        )
 
         user_message = (
+            f"USER QUESTION: {question_text}\n\n"
             f"STRUCTURAL FACTS:\n{facts_text}\n\n"
-            f"ENTRY POINT SOURCE CODE:\n{sources_block}"
+            f"REPRESENTATIVE SOURCE CODE:\n{sources_block}"
         )
 
         try:
             return generate(
                 SYSTEM_PROMPT,
                 user_message,
-                max_output_tokens=500,
+                max_output_tokens=700,
                 client=self.llm_client
             )
 
