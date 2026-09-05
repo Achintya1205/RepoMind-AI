@@ -3,24 +3,34 @@ from sentence_transformers import CrossEncoder
 from retrieval.vector_store import VectorStore
 from retrieval.keyword_search import KeywordSearch
 
-
 class HybridRetriever:
 
     def __init__(self):
+        self._vector_store = None
+        self._keyword_search = None
+        self._reranker = None
 
-        self.vector_store = VectorStore()
-        self.keyword_search = KeywordSearch()
+    def _ensure_loaded(self):
 
-        self.reranker = CrossEncoder("BAAI/bge-reranker-base")
+        if self._vector_store is None:
+            self._vector_store = VectorStore()
+
+        if self._keyword_search is None:
+            self._keyword_search = KeywordSearch()
+
+        if self._reranker is None:
+            self._reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
 
     def hybrid_retrieve(self, query, k=5):
 
-        vector_results = self.vector_store.search(
+        self._ensure_loaded()
+
+        vector_results = self._vector_store.search(
             query,
             k=10
         )
 
-        keyword_results = self.keyword_search.search(
+        keyword_results = self._keyword_search.search(
             query,
             k=10
         )
@@ -29,8 +39,6 @@ class HybridRetriever:
 
         candidates.extend(vector_results)
         candidates.extend(keyword_results)
-
-        # Remove duplicate chunks.
         seen = set()
         unique_candidates = []
 
@@ -54,13 +62,12 @@ class HybridRetriever:
         if not candidates:
             return []
 
-        # Rerank only the unique candidate set.
         pairs = [
             [query, chunk["content"]]
             for chunk in candidates
         ]
 
-        scores = self.reranker.predict(
+        scores = self._reranker.predict(
             pairs,
             batch_size=8,
             show_progress_bar=False
