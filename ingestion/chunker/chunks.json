@@ -1,1 +1,12 @@
-[]
+[
+    {
+        "content": "File: placeholder.py\n\nLines: 1-1\n\nType: function\n\nName: placeholder\n\nCode:\n\ndef placeholder():\n    pass",
+        "metadata": {
+            "file": "placeholder.py",
+            "type": "function",
+            "name": "placeholder",
+            "start_line": 1,
+            "end_line": 1
+        }
+    }
+]
