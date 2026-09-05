@@ -1,1 +1,2125 @@
-[]
+[
+  {
+    "file": "active_repo\\api\\main.py",
+    "functions": [
+      {
+        "name": "lifespan",
+        "start_line": 8,
+        "end_line": 13,
+        "start_byte": 247,
+        "end_byte": 422,
+        "code": "async def lifespan(app: FastAPI):\r\n    print(\"Starting up \u2014 loading model and data...\")\r\n    load_all()\r\n    print(\"Startup complete\")\r\n    yield\r\n    print(\"Shutting down\")"
+      },
+      {
+        "name": "root",
+        "start_line": 39,
+        "end_line": 40,
+        "start_byte": 1225,
+        "end_byte": 1310,
+        "code": "def root():\r\n    return {\"status\": \"ok\", \"message\": \"Fraud Detection API is running\"}"
+      },
+      {
+        "name": "health",
+        "start_line": 43,
+        "end_line": 44,
+        "start_byte": 1335,
+        "end_byte": 1382,
+        "code": "def health():\r\n    return {\"status\": \"healthy\"}"
+      }
+    ],
+    "classes": [],
+    "imports": [
+      {
+        "statement": "from fastapi import FastAPI",
+        "start_line": 1
+      },
+      {
+        "statement": "from fastapi.middleware.cors import CORSMiddleware",
+        "start_line": 2
+      },
+      {
+        "statement": "from contextlib import asynccontextmanager",
+        "start_line": 3
+      },
+      {
+        "statement": "from api.models.loader import load_all",
+        "start_line": 4
+      },
+      {
+        "statement": "from api.routes import predict, reviewer, graph, explain",
+        "start_line": 5
+      }
+    ],
+    "decorators": [
+      {
+        "name": "@asynccontextmanager",
+        "start_line": 7
+      },
+      {
+        "name": "@app.get(\"/\")",
+        "start_line": 38
+      },
+      {
+        "name": "@app.get(\"/health\")",
+        "start_line": 42
+      }
+    ],
+    "calls": [
+      {
+        "name": "print",
+        "caller": "lifespan",
+        "start_line": 9
+      },
+      {
+        "name": "load_all",
+        "caller": "lifespan",
+        "start_line": 10
+      },
+      {
+        "name": "print",
+        "caller": "lifespan",
+        "start_line": 11
+      },
+      {
+        "name": "print",
+        "caller": "lifespan",
+        "start_line": 13
+      },
+      {
+        "name": "FastAPI",
+        "caller": null,
+        "start_line": 15
+      },
+      {
+        "name": "app.add_middleware",
+        "caller": null,
+        "start_line": 24
+      },
+      {
+        "name": "app.include_router",
+        "caller": null,
+        "start_line": 33
+      },
+      {
+        "name": "app.include_router",
+        "caller": null,
+        "start_line": 34
+      },
+      {
+        "name": "app.include_router",
+        "caller": null,
+        "start_line": 35
+      },
+      {
+        "name": "app.include_router",
+        "caller": null,
+        "start_line": 36
+      },
+      {
+        "name": "app.get",
+        "caller": null,
+        "start_line": 38
+      },
+      {
+        "name": "app.get",
+        "caller": null,
+        "start_line": 42
+      }
+    ]
+  },
+  {
+    "file": "active_repo\\api\\__init__.py",
+    "functions": [],
+    "classes": [],
+    "imports": [],
+    "decorators": [],
+    "calls": []
+  },
+  {
+    "file": "active_repo\\api\\models\\loader.py",
+    "functions": [
+      {
+        "name": "load_all",
+        "start_line": 22,
+        "end_line": 46,
+        "start_byte": 427,
+        "end_byte": 1367,
+        "code": "def load_all():\r\n    global model, tokenizer, df, graph_features, fraud_rings, pr_curve\r\n\r\n    print(f\"Loading model from {MODEL_NAME}...\")\r\n    model = RobertaForSequenceClassification.from_pretrained(\r\n        MODEL_NAME,\r\n        torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,\r\n    )\r\n    model.to(device)\r\n    model.eval()\r\n\r\n    tokenizer = RobertaTokenizer.from_pretrained(MODEL_NAME)\r\n    print(\"Model loaded\")\r\n\r\n    print(\"Loading data...\")\r\n    df = pd.read_csv('./processed_reviews_slim.csv',\r\n                      compression='gzip', low_memory=False)\r\n    graph_features = pd.read_csv('./graph_features.csv')\r\n    fraud_rings = pd.read_csv('./fraud_rings.csv')\r\n    print(f\"Data loaded \u2014 {len(df)} reviews\")\r\n\r\n    print(\"Loading precomputed PR curve...\")\r\n    with open('./pr_curve.json') as f:\r\n        pr_curve = json.load(f)\r\n    print(f\"PR curve loaded \u2014 {len(pr_curve['points'])} points\")"
+      },
+      {
+        "name": "get_model",
+        "start_line": 49,
+        "end_line": 50,
+        "start_byte": 1373,
+        "end_byte": 1407,
+        "code": "def get_model():\r\n    return model"
+      },
+      {
+        "name": "get_tokenizer",
+        "start_line": 53,
+        "end_line": 54,
+        "start_byte": 1413,
+        "end_byte": 1455,
+        "code": "def get_tokenizer():\r\n    return tokenizer"
+      },
+      {
+        "name": "get_device",
+        "start_line": 57,
+        "end_line": 58,
+        "start_byte": 1461,
+        "end_byte": 1497,
+        "code": "def get_device():\r\n    return device"
+      },
+      {
+        "name": "get_df",
+        "start_line": 61,
+        "end_line": 62,
+        "start_byte": 1503,
+        "end_byte": 1531,
+        "code": "def get_df():\r\n    return df"
+      },
+      {
+        "name": "get_graph_features",
+        "start_line": 65,
+        "end_line": 66,
+        "start_byte": 1537,
+        "end_byte": 1589,
+        "code": "def get_graph_features():\r\n    return graph_features"
+      },
+      {
+        "name": "get_fraud_rings",
+        "start_line": 69,
+        "end_line": 70,
+        "start_byte": 1595,
+        "end_byte": 1641,
+        "code": "def get_fraud_rings():\r\n    return fraud_rings"
+      },
+      {
+        "name": "get_pr_curve",
+        "start_line": 73,
+        "end_line": 74,
+        "start_byte": 1647,
+        "end_byte": 1687,
+        "code": "def get_pr_curve():\r\n    return pr_curve"
+      }
+    ],
+    "classes": [],
+    "imports": [
+      {
+        "statement": "import json",
+        "start_line": 1
+      },
+      {
+        "statement": "import torch",
+        "start_line": 2
+      },
+      {
+        "statement": "import pandas as pd",
+        "start_line": 3
+      },
+      {
+        "statement": "from transformers import RobertaForSequenceClassification, RobertaTokenizer",
+        "start_line": 4
+      }
+    ],
+    "decorators": [],
+    "calls": [
+      {
+        "name": "torch.device",
+        "caller": null,
+        "start_line": 11
+      },
+      {
+        "name": "torch.cuda.is_available",
+        "caller": null,
+        "start_line": 11
+      },
+      {
+        "name": "print",
+        "caller": "load_all",
+        "start_line": 25
+      },
+      {
+        "name": "RobertaForSequenceClassification.from_pretrained",
+        "caller": "load_all",
+        "start_line": 26
+      },
+      {
+        "name": "torch.cuda.is_available",
+        "caller": "load_all",
+        "start_line": 28
+      },
+      {
+        "name": "model.to",
+        "caller": "load_all",
+        "start_line": 30
+      },
+      {
+        "name": "model.eval",
+        "caller": "load_all",
+        "start_line": 31
+      },
+      {
+        "name": "RobertaTokenizer.from_pretrained",
+        "caller": "load_all",
+        "start_line": 33
+      },
+      {
+        "name": "print",
+        "caller": "load_all",
+        "start_line": 34
+      },
+      {
+        "name": "print",
+        "caller": "load_all",
+        "start_line": 36
+      },
+      {
+        "name": "pd.read_csv",
+        "caller": "load_all",
+        "start_line": 37
+      },
+      {
+        "name": "pd.read_csv",
+        "caller": "load_all",
+        "start_line": 39
+      },
+      {
+        "name": "pd.read_csv",
+        "caller": "load_all",
+        "start_line": 40
+      },
+      {
+        "name": "print",
+        "caller": "load_all",
+        "start_line": 41
+      },
+      {
+        "name": "len",
+        "caller": "load_all",
+        "start_line": 41
+      },
+      {
+        "name": "print",
+        "caller": "load_all",
+        "start_line": 43
+      },
+      {
+        "name": "open",
+        "caller": "load_all",
+        "start_line": 44
+      },
+      {
+        "name": "json.load",
+        "caller": "load_all",
+        "start_line": 45
+      },
+      {
+        "name": "print",
+        "caller": "load_all",
+        "start_line": 46
+      },
+      {
+        "name": "len",
+        "caller": "load_all",
+        "start_line": 46
+      }
+    ]
+  },
+  {
+    "file": "active_repo\\api\\models\\__init__.py",
+    "functions": [],
+    "classes": [],
+    "imports": [],
+    "decorators": [],
+    "calls": []
+  },
+  {
+    "file": "active_repo\\api\\routes\\explain.py",
+    "functions": [
+      {
+        "name": "explain_review",
+        "start_line": 17,
+        "end_line": 51,
+        "start_byte": 377,
+        "end_byte": 1955,
+        "code": "def explain_review(request: ExplainRequest):\r\n    words      = request.text.lower().split()\r\n    word_count = len(words)\r\n    flags      = []\r\n\r\n    suspicious_words = [\r\n        'amazing', 'perfect', 'love', 'best', 'awesome',\r\n        'excellent', 'great', 'fantastic', 'wonderful', 'superb'\r\n    ]\r\n    matches = [w for w in words if w in suspicious_words]\r\n\r\n    if word_count < 20:\r\n        flags.append(f\"Very short review ({word_count} words)\")\r\n    if len(matches) >= 2:\r\n        flags.append(f\"Multiple generic positive words: {', '.join(matches[:3])}\")\r\n    if request.text == request.text.upper() and len(request.text) > 5:\r\n        flags.append(\"ALL CAPS text detected\")\r\n    if len(set(words)) / max(len(words), 1) < 0.6:\r\n        flags.append(\"Low vocabulary diversity\")\r\n\r\n    if request.confidence >= 0.65:\r\n        risk_level  = \"HIGH\"\r\n        explanation = f\"Fraud probability of {request.confidence*100:.1f}% with {len(flags)} linguistic flags. Strong indicators of fake review.\"\r\n    elif request.confidence >= THRESHOLD:\r\n        risk_level  = \"MEDIUM\"\r\n        explanation = f\"Fraud probability of {request.confidence*100:.1f}%. Some suspicious patterns \u2014 recommend manual review.\"\r\n    else:\r\n        risk_level  = \"LOW\"\r\n        explanation = f\"Fraud probability of {request.confidence*100:.1f}%. Language patterns consistent with genuine reviews.\"\r\n\r\n    return ExplainResponse(\r\n        linguistic_flags = flags if flags else [\"No suspicious patterns detected\"],\r\n        risk_level       = risk_level,\r\n        explanation      = explanation\r\n    )"
+      }
+    ],
+    "classes": [
+      {
+        "name": "ExplainRequest",
+        "start_line": 7,
+        "end_line": 9,
+        "start_byte": 130,
+        "end_byte": 200,
+        "code": "class ExplainRequest(BaseModel):\r\n    text: str\r\n    confidence: float"
+      },
+      {
+        "name": "ExplainResponse",
+        "start_line": 11,
+        "end_line": 14,
+        "start_byte": 204,
+        "end_byte": 322,
+        "code": "class ExplainResponse(BaseModel):\r\n    linguistic_flags : list\r\n    risk_level       : str\r\n    explanation      : str"
+      }
+    ],
+    "imports": [
+      {
+        "statement": "from fastapi import APIRouter",
+        "start_line": 1
+      },
+      {
+        "statement": "from pydantic import BaseModel",
+        "start_line": 2
+      },
+      {
+        "statement": "from api.models.loader import THRESHOLD",
+        "start_line": 3
+      }
+    ],
+    "decorators": [
+      {
+        "name": "@router.post(\"/\", response_model=ExplainResponse)",
+        "start_line": 16
+      }
+    ],
+    "calls": [
+      {
+        "name": "APIRouter",
+        "caller": null,
+        "start_line": 5
+      },
+      {
+        "name": "router.post",
+        "caller": null,
+        "start_line": 16
+      },
+      {
+        "name": "request.text.lower().split",
+        "caller": "explain_review",
+        "start_line": 18
+      },
+      {
+        "name": "request.text.lower",
+        "caller": "explain_review",
+        "start_line": 18
+      },
+      {
+        "name": "len",
+        "caller": "explain_review",
+        "start_line": 19
+      },
+      {
+        "name": "flags.append",
+        "caller": "explain_review",
+        "start_line": 29
+      },
+      {
+        "name": "len",
+        "caller": "explain_review",
+        "start_line": 30
+      },
+      {
+        "name": "flags.append",
+        "caller": "explain_review",
+        "start_line": 31
+      },
+      {
+        "name": "', '.join",
+        "caller": "explain_review",
+        "start_line": 31
+      },
+      {
+        "name": "request.text.upper",
+        "caller": "explain_review",
+        "start_line": 32
+      },
+      {
+        "name": "len",
+        "caller": "explain_review",
+        "start_line": 32
+      },
+      {
+        "name": "flags.append",
+        "caller": "explain_review",
+        "start_line": 33
+      },
+      {
+        "name": "len",
+        "caller": "explain_review",
+        "start_line": 34
+      },
+      {
+        "name": "set",
+        "caller": "explain_review",
+        "start_line": 34
+      },
+      {
+        "name": "max",
+        "caller": "explain_review",
+        "start_line": 34
+      },
+      {
+        "name": "len",
+        "caller": "explain_review",
+        "start_line": 34
+      },
+      {
+        "name": "flags.append",
+        "caller": "explain_review",
+        "start_line": 35
+      },
+      {
+        "name": "len",
+        "caller": "explain_review",
+        "start_line": 39
+      },
+      {
+        "name": "ExplainResponse",
+        "caller": "explain_review",
+        "start_line": 47
+      }
+    ]
+  },
+  {
+    "file": "active_repo\\api\\routes\\graph.py",
+    "functions": [
+      {
+        "name": "get_fraud_rings_endpoint",
+        "start_line": 8,
+        "end_line": 13,
+        "start_byte": 163,
+        "end_byte": 428,
+        "code": "def get_fraud_rings_endpoint():\r\n    fraud_rings = get_fraud_rings()\r\n    rings = fraud_rings[fraud_rings['size'] >= 5].sort_values(\r\n        'avg_fraud_score', ascending=False\r\n    ).to_dict(orient='records')\r\n    return {\"total_rings\": len(rings), \"rings\": rings}"
+      },
+      {
+        "name": "get_top_connected_reviewers",
+        "start_line": 17,
+        "end_line": 22,
+        "start_byte": 465,
+        "end_byte": 717,
+        "code": "def get_top_connected_reviewers(limit: int = 10):\r\n    graph_features = get_graph_features()\r\n    top = graph_features.sort_values(\r\n        'graph_degree', ascending=False\r\n    ).head(limit).to_dict(orient='records')\r\n    return {\"top_reviewers\": top}"
+      },
+      {
+        "name": "pr_curve_endpoint",
+        "start_line": 26,
+        "end_line": 27,
+        "start_byte": 749,
+        "end_byte": 800,
+        "code": "def pr_curve_endpoint():\r\n    return get_pr_curve()"
+      },
+      {
+        "name": "_lookup_pr",
+        "start_line": 30,
+        "end_line": 33,
+        "start_byte": 806,
+        "end_byte": 1004,
+        "code": "def _lookup_pr(threshold: float):\r\n    points = get_pr_curve()[\"points\"]\r\n    closest = min(points, key=lambda p: abs(p[\"threshold\"] - threshold))\r\n    return closest[\"precision\"], closest[\"recall\"]"
+      },
+      {
+        "name": "cost_analysis",
+        "start_line": 37,
+        "end_line": 73,
+        "start_byte": 1041,
+        "end_byte": 2565,
+        "code": "def cost_analysis(\r\n    threshold: float = 0.40,\r\n    daily_volume: int = 1000,\r\n    fraud_rate: float = 0.05,\r\n    investigation_cost: int = 50\r\n):\r\n    precision, recall = _lookup_pr(threshold)\r\n\r\n    fraud_per_day = int(daily_volume * fraud_rate)\r\n    flagged_per_day = int(fraud_per_day / max(recall, 0.01))\r\n    false_pos_per_day = int(flagged_per_day * (1 - precision))\r\n    true_pos_per_day = flagged_per_day - false_pos_per_day\r\n    missed_fraud = max(0, fraud_per_day - true_pos_per_day)\r\n    total_cost_day = flagged_per_day * investigation_cost\r\n    total_cost_month = total_cost_day * 30\r\n\r\n    if threshold < 0.30:\r\n        insight = f\"Low threshold \u2014 high recall but {false_pos_per_day} false alarms/day costing \u20b9{false_pos_per_day * investigation_cost}/day\"\r\n    elif threshold > 0.60:\r\n        insight = f\"High threshold \u2014 missing ~{missed_fraud} fraudulent reviews/day\"\r\n    else:\r\n        insight = f\"Balanced threshold \u2014 catching {true_pos_per_day} frauds/day at \u20b9{total_cost_day}/day\"\r\n\r\n    return {\r\n        \"threshold\": threshold,\r\n        \"precision\": round(precision, 3),\r\n        \"recall\": round(recall, 3),\r\n        \"daily_volume\": daily_volume,\r\n        \"fraud_per_day\": fraud_per_day,\r\n        \"flagged_per_day\": flagged_per_day,\r\n        \"true_pos_per_day\": true_pos_per_day,\r\n        \"false_pos_per_day\": false_pos_per_day,\r\n        \"missed_fraud\": missed_fraud,\r\n        \"cost_per_day\": total_cost_day,\r\n        \"cost_per_month\": total_cost_month,\r\n        \"insight\": insight\r\n    }"
+      }
+    ],
+    "classes": [],
+    "imports": [
+      {
+        "statement": "from fastapi import APIRouter",
+        "start_line": 1
+      },
+      {
+        "statement": "from api.models.loader import get_fraud_rings, get_graph_features, get_pr_curve",
+        "start_line": 2
+      }
+    ],
+    "decorators": [
+      {
+        "name": "@router.get(\"/rings\")",
+        "start_line": 7
+      },
+      {
+        "name": "@router.get(\"/top-reviewers\")",
+        "start_line": 16
+      },
+      {
+        "name": "@router.get(\"/pr-curve\")",
+        "start_line": 25
+      },
+      {
+        "name": "@router.get(\"/cost-analysis\")",
+        "start_line": 36
+      }
+    ],
+    "calls": [
+      {
+        "name": "APIRouter",
+        "caller": null,
+        "start_line": 4
+      },
+      {
+        "name": "router.get",
+        "caller": null,
+        "start_line": 7
+      },
+      {
+        "name": "get_fraud_rings",
+        "caller": "get_fraud_rings_endpoint",
+        "start_line": 9
+      },
+      {
+        "name": "fraud_rings[fraud_rings['size'] >= 5].sort_values(\r\n        'avg_fraud_score', ascending=False\r\n    ).to_dict",
+        "caller": "get_fraud_rings_endpoint",
+        "start_line": 10
+      },
+      {
+        "name": "fraud_rings[fraud_rings['size'] >= 5].sort_values",
+        "caller": "get_fraud_rings_endpoint",
+        "start_line": 10
+      },
+      {
+        "name": "len",
+        "caller": "get_fraud_rings_endpoint",
+        "start_line": 13
+      },
+      {
+        "name": "router.get",
+        "caller": null,
+        "start_line": 16
+      },
+      {
+        "name": "get_graph_features",
+        "caller": "get_top_connected_reviewers",
+        "start_line": 18
+      },
+      {
+        "name": "graph_features.sort_values(\r\n        'graph_degree', ascending=False\r\n    ).head(limit).to_dict",
+        "caller": "get_top_connected_reviewers",
+        "start_line": 19
+      },
+      {
+        "name": "graph_features.sort_values(\r\n        'graph_degree', ascending=False\r\n    ).head",
+        "caller": "get_top_connected_reviewers",
+        "start_line": 19
+      },
+      {
+        "name": "graph_features.sort_values",
+        "caller": "get_top_connected_reviewers",
+        "start_line": 19
+      },
+      {
+        "name": "router.get",
+        "caller": null,
+        "start_line": 25
+      },
+      {
+        "name": "get_pr_curve",
+        "caller": "pr_curve_endpoint",
+        "start_line": 27
+      },
+      {
+        "name": "get_pr_curve",
+        "caller": "_lookup_pr",
+        "start_line": 31
+      },
+      {
+        "name": "min",
+        "caller": "_lookup_pr",
+        "start_line": 32
+      },
+      {
+        "name": "abs",
+        "caller": "_lookup_pr",
+        "start_line": 32
+      },
+      {
+        "name": "router.get",
+        "caller": null,
+        "start_line": 36
+      },
+      {
+        "name": "_lookup_pr",
+        "caller": "cost_analysis",
+        "start_line": 43
+      },
+      {
+        "name": "int",
+        "caller": "cost_analysis",
+        "start_line": 45
+      },
+      {
+        "name": "int",
+        "caller": "cost_analysis",
+        "start_line": 46
+      },
+      {
+        "name": "max",
+        "caller": "cost_analysis",
+        "start_line": 46
+      },
+      {
+        "name": "int",
+        "caller": "cost_analysis",
+        "start_line": 47
+      },
+      {
+        "name": "max",
+        "caller": "cost_analysis",
+        "start_line": 49
+      },
+      {
+        "name": "round",
+        "caller": "cost_analysis",
+        "start_line": 62
+      },
+      {
+        "name": "round",
+        "caller": "cost_analysis",
+        "start_line": 63
+      }
+    ]
+  },
+  {
+    "file": "active_repo\\api\\routes\\predict.py",
+    "functions": [
+      {
+        "name": "predict_review",
+        "start_line": 21,
+        "end_line": 56,
+        "start_byte": 711,
+        "end_byte": 1821,
+        "code": "def predict_review(request: ReviewRequest):\r\n    model     = get_model()\r\n    tokenizer = get_tokenizer()\r\n    device    = get_device()\r\n\r\n    encoding = tokenizer(\r\n        request.text,\r\n        padding='max_length',\r\n        truncation=True,\r\n        max_length=128,\r\n        return_tensors='pt'\r\n    )\r\n\r\n    input_ids      = encoding['input_ids'].to(device)\r\n    attention_mask = encoding['attention_mask'].to(device)\r\n\r\n    with torch.no_grad():\r\n        outputs = model(input_ids=input_ids, attention_mask=attention_mask)\r\n        prob    = torch.softmax(outputs.logits, dim=1)[:, 1].item()\r\n\r\n    is_fraud = prob >= THRESHOLD\r\n\r\n    if prob >= 0.65:\r\n        verdict = \"HIGH RISK \u2014 Strong fraud indicators detected\"\r\n    elif prob >= 0.40:\r\n        verdict = \"MEDIUM RISK \u2014 Some suspicious patterns detected\"\r\n    else:\r\n        verdict = \"LOW RISK \u2014 Review appears legitimate\"\r\n\r\n    return ReviewResponse(\r\n        fraud      = is_fraud,\r\n        confidence = round(prob, 4),\r\n        threshold  = THRESHOLD,\r\n        verdict    = verdict,\r\n        word_count = len(request.text.split())\r\n    )"
+      }
+    ],
+    "classes": [
+      {
+        "name": "ReviewRequest",
+        "start_line": 9,
+        "end_line": 10,
+        "start_byte": 320,
+        "end_byte": 366,
+        "code": "class ReviewRequest(BaseModel):\r\n    text: str"
+      },
+      {
+        "name": "ReviewResponse",
+        "start_line": 12,
+        "end_line": 17,
+        "start_byte": 370,
+        "end_byte": 503,
+        "code": "class ReviewResponse(BaseModel):\r\n    fraud: bool\r\n    confidence: float\r\n    threshold: float\r\n    verdict: str\r\n    word_count: int"
+      }
+    ],
+    "imports": [
+      {
+        "statement": "from fastapi import APIRouter",
+        "start_line": 1
+      },
+      {
+        "statement": "from pydantic import BaseModel",
+        "start_line": 2
+      },
+      {
+        "statement": "import torch",
+        "start_line": 3
+      },
+      {
+        "statement": "from api.models.loader import get_model, get_tokenizer, get_device, THRESHOLD",
+        "start_line": 4
+      }
+    ],
+    "decorators": [
+      {
+        "name": "@router.post(\"/\", response_model=ReviewResponse)",
+        "start_line": 20
+      }
+    ],
+    "calls": [
+      {
+        "name": "APIRouter",
+        "caller": null,
+        "start_line": 6
+      },
+      {
+        "name": "router.post",
+        "caller": null,
+        "start_line": 20
+      },
+      {
+        "name": "get_model",
+        "caller": "predict_review",
+        "start_line": 22
+      },
+      {
+        "name": "get_tokenizer",
+        "caller": "predict_review",
+        "start_line": 23
+      },
+      {
+        "name": "get_device",
+        "caller": "predict_review",
+        "start_line": 24
+      },
+      {
+        "name": "tokenizer",
+        "caller": "predict_review",
+        "start_line": 26
+      },
+      {
+        "name": "encoding['input_ids'].to",
+        "caller": "predict_review",
+        "start_line": 34
+      },
+      {
+        "name": "encoding['attention_mask'].to",
+        "caller": "predict_review",
+        "start_line": 35
+      },
+      {
+        "name": "torch.no_grad",
+        "caller": "predict_review",
+        "start_line": 37
+      },
+      {
+        "name": "model",
+        "caller": "predict_review",
+        "start_line": 38
+      },
+      {
+        "name": "torch.softmax(outputs.logits, dim=1)[:, 1].item",
+        "caller": "predict_review",
+        "start_line": 39
+      },
+      {
+        "name": "torch.softmax",
+        "caller": "predict_review",
+        "start_line": 39
+      },
+      {
+        "name": "ReviewResponse",
+        "caller": "predict_review",
+        "start_line": 50
+      },
+      {
+        "name": "round",
+        "caller": "predict_review",
+        "start_line": 52
+      },
+      {
+        "name": "len",
+        "caller": "predict_review",
+        "start_line": 55
+      },
+      {
+        "name": "request.text.split",
+        "caller": "predict_review",
+        "start_line": 55
+      }
+    ]
+  },
+  {
+    "file": "active_repo\\api\\routes\\reviewer.py",
+    "functions": [
+      {
+        "name": "get_reviewer",
+        "start_line": 24,
+        "end_line": 83,
+        "start_byte": 729,
+        "end_byte": 3375,
+        "code": "def get_reviewer(reviewer_id: str):\r\n    df             = get_df()\r\n    graph_features = get_graph_features()\r\n    fraud_rings    = get_fraud_rings()\r\n    model          = get_model()\r\n    tokenizer      = get_tokenizer()\r\n    device         = get_device()\r\n\r\n    reviewer_df = df[df['reviewerID'] == reviewer_id]\r\n    if len(reviewer_df) == 0:\r\n        raise HTTPException(status_code=404, detail=\"Reviewer not found\")\r\n\r\n    graph_row  = graph_features[graph_features['reviewerID'] == reviewer_id]\r\n    graph_deg  = int(graph_row['graph_degree'].iloc[0]) if len(graph_row) > 0 else 0\r\n    community  = int(reviewer_df['community_id'].iloc[0]) if 'community_id' in reviewer_df.columns else -1\r\n\r\n    ring_row   = fraud_rings[fraud_rings['community_id'] == community]\r\n    ring_size  = int(ring_row['size'].iloc[0])             if len(ring_row) > 0 else 0\r\n    ring_fraud = float(ring_row['avg_fraud_score'].iloc[0]) if len(ring_row) > 0 else 0.0\r\n\r\n    latest_review = str(reviewer_df.sort_values('reviewTime').iloc[-1]['reviewText'])\r\n\r\n    encoding = tokenizer(\r\n        latest_review,\r\n        padding='max_length',\r\n        truncation=True,\r\n        max_length=128,\r\n        return_tensors='pt'\r\n    )\r\n    with torch.no_grad():\r\n        outputs = model(\r\n            input_ids=encoding['input_ids'].to(device),\r\n            attention_mask=encoding['attention_mask'].to(device)\r\n        )\r\n        prob = torch.softmax(outputs.logits, dim=1)[:, 1].item()\r\n\r\n    if prob >= 0.65 and graph_deg > 100:\r\n        verdict = \"HIGH RISK \u2014 Suspicious text and highly connected network\"\r\n    elif prob >= 0.40 and float(reviewer_df['fraud_flag'].mean()) >= 0.1:\r\n        verdict = \"MEDIUM RISK \u2014 Suspicious pattern detected\"\r\n    elif prob < 0.40 and graph_deg < 10:\r\n        verdict = \"LOW RISK \u2014 Looks legitimate\"\r\n    else:\r\n        verdict = \"REVIEW MANUALLY \u2014 Mixed signals\"\r\n\r\n    return ReviewerResponse(\r\n        reviewer_id     = reviewer_id,\r\n        name            = str(reviewer_df['reviewerName'].iloc[0]),\r\n        total_reviews   = int(reviewer_df['total_reviews'].iloc[0]),\r\n        avg_rating      = round(float(reviewer_df['avg_rating'].iloc[0]), 2),\r\n        unique_products = int(reviewer_df['unique_products'].iloc[0]),\r\n        velocity        = int(reviewer_df['reviews_last_7_days'].iloc[0]),\r\n        fraud_flag_rate = round(float(reviewer_df['fraud_flag'].mean()), 2),\r\n        graph_degree    = graph_deg,\r\n        community_id    = community,\r\n        ring_size       = ring_size,\r\n        ring_fraud_rate = round(ring_fraud, 3),\r\n        fraud_score     = round(prob, 4),\r\n        verdict         = verdict\r\n    )"
+      }
+    ],
+    "classes": [
+      {
+        "name": "ReviewerResponse",
+        "start_line": 8,
+        "end_line": 21,
+        "start_byte": 242,
+        "end_byte": 661,
+        "code": "class ReviewerResponse(BaseModel):\r\n    reviewer_id       : str\r\n    name              : str\r\n    total_reviews     : int\r\n    avg_rating        : float\r\n    unique_products   : int\r\n    velocity          : int\r\n    fraud_flag_rate   : float\r\n    graph_degree      : int\r\n    community_id      : int\r\n    ring_size         : int\r\n    ring_fraud_rate   : float\r\n    fraud_score       : float\r\n    verdict           : str"
+      }
+    ],
+    "imports": [
+      {
+        "statement": "from fastapi import APIRouter, HTTPException",
+        "start_line": 1
+      },
+      {
+        "statement": "from pydantic import BaseModel",
+        "start_line": 2
+      },
+      {
+        "statement": "from api.models.loader import get_df, get_graph_features, get_fraud_rings, get_model, get_tokenizer, get_device, THRESHOLD",
+        "start_line": 3
+      },
+      {
+        "statement": "import torch",
+        "start_line": 4
+      }
+    ],
+    "decorators": [
+      {
+        "name": "@router.get(\"/{reviewer_id}\", response_model=ReviewerResponse)",
+        "start_line": 23
+      }
+    ],
+    "calls": [
+      {
+        "name": "APIRouter",
+        "caller": null,
+        "start_line": 6
+      },
+      {
+        "name": "router.get",
+        "caller": null,
+        "start_line": 23
+      },
+      {
+        "name": "get_df",
+        "caller": "get_reviewer",
+        "start_line": 25
+      },
+      {
+        "name": "get_graph_features",
+        "caller": "get_reviewer",
+        "start_line": 26
+      },
+      {
+        "name": "get_fraud_rings",
+        "caller": "get_reviewer",
+        "start_line": 27
+      },
+      {
+        "name": "get_model",
+        "caller": "get_reviewer",
+        "start_line": 28
+      },
+      {
+        "name": "get_tokenizer",
+        "caller": "get_reviewer",
+        "start_line": 29
+      },
+      {
+        "name": "get_device",
+        "caller": "get_reviewer",
+        "start_line": 30
+      },
+      {
+        "name": "len",
+        "caller": "get_reviewer",
+        "start_line": 33
+      },
+      {
+        "name": "HTTPException",
+        "caller": "get_reviewer",
+        "start_line": 34
+      },
+      {
+        "name": "int",
+        "caller": "get_reviewer",
+        "start_line": 37
+      },
+      {
+        "name": "len",
+        "caller": "get_reviewer",
+        "start_line": 37
+      },
+      {
+        "name": "int",
+        "caller": "get_reviewer",
+        "start_line": 38
+      },
+      {
+        "name": "int",
+        "caller": "get_reviewer",
+        "start_line": 41
+      },
+      {
+        "name": "len",
+        "caller": "get_reviewer",
+        "start_line": 41
+      },
+      {
+        "name": "float",
+        "caller": "get_reviewer",
+        "start_line": 42
+      },
+      {
+        "name": "len",
+        "caller": "get_reviewer",
+        "start_line": 42
+      },
+      {
+        "name": "str",
+        "caller": "get_reviewer",
+        "start_line": 44
+      },
+      {
+        "name": "reviewer_df.sort_values",
+        "caller": "get_reviewer",
+        "start_line": 44
+      },
+      {
+        "name": "tokenizer",
+        "caller": "get_reviewer",
+        "start_line": 46
+      },
+      {
+        "name": "torch.no_grad",
+        "caller": "get_reviewer",
+        "start_line": 53
+      },
+      {
+        "name": "model",
+        "caller": "get_reviewer",
+        "start_line": 54
+      },
+      {
+        "name": "encoding['input_ids'].to",
+        "caller": "get_reviewer",
+        "start_line": 55
+      },
+      {
+        "name": "encoding['attention_mask'].to",
+        "caller": "get_reviewer",
+        "start_line": 56
+      },
+      {
+        "name": "torch.softmax(outputs.logits, dim=1)[:, 1].item",
+        "caller": "get_reviewer",
+        "start_line": 58
+      },
+      {
+        "name": "torch.softmax",
+        "caller": "get_reviewer",
+        "start_line": 58
+      },
+      {
+        "name": "float",
+        "caller": "get_reviewer",
+        "start_line": 62
+      },
+      {
+        "name": "reviewer_df['fraud_flag'].mean",
+        "caller": "get_reviewer",
+        "start_line": 62
+      },
+      {
+        "name": "ReviewerResponse",
+        "caller": "get_reviewer",
+        "start_line": 69
+      },
+      {
+        "name": "str",
+        "caller": "get_reviewer",
+        "start_line": 71
+      },
+      {
+        "name": "int",
+        "caller": "get_reviewer",
+        "start_line": 72
+      },
+      {
+        "name": "round",
+        "caller": "get_reviewer",
+        "start_line": 73
+      },
+      {
+        "name": "float",
+        "caller": "get_reviewer",
+        "start_line": 73
+      },
+      {
+        "name": "int",
+        "caller": "get_reviewer",
+        "start_line": 74
+      },
+      {
+        "name": "int",
+        "caller": "get_reviewer",
+        "start_line": 75
+      },
+      {
+        "name": "round",
+        "caller": "get_reviewer",
+        "start_line": 76
+      },
+      {
+        "name": "float",
+        "caller": "get_reviewer",
+        "start_line": 76
+      },
+      {
+        "name": "reviewer_df['fraud_flag'].mean",
+        "caller": "get_reviewer",
+        "start_line": 76
+      },
+      {
+        "name": "round",
+        "caller": "get_reviewer",
+        "start_line": 80
+      },
+      {
+        "name": "round",
+        "caller": "get_reviewer",
+        "start_line": 81
+      }
+    ]
+  },
+  {
+    "file": "active_repo\\scripts\\compute_pr_curve.py",
+    "functions": [
+      {
+        "name": "main",
+        "start_line": 25,
+        "end_line": 115,
+        "start_byte": 554,
+        "end_byte": 4555,
+        "code": "def main():\r\n    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')\r\n    print(f\"Device: {device}\")\r\n\r\n    print(\"Loading model...\")\r\n    model = RobertaForSequenceClassification.from_pretrained(MODEL_NAME)\r\n    model.to(device).eval()\r\n    tokenizer = RobertaTokenizer.from_pretrained(MODEL_NAME)\r\n\r\n    print(\"Loading data...\")\r\n    df = pd.read_csv('processed_reviews_slim.csv', compression='gzip', low_memory=False)\r\n    _, test_df = train_test_split(\r\n        df, test_size=0.2, random_state=RANDOM_STATE, stratify=df['fraud_flag']\r\n    )\r\n    if len(test_df) > SAMPLE_SIZE:\r\n        test_df, _ = train_test_split(\r\n            test_df, train_size=SAMPLE_SIZE, random_state=RANDOM_STATE,\r\n            stratify=test_df['fraud_flag']\r\n        )\r\n    fraud_count = int(test_df['fraud_flag'].sum())\r\n    print(f\"Scoring {len(test_df)} sampled reviews \"\r\n          f\"({fraud_count} fraud / {len(test_df) - fraud_count} legit \u2014 \"\r\n          f\"{fraud_count/len(test_df)*100:.1f}% fraud rate, real distribution)\")\r\n\r\n    probs = []\r\n    texts = test_df['reviewText'].astype(str).tolist()\r\n    n_batches = (len(texts) + BATCH_SIZE - 1) // BATCH_SIZE\r\n    start = time.time()\r\n\r\n    for i in range(0, len(texts), BATCH_SIZE):\r\n        batch = texts[i:i + BATCH_SIZE]\r\n        enc = tokenizer(batch, padding=True, truncation=True,\r\n                         max_length=128, return_tensors='pt')\r\n        with torch.no_grad():\r\n            out = model(input_ids=enc['input_ids'].to(device),\r\n                        attention_mask=enc['attention_mask'].to(device))\r\n            probs.extend(torch.softmax(out.logits, dim=1)[:, 1].cpu().tolist())\r\n\r\n        done = min(i + BATCH_SIZE, len(texts))\r\n        batch_num = i // BATCH_SIZE + 1\r\n        elapsed = time.time() - start\r\n        rate = elapsed / batch_num\r\n        remaining = rate * (n_batches - batch_num)\r\n        print(f\"  {done}/{len(texts)} \u2014 batch {batch_num}/{n_batches} \"\r\n              f\"\u2014 ~{remaining/60:.1f} min remaining\")\r\n\r\n    labels = test_df['fraud_flag'].tolist()\r\n    probs_arr = np.array(probs)\r\n    labels_arr = np.array(labels)\r\n\r\n    precisions, recalls, thresholds = precision_recall_curve(labels, probs)\r\n    precisions_trim, recalls_trim = precisions[:-1], recalls[:-1]\r\n\r\n    order = np.argsort(thresholds)\r\n    grid = np.round(np.arange(0.01, 1.00, 0.01), 2)\r\n    grid_p = np.interp(grid, thresholds[order], precisions_trim[order])\r\n    grid_r = np.interp(grid, thresholds[order], recalls_trim[order])\r\n\r\n    curve = [{\"threshold\": float(t), \"precision\": round(float(p), 4), \"recall\": round(float(r), 4)}\r\n             for t, p, r in zip(grid, grid_p, grid_r)]\r\n\r\n    with open('pr_curve.json', 'w') as f:\r\n        json.dump({\"test_size\": len(test_df), \"points\": curve}, f, indent=2)\r\n\r\n    preds = (probs_arr >= PRODUCTION_THRESHOLD).astype(int)\r\n    cm = confusion_matrix(labels_arr, preds) \r\n    tn, fp, fn, tp = cm.ravel()\r\n\r\n    realworld_metrics = {\r\n        \"sample_size\": len(test_df),\r\n        \"fraud_count\": fraud_count,\r\n        \"fraud_rate_pct\": round(fraud_count / len(test_df) * 100, 2),\r\n        \"threshold\": PRODUCTION_THRESHOLD,\r\n        \"accuracy\": round(accuracy_score(labels_arr, preds), 4),\r\n        \"precision\": round(precision_score(labels_arr, preds, zero_division=0), 4),\r\n        \"recall\": round(recall_score(labels_arr, preds, zero_division=0), 4),\r\n        \"f1\": round(f1_score(labels_arr, preds, zero_division=0), 4),\r\n        \"pr_auc\": round(average_precision_score(labels_arr, probs_arr), 4),\r\n        \"confusion_matrix\": {\r\n            \"tp\": int(tp), \"fp\": int(fp), \"fn\": int(fn), \"tn\": int(tn)\r\n        }\r\n    }\r\n\r\n    with open('realworld_metrics.json', 'w') as f:\r\n        json.dump(realworld_metrics, f, indent=2)\r\n\r\n    total_min = (time.time() - start) / 60\r\n    print(f\"\\nDone in {total_min:.1f} min.\")\r\n    print(f\"Saved pr_curve.json with {len(curve)} points.\")\r\n    print(f\"Saved realworld_metrics.json:\")\r\n    print(json.dumps(realworld_metrics, indent=2))"
+      }
+    ],
+    "classes": [],
+    "imports": [
+      {
+        "statement": "import json",
+        "start_line": 1
+      },
+      {
+        "statement": "import time",
+        "start_line": 2
+      },
+      {
+        "statement": "import torch",
+        "start_line": 3
+      },
+      {
+        "statement": "import numpy as np",
+        "start_line": 4
+      },
+      {
+        "statement": "import pandas as pd",
+        "start_line": 5
+      },
+      {
+        "statement": "from sklearn.metrics import (\r\n    precision_recall_curve,\r\n    average_precision_score,\r\n    accuracy_score,\r\n    precision_score,\r\n    recall_score,\r\n    f1_score,\r\n    confusion_matrix,\r\n)",
+        "start_line": 6
+      },
+      {
+        "statement": "from sklearn.model_selection import train_test_split",
+        "start_line": 15
+      },
+      {
+        "statement": "from transformers import RobertaForSequenceClassification, RobertaTokenizer",
+        "start_line": 16
+      }
+    ],
+    "decorators": [],
+    "calls": [
+      {
+        "name": "torch.device",
+        "caller": "main",
+        "start_line": 26
+      },
+      {
+        "name": "torch.cuda.is_available",
+        "caller": "main",
+        "start_line": 26
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 27
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 29
+      },
+      {
+        "name": "RobertaForSequenceClassification.from_pretrained",
+        "caller": "main",
+        "start_line": 30
+      },
+      {
+        "name": "model.to(device).eval",
+        "caller": "main",
+        "start_line": 31
+      },
+      {
+        "name": "model.to",
+        "caller": "main",
+        "start_line": 31
+      },
+      {
+        "name": "RobertaTokenizer.from_pretrained",
+        "caller": "main",
+        "start_line": 32
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 34
+      },
+      {
+        "name": "pd.read_csv",
+        "caller": "main",
+        "start_line": 35
+      },
+      {
+        "name": "train_test_split",
+        "caller": "main",
+        "start_line": 36
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 39
+      },
+      {
+        "name": "train_test_split",
+        "caller": "main",
+        "start_line": 40
+      },
+      {
+        "name": "int",
+        "caller": "main",
+        "start_line": 44
+      },
+      {
+        "name": "test_df['fraud_flag'].sum",
+        "caller": "main",
+        "start_line": 44
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 45
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 45
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 46
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 47
+      },
+      {
+        "name": "test_df['reviewText'].astype(str).tolist",
+        "caller": "main",
+        "start_line": 50
+      },
+      {
+        "name": "test_df['reviewText'].astype",
+        "caller": "main",
+        "start_line": 50
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 51
+      },
+      {
+        "name": "time.time",
+        "caller": "main",
+        "start_line": 52
+      },
+      {
+        "name": "range",
+        "caller": "main",
+        "start_line": 54
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 54
+      },
+      {
+        "name": "tokenizer",
+        "caller": "main",
+        "start_line": 56
+      },
+      {
+        "name": "torch.no_grad",
+        "caller": "main",
+        "start_line": 58
+      },
+      {
+        "name": "model",
+        "caller": "main",
+        "start_line": 59
+      },
+      {
+        "name": "enc['input_ids'].to",
+        "caller": "main",
+        "start_line": 59
+      },
+      {
+        "name": "enc['attention_mask'].to",
+        "caller": "main",
+        "start_line": 60
+      },
+      {
+        "name": "probs.extend",
+        "caller": "main",
+        "start_line": 61
+      },
+      {
+        "name": "torch.softmax(out.logits, dim=1)[:, 1].cpu().tolist",
+        "caller": "main",
+        "start_line": 61
+      },
+      {
+        "name": "torch.softmax(out.logits, dim=1)[:, 1].cpu",
+        "caller": "main",
+        "start_line": 61
+      },
+      {
+        "name": "torch.softmax",
+        "caller": "main",
+        "start_line": 61
+      },
+      {
+        "name": "min",
+        "caller": "main",
+        "start_line": 63
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 63
+      },
+      {
+        "name": "time.time",
+        "caller": "main",
+        "start_line": 65
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 68
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 68
+      },
+      {
+        "name": "test_df['fraud_flag'].tolist",
+        "caller": "main",
+        "start_line": 71
+      },
+      {
+        "name": "np.array",
+        "caller": "main",
+        "start_line": 72
+      },
+      {
+        "name": "np.array",
+        "caller": "main",
+        "start_line": 73
+      },
+      {
+        "name": "precision_recall_curve",
+        "caller": "main",
+        "start_line": 75
+      },
+      {
+        "name": "np.argsort",
+        "caller": "main",
+        "start_line": 78
+      },
+      {
+        "name": "np.round",
+        "caller": "main",
+        "start_line": 79
+      },
+      {
+        "name": "np.arange",
+        "caller": "main",
+        "start_line": 79
+      },
+      {
+        "name": "np.interp",
+        "caller": "main",
+        "start_line": 80
+      },
+      {
+        "name": "np.interp",
+        "caller": "main",
+        "start_line": 81
+      },
+      {
+        "name": "float",
+        "caller": "main",
+        "start_line": 83
+      },
+      {
+        "name": "round",
+        "caller": "main",
+        "start_line": 83
+      },
+      {
+        "name": "float",
+        "caller": "main",
+        "start_line": 83
+      },
+      {
+        "name": "round",
+        "caller": "main",
+        "start_line": 83
+      },
+      {
+        "name": "float",
+        "caller": "main",
+        "start_line": 83
+      },
+      {
+        "name": "zip",
+        "caller": "main",
+        "start_line": 84
+      },
+      {
+        "name": "open",
+        "caller": "main",
+        "start_line": 86
+      },
+      {
+        "name": "json.dump",
+        "caller": "main",
+        "start_line": 87
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 87
+      },
+      {
+        "name": "(probs_arr >= PRODUCTION_THRESHOLD).astype",
+        "caller": "main",
+        "start_line": 89
+      },
+      {
+        "name": "confusion_matrix",
+        "caller": "main",
+        "start_line": 90
+      },
+      {
+        "name": "cm.ravel",
+        "caller": "main",
+        "start_line": 91
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 94
+      },
+      {
+        "name": "round",
+        "caller": "main",
+        "start_line": 96
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 96
+      },
+      {
+        "name": "round",
+        "caller": "main",
+        "start_line": 98
+      },
+      {
+        "name": "accuracy_score",
+        "caller": "main",
+        "start_line": 98
+      },
+      {
+        "name": "round",
+        "caller": "main",
+        "start_line": 99
+      },
+      {
+        "name": "precision_score",
+        "caller": "main",
+        "start_line": 99
+      },
+      {
+        "name": "round",
+        "caller": "main",
+        "start_line": 100
+      },
+      {
+        "name": "recall_score",
+        "caller": "main",
+        "start_line": 100
+      },
+      {
+        "name": "round",
+        "caller": "main",
+        "start_line": 101
+      },
+      {
+        "name": "f1_score",
+        "caller": "main",
+        "start_line": 101
+      },
+      {
+        "name": "round",
+        "caller": "main",
+        "start_line": 102
+      },
+      {
+        "name": "average_precision_score",
+        "caller": "main",
+        "start_line": 102
+      },
+      {
+        "name": "int",
+        "caller": "main",
+        "start_line": 104
+      },
+      {
+        "name": "int",
+        "caller": "main",
+        "start_line": 104
+      },
+      {
+        "name": "int",
+        "caller": "main",
+        "start_line": 104
+      },
+      {
+        "name": "int",
+        "caller": "main",
+        "start_line": 104
+      },
+      {
+        "name": "open",
+        "caller": "main",
+        "start_line": 108
+      },
+      {
+        "name": "json.dump",
+        "caller": "main",
+        "start_line": 109
+      },
+      {
+        "name": "time.time",
+        "caller": "main",
+        "start_line": 111
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 112
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 113
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 113
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 114
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 115
+      },
+      {
+        "name": "json.dumps",
+        "caller": "main",
+        "start_line": 115
+      },
+      {
+        "name": "main",
+        "caller": null,
+        "start_line": 119
+      }
+    ]
+  },
+  {
+    "file": "active_repo\\scripts\\evaluate_combined_verdict.py",
+    "functions": [
+      {
+        "name": "verdict_for",
+        "start_line": 15,
+        "end_line": 23,
+        "start_byte": 424,
+        "end_byte": 703,
+        "code": "def verdict_for(prob, graph_deg, flag_rate):\r\n    if prob >= 0.65 and graph_deg > 100:\r\n        return \"HIGH\"\r\n    elif prob >= 0.40 and flag_rate >= 0.1:\r\n        return \"MEDIUM\"\r\n    elif prob < 0.40 and graph_deg < 10:\r\n        return \"LOW\"\r\n    else:\r\n        return \"MANUAL\""
+      },
+      {
+        "name": "eval_binary",
+        "start_line": 26,
+        "end_line": 36,
+        "start_byte": 709,
+        "end_byte": 1261,
+        "code": "def eval_binary(y_true, y_pred, name):\r\n    cm = confusion_matrix(y_true, y_pred, labels=[0, 1])\r\n    tn, fp, fn, tp = cm.ravel()\r\n    return {\r\n        \"name\": name,\r\n        \"accuracy\": round(accuracy_score(y_true, y_pred), 4),\r\n        \"precision\": round(precision_score(y_true, y_pred, zero_division=0), 4),\r\n        \"recall\": round(recall_score(y_true, y_pred, zero_division=0), 4),\r\n        \"f1\": round(f1_score(y_true, y_pred, zero_division=0), 4),\r\n        \"confusion_matrix\": {\"tp\": int(tp), \"fp\": int(fp), \"fn\": int(fn), \"tn\": int(tn)}\r\n    }"
+      },
+      {
+        "name": "main",
+        "start_line": 38,
+        "end_line": 131,
+        "start_byte": 1265,
+        "end_byte": 5720,
+        "code": "def main():\r\n    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')\r\n    print(f\"Device: {device}\")\r\n\r\n    print(\"Loading model...\")\r\n    model = RobertaForSequenceClassification.from_pretrained(MODEL_NAME)\r\n    model.to(device).eval()\r\n    tokenizer = RobertaTokenizer.from_pretrained(MODEL_NAME)\r\n\r\n    print(\"Loading data...\")\r\n    df = pd.read_csv('processed_reviews_slim.csv', compression='gzip', low_memory=False)\r\n    graph_features = pd.read_csv('graph_features.csv')\r\n\r\n    print(\"Aggregating per reviewer...\")\r\n    df_sorted = df.sort_values('reviewTime')\r\n    reviewer_agg = df.groupby('reviewerID').agg(\r\n        flag_rate=('fraud_flag', 'mean'),\r\n        n_reviews=('fraud_flag', 'size')\r\n    ).reset_index()\r\n    latest_text = df_sorted.groupby('reviewerID')['reviewText'].last().reset_index()\r\n    reviewers = reviewer_agg.merge(latest_text, on='reviewerID')\r\n    reviewers = reviewers.merge(\r\n        graph_features[['reviewerID', 'graph_degree']], on='reviewerID', how='left'\r\n    )\r\n    reviewers['graph_degree'] = reviewers['graph_degree'].fillna(0)\r\n    reviewers['ground_truth'] = (reviewers['flag_rate'] >= 0.5).astype(int)\r\n\r\n    print(f\"Total reviewers: {len(reviewers)} \"\r\n          f\"({int(reviewers['ground_truth'].sum())} fraud / \"\r\n          f\"{int((reviewers['ground_truth']==0).sum())} legit \u2014 \"\r\n          f\"{reviewers['ground_truth'].mean()*100:.2f}% fraud rate, real distribution)\")\r\n\r\n    if len(reviewers) > SAMPLE_SIZE:\r\n        reviewers, _ = train_test_split(\r\n            reviewers, train_size=SAMPLE_SIZE, random_state=RANDOM_STATE,\r\n            stratify=reviewers['ground_truth']\r\n        )\r\n    reviewers = reviewers.reset_index(drop=True)\r\n    print(f\"Evaluating {len(reviewers)} sampled reviewers \"\r\n          f\"({int(reviewers['ground_truth'].sum())} fraud / \"\r\n          f\"{int((reviewers['ground_truth']==0).sum())} legit)\")\r\n\r\n    texts = reviewers['reviewText'].astype(str).tolist()\r\n    probs = []\r\n    n_batches = (len(texts) + BATCH_SIZE - 1) // BATCH_SIZE\r\n    start = time.time()\r\n    for i in range(0, len(texts), BATCH_SIZE):\r\n        batch = texts[i:i + BATCH_SIZE]\r\n        enc = tokenizer(batch, padding=True, truncation=True, max_length=128, return_tensors='pt')\r\n        with torch.no_grad():\r\n            out = model(input_ids=enc['input_ids'].to(device), attention_mask=enc['attention_mask'].to(device))\r\n            probs.extend(torch.softmax(out.logits, dim=1)[:, 1].cpu().tolist())\r\n        done = min(i + BATCH_SIZE, len(texts))\r\n        batch_num = i // BATCH_SIZE + 1\r\n        elapsed = time.time() - start\r\n        remaining = (elapsed / batch_num) * (n_batches - batch_num)\r\n        print(f\"  {done}/{len(texts)} \u2014 batch {batch_num}/{n_batches} \u2014 ~{remaining/60:.1f} min remaining\")\r\n\r\n    reviewers['text_prob'] = probs\r\n    reviewers['verdict'] = reviewers.apply(\r\n        lambda r: verdict_for(r['text_prob'], r['graph_degree'], r['flag_rate']), axis=1\r\n    )\r\n\r\n    y_true = reviewers['ground_truth'].values\r\n\r\n    text_only_pred = (reviewers['text_prob'].values >= 0.40).astype(int)\r\n    text_only = eval_binary(y_true, text_only_pred, \"text_only_baseline (prob >= 0.40)\")\r\n\r\n    strict_pred = reviewers['verdict'].isin([\"HIGH\", \"MEDIUM\"]).astype(int).values\r\n    combined_strict = eval_binary(y_true, strict_pred, \"combined_verdict_strict (HIGH+MEDIUM auto-flag only)\")\r\n\r\n    incl_manual_pred = reviewers['verdict'].isin([\"HIGH\", \"MEDIUM\", \"MANUAL\"]).astype(int).values\r\n    combined_incl_manual = eval_binary(y_true, incl_manual_pred, \"combined_verdict_incl_manual_review\")\r\n\r\n    results = {\r\n        \"sample_size\": len(reviewers),\r\n        \"fraud_rate_pct\": round(float(y_true.mean()) * 100, 2),\r\n        \"text_only_baseline\": text_only,\r\n        \"combined_verdict_strict\": combined_strict,\r\n        \"combined_verdict_incl_manual_review\": combined_incl_manual,\r\n    }\r\n\r\n    with open('combined_verdict_metrics.json', 'w') as f:\r\n        json.dump(results, f, indent=2)\r\n\r\n    total_min = (time.time() - start) / 60\r\n    print(f\"\\nDone in {total_min:.1f} min.\")\r\n    print(\"=\"*60)\r\n    print(json.dumps(results, indent=2))\r\n    print(\"=\"*60)\r\n    print(\"\\nSaved combined_verdict_metrics.json\")\r\n    print(\"\\nCompare precision: text_only_baseline vs combined_verdict_strict.\")\r\n    print(\"If combined precision is meaningfully higher, that's the measured\")\r\n    print(\"proof that multi-signal design mitigates the text-only false-positive problem.\")"
+      }
+    ],
+    "classes": [],
+    "imports": [
+      {
+        "statement": "import json",
+        "start_line": 1
+      },
+      {
+        "statement": "import time",
+        "start_line": 2
+      },
+      {
+        "statement": "import torch",
+        "start_line": 3
+      },
+      {
+        "statement": "import numpy as np",
+        "start_line": 4
+      },
+      {
+        "statement": "import pandas as pd",
+        "start_line": 5
+      },
+      {
+        "statement": "from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score, confusion_matrix",
+        "start_line": 6
+      },
+      {
+        "statement": "from sklearn.model_selection import train_test_split",
+        "start_line": 7
+      },
+      {
+        "statement": "from transformers import RobertaForSequenceClassification, RobertaTokenizer",
+        "start_line": 8
+      }
+    ],
+    "decorators": [],
+    "calls": [
+      {
+        "name": "confusion_matrix",
+        "caller": "eval_binary",
+        "start_line": 27
+      },
+      {
+        "name": "cm.ravel",
+        "caller": "eval_binary",
+        "start_line": 28
+      },
+      {
+        "name": "round",
+        "caller": "eval_binary",
+        "start_line": 31
+      },
+      {
+        "name": "accuracy_score",
+        "caller": "eval_binary",
+        "start_line": 31
+      },
+      {
+        "name": "round",
+        "caller": "eval_binary",
+        "start_line": 32
+      },
+      {
+        "name": "precision_score",
+        "caller": "eval_binary",
+        "start_line": 32
+      },
+      {
+        "name": "round",
+        "caller": "eval_binary",
+        "start_line": 33
+      },
+      {
+        "name": "recall_score",
+        "caller": "eval_binary",
+        "start_line": 33
+      },
+      {
+        "name": "round",
+        "caller": "eval_binary",
+        "start_line": 34
+      },
+      {
+        "name": "f1_score",
+        "caller": "eval_binary",
+        "start_line": 34
+      },
+      {
+        "name": "int",
+        "caller": "eval_binary",
+        "start_line": 35
+      },
+      {
+        "name": "int",
+        "caller": "eval_binary",
+        "start_line": 35
+      },
+      {
+        "name": "int",
+        "caller": "eval_binary",
+        "start_line": 35
+      },
+      {
+        "name": "int",
+        "caller": "eval_binary",
+        "start_line": 35
+      },
+      {
+        "name": "torch.device",
+        "caller": "main",
+        "start_line": 39
+      },
+      {
+        "name": "torch.cuda.is_available",
+        "caller": "main",
+        "start_line": 39
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 40
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 42
+      },
+      {
+        "name": "RobertaForSequenceClassification.from_pretrained",
+        "caller": "main",
+        "start_line": 43
+      },
+      {
+        "name": "model.to(device).eval",
+        "caller": "main",
+        "start_line": 44
+      },
+      {
+        "name": "model.to",
+        "caller": "main",
+        "start_line": 44
+      },
+      {
+        "name": "RobertaTokenizer.from_pretrained",
+        "caller": "main",
+        "start_line": 45
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 47
+      },
+      {
+        "name": "pd.read_csv",
+        "caller": "main",
+        "start_line": 48
+      },
+      {
+        "name": "pd.read_csv",
+        "caller": "main",
+        "start_line": 49
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 51
+      },
+      {
+        "name": "df.sort_values",
+        "caller": "main",
+        "start_line": 52
+      },
+      {
+        "name": "df.groupby('reviewerID').agg(\r\n        flag_rate=('fraud_flag', 'mean'),\r\n        n_reviews=('fraud_flag', 'size')\r\n    ).reset_index",
+        "caller": "main",
+        "start_line": 53
+      },
+      {
+        "name": "df.groupby('reviewerID').agg",
+        "caller": "main",
+        "start_line": 53
+      },
+      {
+        "name": "df.groupby",
+        "caller": "main",
+        "start_line": 53
+      },
+      {
+        "name": "df_sorted.groupby('reviewerID')['reviewText'].last().reset_index",
+        "caller": "main",
+        "start_line": 57
+      },
+      {
+        "name": "df_sorted.groupby('reviewerID')['reviewText'].last",
+        "caller": "main",
+        "start_line": 57
+      },
+      {
+        "name": "df_sorted.groupby",
+        "caller": "main",
+        "start_line": 57
+      },
+      {
+        "name": "reviewer_agg.merge",
+        "caller": "main",
+        "start_line": 58
+      },
+      {
+        "name": "reviewers.merge",
+        "caller": "main",
+        "start_line": 59
+      },
+      {
+        "name": "reviewers['graph_degree'].fillna",
+        "caller": "main",
+        "start_line": 62
+      },
+      {
+        "name": "(reviewers['flag_rate'] >= 0.5).astype",
+        "caller": "main",
+        "start_line": 63
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 65
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 65
+      },
+      {
+        "name": "int",
+        "caller": "main",
+        "start_line": 66
+      },
+      {
+        "name": "reviewers['ground_truth'].sum",
+        "caller": "main",
+        "start_line": 66
+      },
+      {
+        "name": "int",
+        "caller": "main",
+        "start_line": 67
+      },
+      {
+        "name": "(reviewers['ground_truth']==0).sum",
+        "caller": "main",
+        "start_line": 67
+      },
+      {
+        "name": "reviewers['ground_truth'].mean",
+        "caller": "main",
+        "start_line": 68
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 70
+      },
+      {
+        "name": "train_test_split",
+        "caller": "main",
+        "start_line": 71
+      },
+      {
+        "name": "reviewers.reset_index",
+        "caller": "main",
+        "start_line": 75
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 76
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 76
+      },
+      {
+        "name": "int",
+        "caller": "main",
+        "start_line": 77
+      },
+      {
+        "name": "reviewers['ground_truth'].sum",
+        "caller": "main",
+        "start_line": 77
+      },
+      {
+        "name": "int",
+        "caller": "main",
+        "start_line": 78
+      },
+      {
+        "name": "(reviewers['ground_truth']==0).sum",
+        "caller": "main",
+        "start_line": 78
+      },
+      {
+        "name": "reviewers['reviewText'].astype(str).tolist",
+        "caller": "main",
+        "start_line": 80
+      },
+      {
+        "name": "reviewers['reviewText'].astype",
+        "caller": "main",
+        "start_line": 80
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 82
+      },
+      {
+        "name": "time.time",
+        "caller": "main",
+        "start_line": 83
+      },
+      {
+        "name": "range",
+        "caller": "main",
+        "start_line": 84
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 84
+      },
+      {
+        "name": "tokenizer",
+        "caller": "main",
+        "start_line": 86
+      },
+      {
+        "name": "torch.no_grad",
+        "caller": "main",
+        "start_line": 87
+      },
+      {
+        "name": "model",
+        "caller": "main",
+        "start_line": 88
+      },
+      {
+        "name": "enc['input_ids'].to",
+        "caller": "main",
+        "start_line": 88
+      },
+      {
+        "name": "enc['attention_mask'].to",
+        "caller": "main",
+        "start_line": 88
+      },
+      {
+        "name": "probs.extend",
+        "caller": "main",
+        "start_line": 89
+      },
+      {
+        "name": "torch.softmax(out.logits, dim=1)[:, 1].cpu().tolist",
+        "caller": "main",
+        "start_line": 89
+      },
+      {
+        "name": "torch.softmax(out.logits, dim=1)[:, 1].cpu",
+        "caller": "main",
+        "start_line": 89
+      },
+      {
+        "name": "torch.softmax",
+        "caller": "main",
+        "start_line": 89
+      },
+      {
+        "name": "min",
+        "caller": "main",
+        "start_line": 90
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 90
+      },
+      {
+        "name": "time.time",
+        "caller": "main",
+        "start_line": 92
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 94
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 94
+      },
+      {
+        "name": "reviewers.apply",
+        "caller": "main",
+        "start_line": 97
+      },
+      {
+        "name": "verdict_for",
+        "caller": "main",
+        "start_line": 98
+      },
+      {
+        "name": "(reviewers['text_prob'].values >= 0.40).astype",
+        "caller": "main",
+        "start_line": 103
+      },
+      {
+        "name": "eval_binary",
+        "caller": "main",
+        "start_line": 104
+      },
+      {
+        "name": "reviewers['verdict'].isin([\"HIGH\", \"MEDIUM\"]).astype",
+        "caller": "main",
+        "start_line": 106
+      },
+      {
+        "name": "reviewers['verdict'].isin",
+        "caller": "main",
+        "start_line": 106
+      },
+      {
+        "name": "eval_binary",
+        "caller": "main",
+        "start_line": 107
+      },
+      {
+        "name": "reviewers['verdict'].isin([\"HIGH\", \"MEDIUM\", \"MANUAL\"]).astype",
+        "caller": "main",
+        "start_line": 109
+      },
+      {
+        "name": "reviewers['verdict'].isin",
+        "caller": "main",
+        "start_line": 109
+      },
+      {
+        "name": "eval_binary",
+        "caller": "main",
+        "start_line": 110
+      },
+      {
+        "name": "len",
+        "caller": "main",
+        "start_line": 113
+      },
+      {
+        "name": "round",
+        "caller": "main",
+        "start_line": 114
+      },
+      {
+        "name": "float",
+        "caller": "main",
+        "start_line": 114
+      },
+      {
+        "name": "y_true.mean",
+        "caller": "main",
+        "start_line": 114
+      },
+      {
+        "name": "open",
+        "caller": "main",
+        "start_line": 120
+      },
+      {
+        "name": "json.dump",
+        "caller": "main",
+        "start_line": 121
+      },
+      {
+        "name": "time.time",
+        "caller": "main",
+        "start_line": 123
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 124
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 125
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 126
+      },
+      {
+        "name": "json.dumps",
+        "caller": "main",
+        "start_line": 126
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 127
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 128
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 129
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 130
+      },
+      {
+        "name": "print",
+        "caller": "main",
+        "start_line": 131
+      },
+      {
+        "name": "main",
+        "caller": null,
+        "start_line": 134
+      }
+    ]
+  }
+]
