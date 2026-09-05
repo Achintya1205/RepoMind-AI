@@ -49,7 +49,7 @@ vector_store/
 embeddings/
 
 # Generated graph files
-*.pkl
+dependency_graph.pkl
 *.pickle
 *.jsonl
 
