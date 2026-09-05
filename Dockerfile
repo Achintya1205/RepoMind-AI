@@ -15,6 +15,7 @@ COPY . .
 RUN python -c "from sentence_transformers import SentenceTransformer, CrossEncoder; \
 SentenceTransformer('BAAI/bge-small-en-v1.5'); CrossEncoder('BAAI/bge-reranker-base')"
 
-EXPOSE 7860
+ENV PORT=10000
+EXPOSE 10000
 
-CMD ["uvicorn", "api.main:api", "--host", "0.0.0.0", "--port", "7860"]
+CMD ["sh", "-c", "uvicorn api.main:api --host 0.0.0.0 --port ${PORT}"]
