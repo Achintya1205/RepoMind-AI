@@ -1,0 +1,9 @@
+frontend/
+sample_repos/
+active_repo/
+chroma_db/
+.git
+.venv
+__pycache__/
+*.pyc
+.env

@@ -130,11 +130,13 @@ def get_graph(symbol: str):
                 if edge_data.get("edge_type") != "CALLS":
                     continue
 
+                neighbor_data = dependency_graph.graph.nodes[neighbor]
+ 
                 nodes[str(neighbor)] = {
                     "id": str(neighbor),
                     "data": {
                         "label": readable_label(neighbor),
-                        "type": "function"
+                        "type": neighbor_data.get("node_type", "function")
                     }
                 }
 
@@ -158,11 +160,13 @@ def get_graph(symbol: str):
                 if edge_data.get("edge_type") != "CALLS":
                     continue
 
+                caller_data = dependency_graph.graph.nodes[caller]
+ 
                 nodes[str(caller)] = {
                     "id": str(caller),
                     "data": {
                         "label": readable_label(caller),
-                        "type": "function"
+                        "type": caller_data.get("node_type", "function")
                     }
                 }
 

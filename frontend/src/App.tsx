@@ -111,9 +111,6 @@ function App() {
                     <div className="font-display text-[17px] font-semibold tracking-tight whitespace-nowrap">
                         Repo<span className="text-amber">Mind</span> AI
                     </div>
-                    <div className="hidden min-[900px]:block text-[11.5px] text-text-faint border-l border-border pl-3 ml-0.5 whitespace-nowrap">
-                        Code intelligence, traced.
-                    </div>
                 </div>
 
                 <div className="flex items-center gap-2 flex-1 max-w-[620px] ml-auto">
